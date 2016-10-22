@@ -1,0 +1,70 @@
+package thread_test;
+
+import java.io.ObjectInputStream;
+import java.net.Socket;
+
+
+public class ReadThread extends Thread{
+	Socket socket;
+	
+	String ss;
+	
+	public ReadThread(Socket socket){
+		this.socket = socket;
+	}
+
+	public void run(){
+		try{
+			// 받는곳
+			ss = "c";
+			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+			while(true){
+				String readstr = "";
+				//if(in.readObject()==null)
+				readstr = (String) in.readObject();
+				if(in.readObject()==null){
+					System.out.println("null들어옴");
+					break;
+				}
+				System.out.println("read : " + readstr);
+				
+				if(readstr.equals("read from Server Client"))
+					ss = "b";
+				else if(readstr.equals("Client"))
+					ss = "a";
+			}
+		}catch (Exception e) {
+			System.out.println("E1: " + e.getMessage());
+			e.printStackTrace();
+		}finally{
+			
+		}
+	}
+	
+	public String a() {
+		return ss;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

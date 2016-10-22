@@ -1,0 +1,149 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/ll_menuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff393c46"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:textColor="#ff000000" >
+
+            <!-- include -->
+
+            <include
+                android:id="@+id/ic_leftslidemenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/leftslidemenu" />
+        </LinearLayout>
+
+        <!-- slide layout -->
+
+        <LinearLayout
+            android:id="@+id/ll_mainlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffffff"
+            android:gravity="left"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/high1"
+                />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:padding="10dp">
+
+                <ImageButton
+                    android:id="@+id/bt_left"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/menu1"
+                    android:background="@android:color/transparent"
+                    />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <!--상단메뉴-->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+
+                <ImageButton
+                        android:id="@+id/mouseBtn"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/mouse"
+                        android:text="마우스"/>
+
+                    <ImageButton
+                        android:id="@+id/penBtn"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/pen"
+                        android:text="펜"/>
+
+                    <ImageButton
+                        android:id="@+id/eraserBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/eraser"
+                        android:text="지우개"/>
+
+                    <ImageButton
+                        android:id="@+id/speechBtn"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:background="@drawable/mic"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp" />
+
+                    <!--<Button-->
+                        <!--android:id="@+id/exitBtn"-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="40dp"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:text="종료"/>-->
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="450dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <FrameLayout android:id="@+id/TouchPad"
+                            android:layout_width="match_parent" android:layout_height="fill_parent"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_empty"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical">
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
+
+
+
+

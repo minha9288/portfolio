@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+<ImageView
+   android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/right_btn" />
+
+<ImageView
+    android:id="@+id/left"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:src="@drawable/left_btn" />
+
+<ImageView
+    android:id="@+id/main"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+     android:src="@drawable/main_other1" />
+
+<!-- 선택할 재료들 -->
+<ImageView 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:id="@+id/s_1" 
+    android:src="@drawable/material_1" 
+    android:layout_centerInParent="true" 
+    android:layout_toLeftOf="@+id/main" 
+    android:layout_above="@+id/main"/>
+
+<ImageView 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:id="@+id/s_2" 
+    android:src="@drawable/material_2" 
+    android:layout_centerInParent="true" 
+    android:layout_toLeftOf="@+id/main" 
+    android:layout_marginRight="20dp"/>
+
+<ImageView 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:id="@+id/s_3" 
+    android:src="@drawable/material_3" 
+    android:layout_centerInParent="true" 
+    android:layout_toLeftOf="@+id/main" 
+    android:layout_below="@+id/main"/>
+
+<ImageView 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:id="@+id/s_4" 
+    android:src="@drawable/material_4" 
+    android:layout_centerInParent="true" 
+    android:layout_below="@+id/main" 
+    android:layout_toRightOf="@+id/main"/>
+
+<ImageView 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:id="@+id/s_5" 
+    android:src="@drawable/material_5" 
+    android:layout_centerInParent="true" 
+    android:layout_toRightOf="@+id/main" 
+    android:layout_marginLeft="20dp"/>
+
+<ImageView 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:id="@+id/s_6" 
+    android:src="@drawable/material_6" 
+    android:layout_centerInParent="true" 
+    android:layout_above="@+id/main" 
+    android:layout_toRightOf="@+id/main"/>
+
+<!-- 언어번역창 -->
+
+<ImageView
+    android:id="@+id/explain"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_toRightOf="@+id/left"
+    android:src="@drawable/translate_img" />
+
+<TextView
+    android:id="@+id/text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_toLeftOf="@+id/a_1"
+    android:layout_toRightOf="@+id/left" />
+
+ <!-- 대체 재료 -->
+<ImageView
+    android:id="@+id/a_1"
+    android:src="@drawable/a_6"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/trans"
+    android:layout_centerInParent="true"
+    android:layout_alignParentRight="true"
+    /> 
+     
+<ImageView
+    android:id="@+id/a_2"
+    android:src="@drawable/a_5"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@+id/a_1"
+    android:layout_centerInParent="true"
+    android:layout_above="@+id/trans"
+  /> 
+    
+<ImageView
+    android:id="@+id/a_3"
+    android:src="@drawable/a_4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@+id/a_2"
+    android:layout_centerInParent="true"
+    android:layout_above="@+id/trans"
+    /> 
+    
+<ImageView
+    android:id="@+id/a_4"
+    android:src="@drawable/a_3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_above="@+id/a_1"
+    android:layout_alignParentRight="true"
+   /> 
+<ImageView
+    android:id="@+id/a_5"
+    android:src="@drawable/a_2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_above="@+id/a_1"
+    android:layout_toLeftOf="@+id/a_4"
+    
+    /> 
+    <ImageView
+    android:id="@+id/a_6"
+    android:src="@drawable/a_1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_above="@+id/a_1"
+    android:layout_toLeftOf="@+id/a_5"
+   />    
+
+</RelativeLayout>

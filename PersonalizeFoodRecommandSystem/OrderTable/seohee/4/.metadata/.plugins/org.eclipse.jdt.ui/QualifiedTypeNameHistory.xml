@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="please.please"/>
+<fullyQualifiedTypeName name="org.mt4j.input.inputProcessors.componentProcessors.dragProcessor.DragProcessor"/>
+<fullyQualifiedTypeName name="org.mt4j.input.gestureAction.InertiaDragAction"/>
+<fullyQualifiedTypeName name="execute.algorithm.material_auto_change"/>
+<fullyQualifiedTypeName name="display.algorithm.display_material"/>
+<fullyQualifiedTypeName name="org.mt4j.sceneManagement.AbstractScene"/>
+<fullyQualifiedTypeName name="advanced.mtShell.ICreateScene"/>
+<fullyQualifiedTypeName name="org.mt4j.util.MT4jSettings"/>
+<fullyQualifiedTypeName name="org.mt4j.sceneManagement.transition.ITransition"/>
+<fullyQualifiedTypeName name="translate.translator2"/>
+<fullyQualifiedTypeName name="thread_test.ReadThread"/>
+<fullyQualifiedTypeName name="view.basic"/>
+<fullyQualifiedTypeName name="org.mt4j.MTApplication"/>
+<fullyQualifiedTypeName name="org.mt4j.AbstractMTApplication"/>
+<fullyQualifiedTypeName name="thread_test.WriteThread"/>
+<fullyQualifiedTypeName name="org.mt4j.components.MTComponent"/>
+<fullyQualifiedTypeName name="view.first_v"/>
+<fullyQualifiedTypeName name="org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton"/>
+<fullyQualifiedTypeName name="org.mt4j.components.visibleComponents.widgets.MTTextField"/>
+<fullyQualifiedTypeName name="org.mt4j.input.inputProcessors.IGestureEventListener"/>
+<fullyQualifiedTypeName name="translate.translator"/>
+<fullyQualifiedTypeName name="java.net.Socket"/>
+<fullyQualifiedTypeName name="java.io.StreamCorruptedException"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayInputStream"/>
+<fullyQualifiedTypeName name="org.mt4j.util.opengl.GLTexture"/>
+<fullyQualifiedTypeName name="java.nio.IntBuffer"/>
+</qualifiedTypeNameHistroy>

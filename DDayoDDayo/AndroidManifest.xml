@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.khh.ddayoddayo"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+    <uses-permission 
+        android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.khh.ddayoddayo.MainActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape" >
+            
+        </activity>
+        
+        <activity 
+            android:name="SplashActivity" 
+            android:label="따요따요" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+        </activity>
+          <!-- 전체화면 : NoTitleBar.Fullscreen -->
+        
+        <activity 
+            android:name="Test"></activity>
+        
+        <activity 
+            android:name="ScoreActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="landscape"></activity>
+        <activity 
+            android:name="ScoreActivity2"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        
+        <activity 
+            android:name="Stage1Activity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+       <activity 
+            android:name="Stage2Activity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        <activity 
+            android:name="Stage3Activity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        <activity 
+            android:name="Stage4Activity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name="Stage5Activity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        
+        <activity android:name="ExitActivity"></activity>
+           
+        <activity 
+            android:name="info"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        
+        <activity 
+            android:name="how_coke"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        <activity 
+            android:name="how_milk"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        <activity 
+            android:name="how_ran"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity> 
+        <activity 
+            android:name="how_sham"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        <activity 
+            android:name="how_yo"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"></activity>
+        
+        
+    </application>
+
+</manifest>

@@ -1,0 +1,45 @@
+package view;
+
+import java.util.ArrayList;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.MTComponent;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.camera.MTCamera;
+import org.mt4j.util.math.ToolsMath;
+import org.mt4j.util.math.Vector3D;
+
+import processing.core.PImage;
+
+public class first extends AbstractScene {
+	
+	private AbstractMTApplication app;
+
+	
+	public first(AbstractMTApplication mtAppl, String name) {
+		super(mtAppl, name);
+		this.app = mtAppl;
+		this.setClearColor(new MTColor(255, 255, 255, 255)); // 화면 배경 색
+		
+		//Load from classpath
+				//final MTImageButton keyboardButton = new MTImageButton(app, keyboardImg);
+				//final MTImageButton keyboardButton = new MTImageButton(app, app.loadImage("C:\\Users\\김서희\\Pictures\\2.PNG"));
+				final MTImage image = new MTImage(app, app.loadImage("C:\\SmartTable\\4\\mt4j-desktop\\greenlight\\pictures\\기타사진\\nfc.JPG"));
+				image.setSizeXYGlobal(app.width, app.height);
+				image.setPickable(false);
+				image.setPositionGlobal(new Vector3D(app.width-app.width/4, app.height-app.height/4));
+				//keyboardButton.setFillColor(new MTColor(255,255,255,200));
+				//keyboardButton.setName("KeyboardButton");
+				//keyboardButton.setNoStroke(true);
+				
+				
+				this.getCanvas().addChild(image);
+	}
+}

@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/control_alarm_ll_menuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff393c46"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:textColor="#ff000000" >
+
+            <!-- include -->
+
+            <include
+                android:id="@+id/ic_leftslidemenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/leftslidemenu" />
+        </LinearLayout>
+
+        <!-- slide layout -->
+
+        <LinearLayout
+            android:id="@+id/control_alarm_ll_mainlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffffff"
+            android:gravity="left"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/high1"
+                    />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:padding="10dp">
+
+                    <ImageButton
+                        android:id="@+id/control_alarm_bt_left"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/menu1"
+                        android:background="@android:color/transparent"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/control_alarm_ll_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--상단메뉴-->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="90"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+
+
+
+                    </LinearLayout>
+
+
+                    <!--페이지 이동-->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="30dp"
+                        android:paddingTop="30dp">
+
+                        <EditText
+                            android:id="@+id/control_alarm_editText"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:inputType="number"
+                            android:hint="Enter Time Limit"/>
+
+                        <Button
+                            android:id="@+id/control_alarm_button"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+
+                            android:layout_gravity="center_horizontal"
+                            android:text="OK"/>
+                        <Button
+                            android:id="@+id/control_alarm_c_button"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+
+                            android:layout_gravity="center_horizontal"
+                            android:text="Cancel"/>
+                        <TextView
+                            android:id="@+id/control_alarm_tv"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                            android:gravity="center"
+                            android:textSize="50dp"
+                            android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--투명레이어-->
+                <LinearLayout
+                    android:id="@+id/control_alarm_ll_empty"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical">
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

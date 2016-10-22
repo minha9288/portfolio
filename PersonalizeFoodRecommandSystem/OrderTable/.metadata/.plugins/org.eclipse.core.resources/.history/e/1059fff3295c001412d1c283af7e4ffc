@@ -1,0 +1,126 @@
+package Recommand.db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Vector;
+
+import db.DBConnectionMgr;
+import bean.*;
+
+
+public class FoodSearchMgr {
+	private DBConnectionMgr pool;
+	
+	public FoodSearchMgr() {
+		try {
+			pool = DBConnectionMgr.getInstance();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Vector<Food> getMenuFood(){
+		
+	}
+	
+	//���� ���� �� 3���� �޴� ����
+	public ArrayList<String> getLowPrice() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> food_list = new ArrayList<String>();
+		
+		try {	
+			con=pool.getConnection();
+			sql="select food_id from food order by food_price limit 3";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();	
+			while(rs.next()){
+				food_list.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return food_list;
+	}	
+	
+	//�ǰ��޴� ����
+	public ArrayList<String> getHealthy() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> food_list = new ArrayList<String>();
+		
+		try {	
+			con=pool.getConnection();
+			sql="select food_id from food where food_healthy=true";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();	
+			while(rs.next()){
+				food_list.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return food_list;
+	}	
+	
+	//�����̸� ��������
+	public ArrayList<String> getFoodName() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> food_list = new ArrayList<String>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from food;";
+			pstmt = con.prepareStatement(sql); 
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				food_list.add(rs.getString("food_name"));
+			}
+			System.out.println(food_list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return food_list;
+	}
+	
+	//��ȣǥ�� ��������
+	public ArrayList<String> getDic_Opinion() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> opinion_list = new ArrayList<String>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from dic_opinion;";
+			pstmt = con.prepareStatement(sql); 
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				opinion_list.add(rs.getString("keyword"));
+			}
+			System.out.println(opinion_list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return opinion_list;
+	}
+
+		
+}

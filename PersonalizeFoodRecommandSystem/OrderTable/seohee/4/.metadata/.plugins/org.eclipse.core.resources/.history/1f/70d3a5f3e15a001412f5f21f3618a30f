@@ -1,0 +1,35 @@
+package thread_test;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+import thread_test.User;
+
+
+public class clientThread{
+
+   private static final String serverIP = "192.168.0.17"; // 내 ip 입력하기
+   private static final int serverPort = 9898;
+   
+public static void main(String[] args) {    
+      try {
+         Socket socket = new Socket(serverIP, serverPort);
+         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+         User user = new User();
+         
+         Map<String, Object> receiveMessage = new HashMap<String, Object>();
+         receiveMessage = (Map<String, Object>) in.readObject();
+         
+         if(receiveMessage.get("user") != null) {
+        	user = (User)receiveMessage.get("user");
+        	System.out.println(user.getTableNum());
+         }
+         
+      } catch(Exception e) {
+         System.out.println(e);
+      }
+   }
+}

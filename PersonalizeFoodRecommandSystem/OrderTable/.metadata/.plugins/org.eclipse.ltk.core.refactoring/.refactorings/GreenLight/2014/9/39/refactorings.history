@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;MenuClick&apos; to &apos;TouchTest&apos;&#x0D;&#x0A;- Original project: &apos;GreenLight&apos;&#x0D;&#x0A;- Original element: &apos;MenuClick&apos;&#x0D;&#x0A;- Renamed element: &apos;TouchTest&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;MenuClick&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{TouchTest.java[MenuClick" matchStrategy="1" name="TouchTest" qualified="false" references="true" similarDeclarations="false" stamp="1411718504929" textual="false" version="1.0"/>
+</session>

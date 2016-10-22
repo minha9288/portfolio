@@ -1,0 +1,303 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.table.MainActivity" >
+
+    <ImageView
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/right_btn" />
+
+    <!-- 기준점 main_2 -->
+
+    <ImageView
+        android:id="@+id/main_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/main_2"
+        android:src="@drawable/food_1" />
+
+    <ImageView
+        android:id="@+id/main_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/food_2" />
+
+    <ImageView
+        android:id="@+id/main_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/main_2"
+        android:src="@drawable/food_3" />
+
+    <!-- 메인 메뉴들 -->
+
+    <ImageView
+        android:id="@+id/food_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_1"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_2"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_3"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_4"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_5"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_6"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_7"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_8"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_9"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/food_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/food_10"
+        android:visibility="gone" />
+
+    <!-- 기존 -->
+
+    <ImageView
+        android:id="@+id/main_what"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/food_img" />
+    <ImageView
+        android:id="@+id/temp_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/main_2"
+        android:src="@drawable/food_1" />
+
+    <ImageView
+        android:id="@+id/temp_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/main_2"
+        android:src="@drawable/food_2"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/temp_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/food_3"
+        android:visibility="gone" />
+
+    <!-- 메뉴판 -->
+
+    <!-- 번역창 -->
+
+    <ImageView
+        android:id="@+id/trans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/translate_img" />
+
+    <TextView
+        android:id="@+id/main1_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="메뉴1입니다"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/main2_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="메뉴2입니다"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/main3_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="메뉴3입니다"
+        android:visibility="gone" />
+
+    <!-- 음식이름 -->
+
+    <!-- 가격표 -->
+
+    <TextView
+        android:id="@+id/main2_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/main3_price"
+        android:layout_centerHorizontal="true"
+        android:text="price2" />
+
+    <TextView
+        android:id="@+id/main3_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_3"
+        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@+id/main2_price"
+        android:text="price3" />
+
+    <TextView
+        android:id="@+id/main1_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_1"
+        android:layout_marginRight="40dp"
+        android:layout_toLeftOf="@+id/main2_price"
+        android:text="price1" />
+
+    <TextView
+        android:id="@+id/main1_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/main2_name"
+        android:layout_alignBottom="@+id/main2_name"
+        android:layout_alignRight="@+id/main1_price"
+        android:text="name1" />
+
+    <TextView
+        android:id="@+id/menu_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/trans"
+        android:layout_alignRight="@+id/trans"
+        android:layout_alignTop="@+id/trans" />
+
+    <ImageView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/right"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/menu_btn" />
+
+    <TextView
+        android:id="@+id/main3_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/main2_name"
+        android:layout_alignBottom="@+id/main2_name"
+        android:layout_alignLeft="@+id/main_3"
+        android:text="name3" />
+
+    <TextView
+        android:id="@+id/selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_what"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/main2_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_2"
+        android:layout_centerHorizontal="true"
+        android:text="name2" />
+
+</RelativeLayout>

@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/ll_menuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff393c46"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:textColor="#ff000000" >
+
+            <!-- include -->
+
+            <include
+                android:id="@+id/ic_leftslidemenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/leftslidemenu" />
+        </LinearLayout>
+
+        <!-- slide layout -->
+
+        <LinearLayout
+            android:id="@+id/ll_mainlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffffff"
+            android:gravity="left"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/high1"
+                    />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:padding="10dp">
+
+                    <ImageButton
+                        android:id="@+id/bt_left"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/menu1"
+                        android:background="@android:color/transparent"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--상단메뉴-->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="90"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/go_toBtn"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/gogto"/>
+
+                        <ImageButton
+                            android:id="@+id/volumBtn"
+                            android:layout_marginTop="3dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/volume"/>
+
+                        <ImageButton
+                            android:id="@+id/speechBtn"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/mic"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp" />
+
+                    </LinearLayout>
+
+
+                    <!--페이지 이동-->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                        android:paddingTop="30dp">
+
+                        <ImageButton
+                            android:id="@+id/prevBtn"
+                            android:layout_width="250dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@drawable/up"
+                            android:text="Prev"/>
+
+                        <ImageButton
+                            android:id="@+id/nextBtn"
+                            android:layout_width="250dp"
+                            android:layout_height="200dp"
+                            android:background="@drawable/next"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Next"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--투명레이어-->
+                <LinearLayout
+                    android:id="@+id/ll_empty"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical">
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

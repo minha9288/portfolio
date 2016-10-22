@@ -1,0 +1,78 @@
+package translate;
+
+import java.sql.*;
+
+public class translator2 {
+	
+	private Connection conn;
+	private Statement stmt;
+	private ResultSet rs;
+	
+	public void db(int material_id) {
+		try {
+			Class.forName("org.gjt.mm.mysql.Driver");
+		} catch(ClassNotFoundException e) {
+			System.err.println("error : Driver not found");
+			System.exit(0);
+		}
+		
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/greenlight", "root", "1111");
+			String sql = "select material_name from material_translator where material_id="+material_id;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				text_before_translate = rs.getString(1);
+			}
+		} catch(SQLException e) {
+			System.out.println("연결 실패");
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null) {
+					rs.close();
+				}
+				if(stmt!=null) {
+					stmt.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			} catch(Exception e){ }
+		}
+	}
+	
+	public void db2(int material_id) {
+		try {
+			Class.forName("org.gjt.mm.mysql.Driver");
+		} catch(ClassNotFoundException e) {
+			System.err.println("error : Driver not found");
+			System.exit(0);
+		}
+		
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/greenlight", "root", "1111");
+			String sql = "select material_explain from material_translator where material_id="+material_id;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				text_before_translate = rs.getString(1);
+			}
+		} catch(SQLException e) {
+			System.out.println("연결 실패");
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null) {
+					rs.close();
+				}
+				if(stmt!=null) {
+					stmt.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			} catch(Exception e){ }
+		}
+	}
+}

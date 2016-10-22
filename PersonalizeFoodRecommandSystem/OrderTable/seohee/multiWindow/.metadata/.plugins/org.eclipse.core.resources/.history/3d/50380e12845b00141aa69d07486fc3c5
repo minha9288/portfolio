@@ -1,0 +1,157 @@
+package view;
+
+import javax.swing.JDesktopPane;
+
+import java.awt.*;
+import java.beans.PropertyVetoException;
+import java.util.Random;
+
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
+public class view extends JDesktopPane implements AppSetup {
+	
+	// first
+	JPanel firstPane;
+	Image first_image;
+	String tableNum;
+	String user_id;
+	String nation;
+	
+	// food
+	JPanel foodPane;
+	Image prev_to_main, next_to_material, menu_button;
+	Image food_button1, food_button2, food_button3;
+	Image selected_food, translate;
+	JLabel food_name1, food_name2, food_name3;
+	JLabel food_price1, food_price2, food_price3;
+	JLabel name, explain;
+	
+	int food1, food2, food3;
+	int selected_food_id;
+	String food1_name, food2_name, food3_name;
+	String food1_explain, food2_explain, food3_explain;
+	String food1_price, food2_price, food3_price;
+	
+	// menu
+	JPanel menuPane;
+	Image exit_button, food_image[];
+	JLabel food_name[], food_price[];
+	Image background;
+	
+	String food_name_m[], food_price_m[], food_explain_m[];
+	int food_m[];
+	String explain_from_menu, name_from_menu;
+	
+	
+	
+	public view() {
+		setDragMode(JDesktopPane.LIVE_DRAG_MODE);
+	}
+	
+	public void apply(final JFrame frame) {
+		final JDesktopPane desktop = this;
+		
+		JInternalFrame frame1 = new InternalFrame1();
+		JInternalFrame frame2 = new InternalFrame2();
+		JInternalFrame frame3 = new InternalFrame3();
+		JInternalFrame frame4 = new InternalFrame4();
+		
+		((BasicInternalFrameUI)frame1.getUI()).setNorthPane(null);
+		((BasicInternalFrameUI)frame2.getUI()).setNorthPane(null);
+		((BasicInternalFrameUI)frame3.getUI()).setNorthPane(null);
+		((BasicInternalFrameUI)frame4.getUI()).setNorthPane(null);
+		
+		java.awt.geom.AffineTransform rotate;
+		double theta = (1.0) * Math.PI;
+		rotate = java.awt.geom.AffineTransform.getRotateInstance(theta);
+		
+		frame1.setVisible(true);
+		frame2.setVisible(true);
+		frame3.setVisible(true);
+		frame4.setVisible(true);
+		
+		desktop.add(frame1);
+		desktop.add(frame2);
+		desktop.add(frame3);
+		desktop.add(frame4);
+		
+		try {
+			frame1.setSelected(true);
+			frame2.setSelected(true);
+			frame3.setSelected(true);
+			frame4.setSelected(true);
+		} catch (PropertyVetoException p) {
+			
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		final JDesktopPane c = new view();
+		c.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		SimpleAppLauncher.launch("title", c);
+	}
+	
+	class InternalFrame1 extends JInternalFrame {
+		public InternalFrame1() {
+			super("table4", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(0,0);
+			
+			
+			
+		}
+	}
+
+	class InternalFrame2 extends JInternalFrame {
+		public InternalFrame2() {
+			super("table2", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2,0);
+		}
+	}
+
+	class InternalFrame3 extends JInternalFrame {
+		public InternalFrame3() {
+			super("table3", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(0,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		}
+	}
+
+	class InternalFrame4 extends JInternalFrame {
+		public InternalFrame4() {
+			super("table4", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		}
+	}
+	
+	
+	public void first() {
+		
+	}
+	
+	public void food() {
+		
+	}
+	
+	public void menu() {
+		
+	}
+	
+	public void material() {
+		
+	}
+	
+	public void last() {
+		
+	}
+}
+
+

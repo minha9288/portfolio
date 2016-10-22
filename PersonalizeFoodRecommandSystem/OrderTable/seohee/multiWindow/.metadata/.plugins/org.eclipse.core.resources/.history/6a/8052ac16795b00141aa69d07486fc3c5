@@ -1,0 +1,38 @@
+class InternalFrame1 extends JInternalFrame {
+	public InternalFrame1() {
+		super("table4", false, false, false, false);
+		setLayout(new BorderLayout());
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		setLocation(0,0);
+		
+		
+		
+	}
+}
+
+class InternalFrame2 extends JInternalFrame {
+	public InternalFrame2() {
+		super("table2", false, false, false, false);
+		setLayout(new BorderLayout());
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2,0);
+	}
+}
+
+class InternalFrame3 extends JInternalFrame {
+	public InternalFrame3() {
+		super("table3", false, false, false, false);
+		setLayout(new BorderLayout());
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		setLocation(0,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+	}
+}
+
+class InternalFrame4 extends JInternalFrame {
+	public InternalFrame4() {
+		super("table4", false, false, false, false);
+		setLayout(new BorderLayout());
+		setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+	}
+}

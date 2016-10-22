@@ -1,0 +1,349 @@
+package view;
+
+import java.awt.event.KeyEvent;
+import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.TransformSpace;
+import org.mt4j.components.visibleComponents.widgets.MTList;
+import org.mt4j.components.visibleComponents.widgets.MTSceneMenu;
+import org.mt4j.components.visibleComponents.widgets.MTSceneWindow;
+import org.mt4j.input.gestureAction.InertiaDragAction;
+import org.mt4j.input.inputProcessors.componentProcessors.dragProcessor.DragProcessor;
+import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.sceneManagement.Iscene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
+import org.mt4j.sceneManagement.transition.FadeTransition;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
+import org.mt4j.util.logging.ILogger;
+import org.mt4j.util.logging.MTLoggerFactory;
+import org.mt4j.util.math.Vector3D;
+import org.mt4j.util.opengl.GLFBO;
+
+import please.please;
+import thread_test.ReadThread;
+import thread_test.User;
+import thread_test.WriteThread;
+import advanced.mtShell.ICreateScene;
+
+
+public class basic extends AbstractScene {
+	/** The Constant logger. */
+	private static final ILogger logger = MTLoggerFactory.getLogger(basic.class.getName());
+	static{
+		logger.setLevel(ILogger.INFO);
+	}
+	
+	/** The app. */
+	private AbstractMTApplication app;
+	
+	/** The has fbo. */
+	private boolean hasFBO;
+	
+	/** The list. */
+	private MTList list;
+	
+	/** The font. */
+	private IFont font;
+	
+	/** The list width. */
+	private float listWidth;
+	
+	/** The list height. */
+	private int listHeight;
+	
+	/** The switch directly to scene. */
+	private boolean switchDirectlyToScene = false;
+	
+	//private static final String serverIP = "192.168.0.17"; // 내 ip 입력하기
+	//private static final int serverPort = 9898;
+	
+	
+	
+	private static final String serverIP = "172.25.235.152"; // 내 ip 입력하기
+	private static final int serverPort = 9286;
+	private static String msg;
+	String a;
+	
+
+	public basic(AbstractMTApplication mtApplication, String name) {
+		super(mtApplication, name);
+		this.app = mtApplication;
+		this.hasFBO = GLFBO.isSupported(app);
+		this.switchDirectlyToScene = !this.hasFBO || switchDirectlyToScene;
+		
+		this.registerGlobalInputProcessor(new CursorTracer(app, this));
+		
+		this.setClearColor(new MTColor(0,0,0,255));
+		
+		//CREATE LIST // 메뉴아이콘이 들어가는 자리
+		list = new MTList(mtApplication,0, 0, listWidth, listHeight, 40); // 이게 있어야 화면이 나옴
+		
+		font = FontManager.getInstance().createFont(app, "SansSerif", 18, MTColor.WHITE); // 아이콘 위에 쓰이는 글씨
+		
+		this.person4();
+		
+		getCanvas().addChild(list);
+		list.rotateZ(list.getCenterPointLocal(), -90, TransformSpace.LOCAL);
+		list.setPositionGlobal(new Vector3D(app.width/2f, app.height/2f));
+		getCanvas().setFrustumCulling(true); 
+		
+		//Scene transition effect
+		if (this.hasFBO){
+			this.setTransition(new BlendTransition(app, 730));	
+		}else{
+			this.setTransition(new FadeTransition(app, 730));	
+		}
+	}
+	
+	public void person4() {
+		msg = "aaaa from Client";
+		try {
+	        Socket socket = new Socket(serverIP, serverPort);
+	        
+	        Thread readThread = new ReadThread(socket);
+	        Thread writeThread = new WriteThread(socket, msg);
+	        readThread.start();
+	        writeThread.start();
+	        a = ((ReadThread) readThread).a();
+	        
+	        if(a.equals("a")) {
+	    		this.processGestureEvent_1(new ICreateScene() {
+	    			public Iscene getNewScene() {
+	    				return new food(app, "table1");
+	    			}
+	    			public String getTitle() { // 아이콘 위에 쓰이는 글씨
+	    				return "화면1";
+	    			}
+	    		});
+	    	}
+		} catch(Exception e) {
+			System.out.println("E: " + e.getMessage());
+		}
+		
+		
+		
+		
+		this.processGestureEvent_2(new ICreateScene() {
+			public Iscene getNewScene() {
+				return new first(app, "table2");
+			}
+			public String getTitle() { // 아이콘 위에 쓰이는 글씨
+				return "화면2";
+			}
+		});
+		
+		this.processGestureEvent_3(new ICreateScene() {
+			public Iscene getNewScene() {
+				return new first(app, "table3");
+			}
+			public String getTitle() { // 아이콘 위에 쓰이는 글씨
+				return "화면3";
+			}
+		});
+		
+		this.processGestureEvent_4(new ICreateScene() {
+			public Iscene getNewScene() {
+				return new first(app, "table4");
+			}
+			public String getTitle() { // 아이콘 위에 쓰이는 글씨
+				return "화면4";
+			}
+		});
+		
+	}
+	
+	/**
+	 * 큰 화면에 작은 화면 돌려서 띄우기
+	 * @param createScene
+	 * @return
+	 */
+	public boolean processGestureEvent_1(final ICreateScene createScene) {
+		final Iscene scene = createScene.getNewScene();
+							
+		if (!switchDirectlyToScene){//We have FBO support -> show scene in a window first
+						
+			if (hasFBO && scene instanceof AbstractScene){
+				((AbstractScene) scene).setTransition(new BlendTransition(app, 300));	
+			}
+				
+			final MTSceneWindow sceneWindow = new MTSceneWindow(app, scene, 1, 1); // applet, scene, 테두리 가로두께, 테두리 세로두께
+			// 테두리 두께가 1이거나 50 이러면 x표시랑 최대화 표시가 있는데 5나 10이면 완전 작아진다.
+			sceneWindow.setFillColor(new MTColor(50,50,50,200)); // 테두리 색
+			sceneWindow.scaleGlobal(0.5f, 0.5f, 0.5f, sceneWindow.getCenterPointGlobal()); // 화면의 크기(1이면 전체화면) 가로폭, 세로폭, ?, ?	
+			sceneWindow.setPositionGlobal(new Vector3D(app.width-app.width/4, app.height-app.height/4)); // 화면 위치
+			sceneWindow.addGestureListener(DragProcessor.class, new InertiaDragAction());
+			sceneWindow.rotateX(new Vector3D(app.width/2f, app.height/2f), 180f); // 화면 x축으로 뒤집기
+			sceneWindow.rotateY(new Vector3D(app.width/2f, app.height/2f), 180f); // 화면 Y축으로 뒤집기
+			sceneWindow.setPickable(false); // 화면 이동 안되게 고정
+			getCanvas().addChild(sceneWindow);
+		}else {
+			//No FBO available -> change to the new scene fullscreen directly			
+			float menuWidth = 64;
+			float menuHeight = 64;
+			MTSceneMenu sceneMenu = 
+			new MTSceneMenu(app, scene, app.width-menuWidth, app.height-menuHeight, menuWidth, menuHeight);
+			sceneMenu.addToScene();
+						
+			app.addScene(scene);
+			app.pushScene();
+			app.changeScene(scene);
+		}
+		return false;
+	}
+	
+	/**
+	 * 큰 화면에 작은 화면 돌려서 띄우기
+	 * @param createScene
+	 * @return
+	 */
+	public boolean processGestureEvent_2(final ICreateScene createScene) {
+		final Iscene scene = createScene.getNewScene();
+							
+		if (!switchDirectlyToScene){//We have FBO support -> show scene in a window first
+						
+			if (hasFBO && scene instanceof AbstractScene){
+				((AbstractScene) scene).setTransition(new BlendTransition(app, 300));	
+			}
+				
+			final MTSceneWindow sceneWindow = new MTSceneWindow(app, scene, 1, 1); // applet, scene, 테두리 가로두께, 테두리 세로두께
+			// 테두리 두께가 1이거나 50 이러면 x표시랑 최대화 표시가 있는데 5나 10이면 완전 작아진다.
+			sceneWindow.setFillColor(new MTColor(50,50,50,200)); // 테두리 색
+			sceneWindow.scaleGlobal(0.5f, 0.5f, 0.5f, sceneWindow.getCenterPointGlobal()); // 화면의 크기(1이면 전체화면) 가로폭, 세로폭, ?, ?	
+			sceneWindow.setPositionGlobal(new Vector3D(app.width-app.width/1.333f, app.height-app.height/4)); // 화면 위치
+			sceneWindow.addGestureListener(DragProcessor.class, new InertiaDragAction());
+			sceneWindow.rotateX(new Vector3D(app.width/2f, app.height/2f), 180f); // 화면 x축으로 뒤집기
+			sceneWindow.rotateY(new Vector3D(app.width/2f, app.height/2f), 180f); // 화면 Y축으로 뒤집기
+			sceneWindow.setPickable(false); // 화면 이동 안되게 고정
+			getCanvas().addChild(sceneWindow);
+		}else {
+			//No FBO available -> change to the new scene fullscreen directly			
+			float menuWidth = 64;
+			float menuHeight = 64;
+			MTSceneMenu sceneMenu = 
+			new MTSceneMenu(app, scene, app.width-menuWidth, app.height-menuHeight, menuWidth, menuHeight);
+			sceneMenu.addToScene();
+						
+			app.addScene(scene);
+			app.pushScene();
+			app.changeScene(scene);
+		}
+		return false;
+	}
+	
+	/**
+	 * 큰 화면에 작은 화면 띄우기
+	 * @param createScene
+	 * @return
+	 */
+	public boolean processGestureEvent_3(final ICreateScene createScene) {
+		final Iscene scene = createScene.getNewScene();
+							
+		if (!switchDirectlyToScene){//We have FBO support -> show scene in a window first
+						
+			if (hasFBO && scene instanceof AbstractScene){
+				((AbstractScene) scene).setTransition(new BlendTransition(app, 300));	
+			}
+				
+			final MTSceneWindow sceneWindow = new MTSceneWindow(app, scene, 1, 1); // applet, scene, 테두리 가로두께, 테두리 세로두께
+			// 테두리 두께가 1이거나 50 이러면 x표시랑 최대화 표시가 있는데 5면 없다.(이상함...)
+			sceneWindow.setFillColor(new MTColor(50,50,50,200)); // 테두리 색
+			sceneWindow.scaleGlobal(0.5f, 0.5f, 0.5f, sceneWindow.getCenterPointGlobal()); // 화면의 크기(1이면 전체화면) 가로폭, 세로폭, ?, ?	
+			sceneWindow.setPositionGlobal(new Vector3D(app.width-app.width/4, app.height-app.height/4)); // 화면 위치
+			sceneWindow.addGestureListener(DragProcessor.class, new InertiaDragAction());
+			sceneWindow.setPickable(false); // 화면 이동 안되게 고정
+			getCanvas().addChild(sceneWindow);
+		}else{
+			//No FBO available -> change to the new scene fullscreen directly			
+			float menuWidth = 64;
+			float menuHeight = 64;
+			MTSceneMenu sceneMenu = 
+			new MTSceneMenu(app, scene, app.width-menuWidth, app.height-menuHeight, menuWidth, menuHeight);
+			sceneMenu.addToScene();
+						
+			app.addScene(scene);
+			app.pushScene();
+			app.changeScene(scene);
+		}
+		return false;
+	}
+	
+	/**
+	 * 큰 화면에 작은 화면 띄우기
+	 * @param createScene
+	 * @return
+	 */
+	public boolean processGestureEvent_4(final ICreateScene createScene) {
+		final Iscene scene = createScene.getNewScene();
+							
+		if (!switchDirectlyToScene){//We have FBO support -> show scene in a window first
+						
+			if (hasFBO && scene instanceof AbstractScene){
+				((AbstractScene) scene).setTransition(new BlendTransition(app, 300));	
+			}
+				
+			final MTSceneWindow sceneWindow = new MTSceneWindow(app, scene,1, 1); // applet, scene, 테두리 가로두께, 테두리 세로두께
+			// 테두리 두께가 1이거나 50 이러면 x표시랑 최대화 표시가 있는데 5면 없다.(이상함...)
+			sceneWindow.setFillColor(new MTColor(50,50,50,200)); // 테두리 색
+			sceneWindow.scaleGlobal(0.5f, 0.5f, 0.5f, sceneWindow.getCenterPointGlobal()); // 화면의 크기(1이면 전체화면) 가로폭, 세로폭, ?, ?	
+			sceneWindow.setPositionGlobal(new Vector3D(app.width-app.width/1.333f, app.height-app.height/4)); // 화면 위치
+			sceneWindow.addGestureListener(DragProcessor.class, new InertiaDragAction());
+			sceneWindow.setPickable(false); // 화면 이동 안되게 고정
+			getCanvas().addChild(sceneWindow);
+		}else{
+			//No FBO available -> change to the new scene fullscreen directly			
+			float menuWidth = 64;
+			float menuHeight = 64;
+			MTSceneMenu sceneMenu = 
+			new MTSceneMenu(app, scene, app.width-menuWidth, app.height-menuHeight, menuWidth, menuHeight);
+			sceneMenu.addToScene();
+						
+			app.addScene(scene);
+			app.pushScene();
+			app.changeScene(scene);
+		}
+		return false;
+	}
+	
+	public void onEnter() {
+		getMTApplication().registerKeyEvent(this);
+	}
+	
+	public void onLeave() {	
+		getMTApplication().unregisterKeyEvent(this);
+	}
+	
+	/**
+	 * Key event.
+	 * 
+	 * @param e the e
+	 */
+	public void keyEvent(KeyEvent e){
+		int evtID = e.getID();
+		if (evtID != KeyEvent.KEY_PRESSED)
+			return;
+		switch (e.getKeyCode()){
+		case KeyEvent.VK_F:
+			System.out.println("FPS: " + getMTApplication().frameRate);
+			break;
+		case KeyEvent.VK_M:
+			System.out.println("Max memory: " + Runtime.getRuntime().maxMemory() + " <-> Free memory: " + Runtime.getRuntime().freeMemory());
+			break;	
+		case KeyEvent.VK_C:
+			getMTApplication().invokeLater(new Runnable() {
+				public void run() {
+				}
+			});
+			break;
+		default:
+			break;
+		}
+	}
+
+}

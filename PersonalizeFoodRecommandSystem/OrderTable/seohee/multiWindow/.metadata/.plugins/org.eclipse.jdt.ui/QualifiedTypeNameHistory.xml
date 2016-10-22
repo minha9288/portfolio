@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.swing.plaf.InternalFrameUI"/>
+<fullyQualifiedTypeName name="javax.swing.plaf.basic.BasicInternalFrameUI"/>
+<fullyQualifiedTypeName name="javax.swing.JRootPane"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="javax.swing.JDesktopPane"/>
+<fullyQualifiedTypeName name="java.beans.PropertyVetoException"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.awt.geom.AffineTransform"/>
+</qualifiedTypeNameHistroy>

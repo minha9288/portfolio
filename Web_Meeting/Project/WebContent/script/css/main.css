@@ -1,0 +1,375 @@
+
+/* --------- 숨김 콘텐츠  -------- */
+.banner h3, .search h3 {
+	position:absolute;
+	overflow:hidden;
+	width:1px;
+	height:1px;
+	top:auto;
+	left:-10000px;
+}
+/* -------------------------------- */
+/* -----  main layout 재정의 ------ */
+#header, #contents, #slogan, .footerInner {
+	width:886px;
+}
+#infoMenu {
+	margin-right:25px;
+}
+#visual {
+	margin:0 auto;
+	width:824px;
+	height:107px;
+}
+/* -------------------------------- */
+/* ----- main content layout ------ */
+.section {
+	float:left;
+	display:inline;
+	width:239px;
+	margin:0 25px 0 20px;
+}
+.sectionInfo {
+	float:left;
+	width:375px;
+	margin-right:24px;
+}
+.sectionEvent {
+	float:left;
+	width:185px;
+}
+/* -------------------------------- */
+/* ------- 로그인 content --------- */ 
+.login {
+	position:relative;
+	width:239px;
+	margin-bottom:10px;
+	background:url(../images/main/login_box.gif) no-repeat;
+}
+.login h3 {
+	padding: 10px 0 16px 12px;
+}
+.login .id, .login .pw {
+	margin-left: 18px;
+}
+.login .id {
+	padding-bottom: 5px;
+}
+.login .id label {
+	padding-right:11px;
+}
+.login #logid, .login #logpw {
+	width:95px;
+	height:18px;
+	border: 1px solid #b4b4b4;
+	margin-left:2px;
+}
+.login label img {
+	margin-top:4px;
+}
+.login .btnLogin {
+	position: absolute;	
+	height:45px;
+	width:50px;
+	top: 44px;
+	right:19px;
+}
+.memberInfo {
+	margin:9px 19px 0 19px;
+	padding-top:8px;
+	padding-bottom:17px;
+	border-top:1px solid #dedede;
+}
+.memberInfo a {
+	padding-left:11px;
+	color:#686868;
+	letter-spacing:-0.1em;
+	background:url(../images/main/icon_login.gif) no-repeat 1px 3px;
+}
+.memberInfo a:hover, .memberInfo a:focus {
+	text-decoration:underline;
+}
+.memberInfo a.join {
+	padding-right:23px;
+}
+/* -------------------------------- */
+/* ------------- 배너 ------------- */
+.banner {
+	margin:0 2px 26px;
+}
+.banner li {
+	padding-bottom:8px;
+}
+/* -------------------------------- */
+/* --------- 웹 표준이란? --------- */ 
+.standardBox {
+	margin:2px 0 2px 2px;
+	width:236px;
+	background:url(../images/main/bg_standardbox.gif) no-repeat 0 0;
+}
+.standardBox h3 {
+	padding: 15px 0 15px 15px;
+}
+.standardBox dl {
+	overflow:auto;
+	margin:0 15px;
+}
+.standardBox .img {
+	float:left;
+	padding-bottom:18px;
+}
+.standardBox .subject, .standardBox .brief {
+	float:right;
+	width:130px;
+}
+.standardBox .subject {
+	padding-bottom:4px;
+}
+.standardBox .subject a {
+	color:#296897;
+	font-weight:bold;
+}
+.standardBox .brief a {
+	line-height:1.4;
+	color:#303030;
+}
+/* -------------------------------- */
+/* ---------- 자료 검색 ----------- */
+.search {
+	height: 50px;
+	margin-top:0;
+	margin-bottom:10px;
+	background: url(../images/main/bg_search.gif) no-repeat 0 0;
+}
+.search fieldset {
+	margin:0 0 0 17px;
+	padding-top:10px;
+}
+.search label {
+	padding:0 4px 6px 23px;
+	background:url(../images/common/icon_searcgh.gif) no-repeat 0 0;
+}
+.search label img {
+	padding-top: 4px; 
+}
+.search #search {
+	width:195px;
+	height:18px;
+	border:1px solid #a1a1a1;
+}
+.search .btnSearch {
+	margin-left:5px;
+}
+/* -------------------------------- */
+/* ------- 공지사항/자료실 -------- */ 
+.boardBox {
+	position:relative;
+	margin:0 8px 35px 3px;
+    background: url(../images/main/bbs_h3_bg.gif) no-repeat 0 22px;
+	height:155px; /* 높이를 지정하지 않으면 아래쪽 새소식 영역이 위로 올라오기 때문에 absolute 되는 하위 요소를 포함하여 높이 고정 시킴 */
+}
+/* 수정 필요한 부분 -> 클래스 분리 
+.boardBox h3, .newsList h3 {
+	padding-bottom:8px;
+	margin-bottom:7px;
+	background: url(../images/main/bbs_h3_bg.gif) no-repeat bottom left;
+}
+*/
+
+.newsList h3 {
+	padding-bottom:8px;
+	margin-bottom:7px;
+	background: url(../images/main/bbs_h3_bg.gif) no-repeat bottom left;
+}
+/* 0404 추가 분 */
+.boardBox h3 { position:absolute; top:0; margin-bottom:-28px; padding-bottom:8px;	margin-bottom:7px;}
+.boardBox .tab01 { left:0;}
+.boardBox .tab02 { left:76px;}
+.boardBox ul { padding-top:36px;}
+/* 0404 추가 끝 */
+
+.boardBox ul li {
+	position: relative; /* 추가 */
+	padding:5px 0 4px 12px;
+	background: url(../images/common/bullet_list.gif) no-repeat 2px 10px;
+}
+.boardBox ul li a, .boardBox ul li .date {
+	display:block;
+}
+.boardBox ul li a {
+	margin-right:5.1em;
+}
+.boardBox ul li .date {
+	position:absolute;
+	right:0;
+	top:5px;
+	color:#6f6f6f;
+}
+.boardBox #noticeList, .boardBox #pdsList {
+	position:relative;
+}
+.boardBox .more a, .newsList .more a, .siteFavorite .more a {
+	position:absolute;
+	display:block;
+	padding:5px 2px 4px 5px;
+	top:1px;
+	right:0;
+}
+/* .boardBox #noticeList 전체를 제어하는게 아니라 ul 요소만으로 수정 */
+.boardBox #noticeList ul {
+	position:absolute;
+	width:100%;
+	top:21px; /* top을 0으로 지정하면 공지사항 탭이랑 겹쳐서 마우스 영역이 인식 안되므로 수정 */
+	padding-top:10px; /* 위쪽 여백 35px에서 10px로 수정 */
+}
+
+/* .boardBox #pdsList 전체를 제어하는게 아니라 ul 요소만으로 수정 */
+.boardBox #pdsList ul {
+	position:absolute;
+	width:100%;
+	top:21px; /* top을 0으로 지정하면 공지사항 탭이랑 겹쳐서 마우스 영역이 인식 안되므로 수정 */
+	padding-top:10px; /* 위쪽 여백 35px에서 10px로 수정 */
+}
+.boardBox #pdsList h3 {
+	padding-left:76px;
+}
+/* -------------------------------- */
+/* -----------  새소식 ------------ */
+.newsList {
+	position:relative;
+	margin-left:2px;
+	margin-right:9px;
+}
+.newsList h3 img {
+	margin-bottom:8px;
+}
+.newsList h4 {
+	padding: 1px 0 4px 11px;
+	font-weight:bold;
+	background: url(../images/common/bullet_list.gif) no-repeat 1px 7px;
+}
+.newsList h4 a {
+	color:#3b3939;
+}
+.newsList .newsWrap {
+	float:right;
+	width:234px;
+}
+.newsList .newsWrap p {
+	margin-left:11px;
+}
+.newsList .newsWrap .date {
+	padding:0 0 7px 1px;
+	color:#6f6f6f;
+	font-size:0.92em;
+}
+.newsList .newsWrap .brief {
+	line-height:1.42;
+}
+.newsList .imgWrap {
+	float:left;
+	width:112px;
+	margin-left:1px;
+}
+.imgWrap .img {
+	display:block;
+	padding-bottom:13px;
+	background:url(../images/main/news_imgbg.gif) no-repeat 0 bottom;
+}
+.imgWrap .imgTitle {
+	display:block;
+	text-align:center;
+	font-size:0.92em;
+	color:#676565;
+	font-weight:bold;
+}
+/* -------------------------------- */
+/* --------- 신규 이벤트 ---------- */
+.event {
+	position:relative;
+	background:url(../images/main/eventbox_bg.gif) no-repeat 0 0;
+}
+.event h3, .siteLink h3, .siteFavorite h3 img {
+	padding-top:15px;
+	margin: 0 0 8px 10px;
+}
+.event p {
+	margin-left:9px;
+}
+.event .thumbnail, .event .brief {
+	display:block;
+}
+.event .thumbnail {
+	background:url(../images/main/img_event_bg.gif) no-repeat 0 0;
+}
+.event .brief {
+	margin:13px 12px 0 0;
+	padding-bottom:14px;
+	border-bottom: 1px solid #dbdbdb;
+}
+.event a:hover, a:focus {
+	color:#333333;
+}
+.event .btnGo {
+	position:absolute;
+	top:13px;
+	right:14px;
+}
+/* -------------------------------- */
+/* --------- 관련 사이트 ---------- */
+.siteLink {
+	margin-bottom:33px;
+	background:url(../images/main/eventbox_bg.gif) no-repeat 0 100%;
+}
+.siteLink fieldset {
+	margin:0 10px;
+	padding-bottom:13px;
+}
+.siteLink select {
+	width:120px;
+	height:21px;
+	font-size:1em;
+}
+/* -------------------------------- */
+/* --------- 인기 사이트 ---------- */
+.siteFavorite {
+	position:relative;
+	height:1%;
+	background:url(../images/main/eventbox_bg.gif) no-repeat 0 100%;
+}
+.siteFavorite h3 {
+	background:url(../images/main/eventbox_bg.gif) no-repeat 0 0;
+}
+.siteFavorite .ranking {
+	margin:5px 15px 0 10px;
+	padding-bottom:18px;
+}
+.siteFavorite .ranking li {
+	position:relative;
+	padding:2px 18px 1px 18px;
+	background:url(../images/main/icon_site.gif) no-repeat 0 0;
+}
+.siteFavorite .ranking .order {
+	display:block;
+	position:absolute;
+	top:5px;
+	right:3px;
+}
+.ranking li.no1 {
+	background-position:0 2px;
+}
+.ranking li.no2 {
+	background-position:0 -33px;
+}
+.ranking li.no3 {
+	background-position:0 -67px;
+}
+.ranking li.no4 {
+	background-position:0 -102px;
+}
+.siteFavorite .more {
+	position: absolute;
+	top:12px;
+	right:15px;
+}
+/* -------------------------------- */

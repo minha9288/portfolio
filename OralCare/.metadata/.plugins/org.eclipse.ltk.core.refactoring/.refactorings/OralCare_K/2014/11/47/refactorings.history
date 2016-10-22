@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;Menu.MainTab()&apos; to &apos;SearchTab&apos;&#x0D;&#x0A;- Original project: &apos;OralCare_K&apos;&#x0D;&#x0A;- Original element: &apos;Menu.MainTab()&apos;&#x0D;&#x0A;- Renamed element: &apos;Menu.SearchTab()&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;MainTab&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{ShowPatientInfo_K.java[Menu~MainTab" name="SearchTab" references="true" stamp="1416575140471" version="1.0"/>
+</session>

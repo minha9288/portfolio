@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.tcpsokettest"
+    android:installLocation="auto"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="16" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.NFC" />
+<!-- ㅇㅇ -->
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        <activity
+            android:name=".TCPsoketTest"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 왜 안되뉴 -->
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="food_activity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="material_activity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="menuboard_activity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="rate_activity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="check_activity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+
+        <service
+            android:name="controller.GreenlightService"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="controller.GreenlightService" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+       	<activity android:name=".NotificationFollower" android:label="평점 알림"/>
+		<receiver android:name=".AlarmReceiver" android:process=":remote"> </receiver>
+    </application>
+
+</manifest>

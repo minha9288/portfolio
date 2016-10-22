@@ -1,0 +1,49 @@
+#wrapper {
+	background:url(../images/common/wrap_bg.jpg) no-repeat top center;
+}
+#header {
+	position:relative;
+	margin:0 auto;
+	width:940px;
+	height:105px;
+	background:url(../images/common/bg_menubox.png) no-repeat 0 0;
+}
+/* ------------ ¼­ºê ÄÜÅÙÃ÷ layout -------------- */
+#contents { 
+	width:940px;
+	margin:0 auto;
+	min-height:400px;
+	padding-top:30px;
+	background:url(../images/common/contents_box.png) no-repeat 0 0;
+}
+#subWrap {
+	float:left;
+	display:inline;
+	width:213px;
+	height:350px;
+	margin-left:30px;
+	margin-right:18px;
+	background:url(../images/common/subwrap_bg.gif) no-repeat top right;
+}
+#contentsWrap {	
+	float:left;
+	position:relative;
+	width:590px;
+}
+#quick {
+	float:right;
+	width:50px;	
+}
+/* ----------------------------------------------- */
+
+#slogan {
+  clear:both;
+  position: relative;	
+	width:940px;
+	margin:20px auto 0;
+}
+#footer { 
+	height:75px;
+	margin-bottom:15px;
+	background:url(../images/common/footerbg.gif) repeat-x 0 0;
+}

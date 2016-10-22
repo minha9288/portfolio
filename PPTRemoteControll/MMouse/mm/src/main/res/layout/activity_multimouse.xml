@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    >
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/mmouse"
+        />
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_width="fill_parent" android:id="@+id/tvInstructions"
+        android:layout_height="wrap_content" android:text="@string/txt_ip_address"
+        android:textColor="#000000"
+        android:layout_gravity="left" android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="0dp" />
+
+
+    <ImageButton android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="@string/txt_connect"
+        android:layout_marginLeft="0dp" android:layout_marginTop="11dp"
+        android:layout_marginRight="5dp" android:layout_marginBottom="5dp"
+        android:id="@+id/btnConnect" android:layout_gravity="left"
+        android:background="@drawable/connect"
+        android:layout_alignParentRight="true" android:layout_below="@id/tvInstructions" />
+
+    <EditText android:layout_height="wrap_content"
+        android:focusable="true" android:enabled="true" android:id="@+id/etIp"
+        android:layout_marginLeft="5dp" android:layout_marginTop="5dp"
+        android:layout_marginRight="0dp" android:layout_marginBottom="5dp"
+        android:layout_width="fill_parent" android:layout_below="@id/tvInstructions"
+        android:text="192.168.255.255" android:layout_toLeftOf="@id/btnConnect" />
+
+
+    <TextView android:id="@+id/tvRecentHosts"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginLeft="5px" android:text="@string/txt_recentlyUsedHosts"
+        android:textColor="#000000"
+        android:layout_marginTop="30px" android:layout_marginBottom="5px"
+        android:textStyle="bold" android:layout_centerHorizontal="true"
+        android:layout_below="@id/etIp" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/tvRecentHosts"
+        android:background="@drawable/backcolor"
+    />
+
+    <ListView android:id="@+id/lvHosts" android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:textColor="#000000"
+        android:layout_below="@id/tvRecentHosts"
+        android:layout_alignRight="@+id/btnConnect"
+        android:layout_alignEnd="@+id/btnConnect" />
+
+    <ImageButton
+        android:id="@+id/startshow"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="37dp"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:background="@drawable/showstart"
+        android:layout_below="@id/lvHosts"/>
+
+</RelativeLayout>

@@ -1,0 +1,80 @@
+/**@author 김서희
+ * 재료 설명 DB에서 재료 이름과 설명 번역된 것 가져오기
+ * translate패키지의 translator클래스에 있는 translating()메소드를 호출하여
+ * 매개변수로 번역 할 재료id와 국가정보(kr, cn, jp, us, uk, fr), "name" or "explain"을 보내고
+ * return으로 받은 String값을 출력한다.
+ * 
+ * properties -> java build path -> Libraries -> add External JARs -> microsoft-translator-java-api-0.6.2-jar-with-dependencies.jar
+ * 
+ */
+
+package translate;
+
+import com.memetix.mst.language.Language;
+import com.memetix.mst.translate.Translate;
+
+import java.sql.*;
+
+
+public class trt {
+	String text_after_translate;
+	
+	private Connection conn;
+	private Statement stmt;
+	private ResultSet rs;
+	
+	public String translating(String text_before_translate, String nation) {
+		
+		
+		Translate.setClientId("rlatjgml38"); // ID
+		Translate.setClientSecret("nOFqHOM+LLYxO9SFbV+8Sp7cplsPf6xYJoJfY6qpdsI="); // Secret
+		try {
+			if(nation.equals("kr"))
+				text_after_translate = Translate.execute(text_before_translate, Language.KOREAN); // 국적이 한국일 경우 한국어로 번역
+			else if(nation.equals("cn"))
+				text_after_translate = Translate.execute(text_before_translate, Language.CHINESE_SIMPLIFIED); // 국적이 중국일 경우 중국어로 번역
+			else if(nation.equals("jp"))
+				text_after_translate = Translate.execute(text_before_translate, Language.JAPANESE); // 국적이 일본일 경우 일본어로 번역
+			else if(nation.equals("us") || nation.equals("uk"))
+				text_after_translate = Translate.execute(text_before_translate, Language.ENGLISH); // 국적이 영국이나 미국일 경우 일본어로 번역
+			else if(nation.equals("fr"))
+				text_after_translate = Translate.execute(text_before_translate, Language.FRENCH); // 국적이 프랑스일 경우 프랑스어로 번역
+		} catch (Exception e) {
+			e.printStackTrace();
+			text_after_translate = e.toString();
+		}
+		
+		System.out.println(text_after_translate);
+		return text_after_translate;
+	}
+}
+
+
+ import javax.swing.*;
+import java.awt.*;
+
+public class translator extends JFrame {
+	Container ct;
+	translator() {
+		ct = getContentPane();
+		String text_before_translate = "마시썽"; // 한국어로 된 기타 설명
+		String text_after_translate = null; // 번역된 기타 설명
+		String nation = "uk"; // 사용자의 국가정보(번역될 나라의 언어) 한국(kr),중국(cn),일본(jp),미국(us),영국(uk),프랑스(fr)  	
+		
+		JLabel label_after_translate = new JLabel(); // 화면에 표시 될 번역된 설명을 저장할 JLabel
+		
+		trt tr = new trt(); // 번역기가 있는 클래스
+		text_after_translate = tr.translating(text_before_translate, nation); // 번역하는 메소드
+		label_after_translate.setText(text_after_translate);
+		
+		ct.add(label_after_translate); // 번역된 설명을 화면에 출력
+		
+		setSize(500,500);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new translator();
+	}
+}
+

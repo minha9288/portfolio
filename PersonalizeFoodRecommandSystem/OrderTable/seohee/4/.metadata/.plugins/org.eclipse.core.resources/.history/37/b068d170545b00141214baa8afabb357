@@ -1,0 +1,1156 @@
+/************ kim seo hee ******************/
+
+package view;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.MTComponent;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.components.visibleComponents.widgets.MTTextField;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.camera.MTCamera;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.math.Vector3D;
+import org.mt4j.util.opengl.GLTexture;
+
+import translate.translator;
+import translate.translator2;
+
+
+
+
+import bean.*;
+
+import java.util.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+
+
+public class view extends AbstractScene {
+	private AbstractMTApplication app;
+	MTComponent mtCom;
+	
+	/* first */
+	MTComponent firstCom;
+	MTImage first_image;
+	String tableNum;
+	String user_id;
+	
+	
+	/* food */
+	MTComponent foodCom;
+	MTImageButton prev_to_main, next_to_material, menu_button;
+	MTImageButton food_button1, food_button2, food_button3;
+	MTImage selected_food, translate;
+	MTTextField food_name1, food_name2, food_name3;
+	MTTextField food_price1, food_price2, food_price3;
+	MTTextField name, explain;
+	int food1, food2, food3; // food id
+	int selected_food_id;
+	String food1_name, food2_name, food3_name; // food name
+	String food1_explain, food2_explain, food3_explain; // food explain
+	String food1_price, food2_price, food3_price; // food price
+	String nation;
+	//String tableNum;
+	//String user_id;
+	
+	
+	/* menu */
+	MTComponent menuCom;
+	MTImageButton exit_button, food_image[];
+	MTTextField food_name[];
+	MTTextField food_price[];
+	MTImage background;
+	String food_name_m[], food_price_m[], food_explain_m[]; // food name, price, explain
+	int food_m[]; // food id
+	String explain_from_menu, name_from_menu;
+
+	
+	/* material */
+	MTComponent materialCom;
+	MTImageButton prev_to_food, next_to_last;
+	MTImageButton material_button[], change_button[];
+	//MTTextField name, explain;
+	//MTImage selected_food, translate;
+	int material_id[];
+	int change[];
+	//String nation;
+	translator tr;
+	String material_name[], material_explain[];
+	String change_name[], change_explain[];
+	int selected_material_id;
+	int selected_change_id;
+
+
+	/* last */
+	translator tr2;
+	MTComponent lastCom;
+	MTImage last_image;
+	MTImageButton go_to_first;
+	MTTextField last_text;
+	
+	
+	
+	Socket socket;
+	ObjectInputStream in;
+	ObjectOutputStream out;
+	
+	User user;
+	Food food;
+	ArrayList<Food> recommand_food;
+	ArrayList<Food> menu_food;
+	int position;
+	Material material;
+	Food food_o;
+	
+	
+	
+	
+	
+	private static final String serverIP = "127.0.0.1";
+	private static final int serverPort = 9286;
+	
+	
+	public view(AbstractMTApplication mtAppl, String table_name) {
+		super(mtAppl, table_name);
+		this.app = mtAppl;
+		mtCom = new MTComponent(app, "view", new MTCamera(app));
+		this.setClearColor(new MTColor(255,255,255,255)); 
+		
+		
+		
+	
+		
+		try {
+			socket = new Socket(serverIP, serverPort);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		food1 = 1;
+		food2 = 2;
+		food3 = 3;
+		food1_name = "비빔밥1";
+		food2_name = "불고기덮밥1";
+		food3_name = "춘천닭갈비1";
+		food1_explain = "비빔밥인데1";
+		food2_explain = "이건 소고기덮밥1";
+		food3_explain = "춘천닭갈비도 있음1";
+		food1_price = "6000";
+		food2_price = "7000";
+		food3_price = "9000";
+		/*
+		nation = "kr";
+		
+		food_name_m = new String[10]; 
+		food_price_m = new String[10]; 
+		food_explain_m = new String[10];
+		food_m = new int[10];
+		food_name_m[0] = "�����";
+		food_name_m[1] = "�Ұ�ⵤ��";
+		food_name_m[2] = "��õ�߰���";
+		food_name_m[3] = "�δ��";
+		food_name_m[4] = "�����";
+		food_name_m[5] = "�ع�����";
+		food_name_m[6] = "�ع���";
+		food_name_m[7] = "�ż���";
+		food_name_m[8] = "ȭ����";
+		food_name_m[9] = "���߶�����";
+		food_price_m[0] = "6000";
+		food_price_m[1] = "7000";
+		food_price_m[2] = "9000";
+		food_price_m[3] = "8000";
+		food_price_m[4] = "10000";
+		food_price_m[5] = "8000";
+		food_price_m[6] = "15000";
+		food_price_m[7] = "13000";
+		food_price_m[8] = "10000";
+		food_price_m[9] = "6000";
+		food_explain_m[0] = "�ҹ信 ��⺺��, ���� ���� �� ������ ����� �ø��� �����忡 �� �Դ� �����̴�. �پ��� ��ö ���� ���⸧�� ÷���ϸ� ���� ���ִ�.";
+		food_explain_m[1] = "���� ����忡 ��� �Ұ�⸦ ���� �� �� ���� ��� �Դ� �����̴�. �Ұ�⿡ ä�Ҹ� �˳��� �ְ� ������ �����ϰ� ������ ���� �� �Ա⿡ ����.";
+		food_explain_m[2] = "�߰�⸦ ������ ����忡 ����ٰ� �̰߰� �ޱ� �ҿ� �⸧�� �θ��� �����, ����, ���, ���� �Բ� ���� �Դ� ������ ��õ�� ���� �����̴�.";
+		food_explain_m[3] = "�ܰ� �ҽ����� ������ �Ͽ� ��ġ, �������, �κ� ���� �ѵ� �ְ� ������ �ξ� ��ū�ϰ� ���� �����̴�. ����� �־� �Ա⵵ �Ѵ�.";
+		food_explain_m[4] = "� ���� �� �ӿ� �λ�, ����, ��, ����, ���� ���� �ְ� ǫ ��� ���� �����̴�. �߰��� �λ��� ��ȭ�� �̷� �������� ����ö ������̴�.";
+		food_explain_m[5] = "�а��� ���׿� ���߱����ϰ� �� ���Ŀ� ��¡��, ����, ������, �� ���� �־� ��ģ ����. �ʰ����� ��鿩 ��� �Դ´�.";
+		food_explain_m[6] = "����, ��¡��, �ɰ�, ������ �� �̽��� ��ö �ع��� �ᳪ��, �̳��� ���� ��� �ſ� ������� �־� �����ϰ� ���� �����̴�.";
+		food_explain_m[7] = "��� ������ ��� ���� �ִ� �ż��ζ�� ���⿡ ���� �ػ깰, ä�� ���� �ѷ� ��� ������ �ξ� �Ｎ���� ���� �Դ� ������ ��ǥ���� ���������̴�.";
+		food_explain_m[8] = "������, ����, ���, ����, �� ���� ��¦ ���� ���� ���� ���� ��ġ�� ��� �⸧�� ��ģ �������� �߼� �� ���� �Դ´�. ȭ���� �������� �ǹ��Ѵ�.";
+		food_explain_m[9] = "�������� ������ ũ��� �߶� ����� ǥ�����, ����, ��� ���� �ְ� ���ٰ� ����, ���� ���� �־� ���� �������� ���߿��� �Դ� �����̴�.";
+		food_m[0] = 1;
+		food_m[1] = 2;
+		food_m[2] = 3;
+		food_m[3] = 4;
+		food_m[4] = 5;
+		food_m[5] = 6;
+		food_m[6] = 7;
+		food_m[7] = 8;
+		food_m[8] = 9;
+		food_m[9] = 10;
+		
+		//selected_food_id = 1;
+		tr = new translator();
+		material_id = new int[6];
+		material_id[0] = 1;
+		material_id[1] = 2;
+		material_id[2] = 3;
+		material_id[3] = 4;
+		material_id[4] = 5;
+		material_id[5] = 6;
+		change = new int[6];
+		change[0] = 1;
+		change[1] = 2;
+		change[2] = 3;
+		change[3] = 4;
+		change[4] = 5;
+		change[5] = 6;
+		material_name = new String[6];
+		material_name[0] = "�Ұ��";
+		material_name[1] = "�ް�";
+		material_name[2] = "�ᳪ��";
+		material_name[3] = "�ñ�ġ";
+		material_name[4] = "��縮";
+		material_name[5] = "���";
+		material_explain = new String[6];
+		material_explain[0] = "������ ��ĥ���� ���� ��ܹ��� �����ǰ�̴�.";
+		material_explain[1] = "���ο� ������ Ű�� ���� ������� ��� ���߰� �ִ� �Ϻ��� ��ǰ�̴�.";
+		material_explain[2] = "�ƽ��Ķ���� �����Ͽ� �Ƿ� ȸ�� �� ���� ���ſ� ���� ��ǰ�̴�.";
+		material_explain[3] = "��Ÿ�� A�� ä�� �߿��� ���� ���� ��Ÿ�� C�� Į��, ö���� ǳ���� ��ǰ���� ��â �ڶ󳪴� ���̵�� �ӻ�ο��� ����.";
+		material_explain[4] = "���̼����Ұ� ǳ���Ͽ� �躯Ȱ���� ���� �곪���̴�.";
+		material_explain[5] = "�÷� ���� ȿ���� �ְ�, ���� �����ϸ� ����ϴ�.";
+		change_name = new String[6];
+		change_name[0] = "�Ұ��";
+		change_name[1] = "�ް�";
+		change_name[2] = "�ᳪ��";
+		change_name[3] = "�ñ�ġ";
+		change_name[4] = "��縮";
+		change_name[5] = "���";
+		change_explain = new String[6];
+		change_explain[0] = "������ ��ĥ���� ���� ��ܹ��� �����ǰ�̴�.";
+		change_explain[1] = "���ο� ������ Ű�� ���� ������� ��� ���߰� �ִ� �Ϻ��� ��ǰ�̴�.";
+		change_explain[2] = "�ƽ��Ķ���� �����Ͽ� �Ƿ� ȸ�� �� ���� ���ſ� ���� ��ǰ�̴�.";
+		change_explain[3] = "��Ÿ�� A�� ä�� �߿��� ���� ���� ��Ÿ�� C�� Į��, ö���� ǳ���� ��ǰ���� ��â �ڶ󳪴� ���̵�� �ӻ�ο��� ����.";
+		change_explain[4] = "���̼����Ұ� ǳ���Ͽ� �躯Ȱ���� ���� �곪���̴�.";
+		change_explain[5] = "�÷� ���� ȿ���� �ְ�, ���� �����ϸ� ����ϴ�.";
+		
+		tr2 = new translator();
+		*/
+		
+		this.socket = socket;
+		
+		
+		//first();
+		
+		food(selected_food_id, explain_from_menu, name_from_menu);
+		
+		//menu();
+		
+		//if(table_name.equals("1-3")) {
+		//	material();
+		//}
+		
+		
+		//last();
+		
+		
+		
+		this.getCanvas().addChild(mtCom);
+		
+		if(table_name.equals("1-1")) {
+			setUpNetworking();
+			Thread readerThread = new Thread(new Reader());
+			readerThread.start(); 
+		}
+	    //food(selected_food_id, explain_from_menu, name_from_menu);
+	}
+	
+	public void first() {
+		firstCom = new MTComponent(app, "first", new MTCamera(app));
+		
+		first_image = new MTImage(app, app.loadImage("greenlight/pictures/etc/main.png")); 
+		first_image.setSizeXYGlobal(app.width, app.height); 
+		first_image.setPickable(false); 
+		first_image.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2)); 
+						
+		firstCom.addChild(first_image); 
+		mtCom.addChild(firstCom);
+	}
+	
+	public void food(int selected_food_id, String explain_from_menu, String name_from_menu) {
+		this.selected_food_id = selected_food_id;
+		
+		//firstCom.destroy();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
+		System.out.println(food1_name);
+		System.out.println(food2_name);
+		System.out.println(food3_name);
+		System.out.println(food1);
+		
+		foodCom = new MTComponent(app, "food", new MTCamera(app));
+		
+		GLTexture gl = new GLTexture(app);
+		
+		gl.updatePImageFromGLTexture();
+		gl.updateGLTextureFromPImage();
+		gl.updateGLTexture((IntBuffer)food_button1);
+		
+		food_button1 = new MTImageButton(app, app.loadImage("greenlight/pictures/food/"+food1+".PNG")); 
+		food_button1.setName("food_button1");
+		food_button1.setSizeXYGlobal(app.width/5, app.width/5);
+		food_button1.setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/2.5f));
+		foodCom.addChild(food_button1);
+		System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+		System.out.println(food1);
+		
+		food_button2 = new MTImageButton(app, app.loadImage("greenlight/pictures/food/"+food2+".PNG")); 
+		food_button2.setName("food_button2");
+		food_button2.setSizeXYGlobal(app.width/5, app.width/5);
+		food_button2.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2.5f)); 
+		foodCom.addChild(food_button2); 
+		
+		
+		food_button3 = new MTImageButton(app, app.loadImage("greenlight/pictures/food/"+food3+".PNG")); 
+		food_button3.setName("food_button3");
+		food_button3.setSizeXYGlobal(app.width/5, app.width/5); 
+		food_button3.setPositionGlobal(new Vector3D(app.width-app.width/4.5f, app.height-app.height/2.5f));
+		foodCom.addChild(food_button3); 
+
+		
+		prev_to_main = new MTImageButton(app, app.loadImage("greenlight/pictures/etc/left_btn.png"));
+		prev_to_main.setSizeXYGlobal(app.width/10, app.width/10);
+		prev_to_main.setPositionGlobal(new Vector3D(app.width-app.width/1.07f, app.height-app.height/1.13f));
+		foodCom.addChild(prev_to_main);
+		
+		
+		next_to_material = new MTImageButton(app, app.loadImage("greenlight/pictures/etc/right_btn.png"));
+		next_to_material.setSizeXYGlobal(app.width/10, app.width/10);
+		next_to_material.setPositionGlobal(new Vector3D(app.width-app.width/15f, app.height-app.height/1.13f));
+		foodCom.addChild(next_to_material);
+		
+		
+		menu_button = new MTImageButton(app, app.loadImage("greenlight/pictures/etc/menu_btn.png"));
+		menu_button.setSizeXYGlobal(app.width/10, app.height/15);
+		menu_button.setPositionGlobal(new Vector3D(app.width-app.width/15f, app.height-app.height/1.35f));
+		foodCom.addChild(menu_button);
+		
+		
+		if(selected_food_id==0)
+			selected_food = new MTImage(app, app.loadImage("greenlight/pictures/etc/food_img.png"));
+		else
+			selected_food = new MTImage(app, app.loadImage("greenlight/pictures/food/"+selected_food_id+".PNG"));
+		selected_food.setPickable(false);
+		selected_food.setSizeXYGlobal(app.width/5, app.width/5);
+		selected_food.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/1.25f));
+		foodCom.addChild(selected_food);
+		
+		
+		translate = new MTImage(app, app.loadImage("greenlight/pictures/etc/translate_img.png"));
+		translate.setPickable(false);
+		translate.setSizeXYGlobal(app.width, app.height/6); 
+		translate.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/10f)); 
+		foodCom.addChild(translate); 
+		
+		
+		name = new MTTextField(50, 920, app.width/1.05f, 50, FontManager.getInstance().createFont(app, "SansSerif", 30), app);
+		name.setFillColor(new MTColor(215,228,189,255));
+		name.setStrokeColor(new MTColor(215,228,189,255));
+		name.setPickable(false);
+		if(name_from_menu!=null) {
+			name.setText(name_from_menu);
+			foodCom.addChild(name);
+		}
+		
+		
+		explain = new MTTextField(50, 980, app.width/1.05f, 50, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		explain.setFillColor(new MTColor(215,228,189,255));
+		explain.setStrokeColor(new MTColor(215,228,189,255));
+		explain.setPickable(false);
+		if(explain_from_menu!=null) {
+			explain.setText(explain_from_menu);
+			foodCom.addChild(explain);
+		}
+		
+		
+		food_name1 = new MTTextField(400, 420, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		food_name1.setPickable(false);
+		food_name1.setText(food1_name);
+		foodCom.addChild(food_name1);
+		
+	
+		food_name2 = new MTTextField(890, 420, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name2.setPickable(false);
+		food_name2.setText(food2_name);
+		foodCom.addChild(food_name2);
+		
+		
+		food_name3 = new MTTextField(1430, 420, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name3.setPickable(false);
+		food_name3.setText(food3_name);
+		foodCom.addChild(food_name3);
+		
+		
+		food_price1 = new MTTextField(400, 845, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_price1.setPickable(false);
+		food_price1.setText(food1_price);
+		food_price1.setFontColor(new MTColor(97, 143, 252, 255));
+		foodCom.addChild(food_price1);
+		
+		
+		food_price2 = new MTTextField(900, 845, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		food_price2.setPickable(false);
+		food_price2.setText(food2_price);
+		food_price2.setFontColor(new MTColor(97, 143, 252, 255));
+		foodCom.addChild(food_price2);
+		
+		
+		food_price3 = new MTTextField(1450, 845, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		food_price3.setPickable(false);
+		food_price3.setText(food3_price);
+		food_price3.setFontColor(new MTColor(97, 143, 252, 255));
+		foodCom.addChild(food_price3);
+		
+		food_button1.addGestureListener(TapProcessor.class, new foodButtonListener());
+		food_button2.addGestureListener(TapProcessor.class, new foodButtonListener());
+		food_button3.addGestureListener(TapProcessor.class, new foodButtonListener());
+		
+		prev_to_main.addGestureListener(TapProcessor.class, new prevToMainListener());
+		
+		next_to_material.addGestureListener(TapProcessor.class, new nextToMaterialListener());
+		
+		menu_button.addGestureListener(TapProcessor.class, new menuButtonListener());
+		
+		mtCom.addChild(foodCom);
+		
+		app.invalidate();
+		app.repaint();
+	}
+	
+	class foodButtonListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				selected_food.destroy();
+				
+				String food_button_name = te.getTarget().toString().split(" ")[0];
+				if(food_button_name.equals("\""+food_button1.getName()+"\"")) {
+					name_from_menu = food1_name;
+					explain_from_menu = food1_explain; 
+					selected_food = new MTImage(app, app.loadImage("greenlight/pictures/food/"+food1+".PNG"));
+					selected_food_id = food1;
+				} else if(food_button_name.equals("\""+food_button2.getName()+"\"")) {
+					name_from_menu = food2_name;
+					explain_from_menu = food2_explain;
+					selected_food = new MTImage(app, app.loadImage("greenlight/pictures/food/"+food2+".PNG"));
+					selected_food_id = food2;
+				} else if(food_button_name.equals("\""+food_button3.getName()+"\"")) {
+					name_from_menu = food3_name;
+					explain_from_menu = food3_explain;
+					selected_food = new MTImage(app, app.loadImage("greenlight/pictures/food/"+food3+".PNG"));
+					selected_food_id = food3;
+				}
+				name.setText(name_from_menu);
+				explain.setText(explain_from_menu);
+				selected_food.setPickable(false);
+				selected_food.setSizeXYGlobal(app.width/5, app.width/5); 
+				selected_food.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/1.25f)); 
+				foodCom.addChild(name);
+				foodCom.addChild(explain);
+				foodCom.addChild(selected_food); 
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	class prevToMainListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				foodCom.destroy();
+				selected_food_id = 0;
+				first();
+				mtCom.addChild(firstCom);
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	class nextToMaterialListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				
+				if(selected_food_id!=0) {
+					foodCom.destroy();
+					material();
+					mtCom.addChild(materialCom);
+					app.invalidate();
+					app.repaint();
+				}
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	class menuButtonListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				foodCom.destroy();
+				menu();
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	public void menu() {
+		menuCom = new MTComponent(app, "menu", new MTCamera(app));
+		
+		food_image = new MTImageButton[10];
+		food_name = new MTTextField[10];
+		food_price = new MTTextField[10];
+		
+		background = new MTImage(app, app.loadImage("greenlight/pictures/etc/menu.png")); 
+		background.setSizeXYGlobal(app.width, app.height);
+		background.setPickable(false);
+		background.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2)); 
+		menuCom.addChild(background);
+		
+		exit_button = new MTImageButton(app, app.loadImage("greenlight/pictures/etc/menu_exit.png")); 
+		exit_button.setSizeXYGlobal(app.width/20, app.width/20);
+		exit_button.setPositionGlobal(new Vector3D(app.width-app.width/20.1f, app.height-app.height/1.1f)); 
+		menuCom.addChild(exit_button);
+		
+		for(int i=0; i<10; i++) {
+			food_image[i] = new MTImageButton(app, app.loadImage("greenlight/pictures/food/"+food_m[i]+".PNG"));
+			food_image[i].setSizeXYGlobal(app.width/6.5f, app.width/6.5f);
+		}
+		
+		food_image[0].setPositionGlobal(new Vector3D(app.width-app.width/1.12f, app.height-app.height/1.7f));
+		food_image[1].setPositionGlobal(new Vector3D(app.width-app.width/1.435f, app.height-app.height/1.7f));
+		food_image[2].setPositionGlobal(new Vector3D(app.width-app.width/2f, app.height-app.height/1.7f));
+		food_image[3].setPositionGlobal(new Vector3D(app.width-app.width/3.3f, app.height-app.height/1.7f));
+		food_image[4].setPositionGlobal(new Vector3D(app.width-app.width/9.3f, app.height-app.height/1.7f));
+		food_image[5].setPositionGlobal(new Vector3D(app.width-app.width/1.12f, app.height-app.height/4.75f));
+		food_image[6].setPositionGlobal(new Vector3D(app.width-app.width/1.435f, app.height-app.height/4.75f));
+		food_image[7].setPositionGlobal(new Vector3D(app.width-app.width/2f, app.height-app.height/4.75f));
+		food_image[8].setPositionGlobal(new Vector3D(app.width-app.width/3.3f, app.height-app.height/4.75f));
+		food_image[9].setPositionGlobal(new Vector3D(app.width-app.width/9.3f, app.height-app.height/4.75f));		
+		
+		food_name[0] = new MTTextField(150, 250, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[1] = new MTTextField(520, 250, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[2] = new MTTextField(890, 250, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[3] = new MTTextField(1270, 250, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[4] = new MTTextField(1650, 250, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		food_name[5] = new MTTextField(150, 660, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[6] = new MTTextField(520, 660, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[7] = new MTTextField(890, 660, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[8] = new MTTextField(1270, 660, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_name[9] = new MTTextField(1650, 660, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		
+		food_price[0] = new MTTextField(160, 600, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_price[1] = new MTTextField(545, 600, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_price[2] = new MTTextField(925, 600, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_price[3] = new MTTextField(1300, 600, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_price[4] = new MTTextField(1660, 600, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_price[5] = new MTTextField(160, 1010, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		food_price[6] = new MTTextField(535, 1010, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		food_price[7] = new MTTextField(915, 1010, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app); 
+		food_price[8] = new MTTextField(1290, 1010, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		food_price[9] = new MTTextField(1680, 1010, app.width/5f, 30, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+
+		for(int i=0; i<10; i++) {
+			food_image[i].setName("food_image"+i);	
+			
+			food_name[i].setPickable(false);
+			food_name[i].setText(food_name_m[i]);
+			
+			food_price[i].setFontColor(new MTColor(97, 143, 252));
+			food_price[i].setPickable(false);
+			food_price[i].setText(food_price_m[i]);
+		}
+		
+		for(int i=0; i<10; i++) {
+			food_image[i].addGestureListener(TapProcessor.class, new menuFoodButtonListener());
+			
+			menuCom.addChild(food_image[i]);
+			menuCom.addChild(food_name[i]);
+			menuCom.addChild(food_price[i]);
+		}
+		
+		exit_button.addGestureListener(TapProcessor.class, new exitButtonListener());
+		
+		mtCom.addChild(menuCom);
+	}
+	
+	class exitButtonListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				menuCom.destroy();
+				
+				food(selected_food_id, explain_from_menu, name_from_menu);
+				
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	class menuFoodButtonListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				menuCom.destroy();
+				
+				String food_button_name = te.getTarget().toString().split(" ")[0];
+				for(int i=0; i<10; i++) {
+					if(food_button_name.equals("\""+food_image[i].getName()+"\"")) {
+						selected_food_id = i+1;
+						System.out.println(selected_food_id);
+						System.out.println(food_button_name);
+						System.out.println("\""+food_image[i].getName()+"\"");
+						explain_from_menu = food_explain_m[i];
+						name_from_menu = food_name_m[i];
+					}
+				}
+				
+				
+				food(selected_food_id, explain_from_menu, name_from_menu);
+				
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	public void material() {
+		materialCom = new MTComponent(app, "material", new MTCamera(app));
+		
+		material_button = new MTImageButton[6];
+		change_button = new MTImageButton[6];
+		
+		
+		selected_food = new MTImage(app, app.loadImage("greenlight/pictures/food/"+selected_food_id+".PNG"));
+		selected_food.setPickable(false);
+		selected_food.setSizeXYGlobal(app.width/4.5f, app.width/4.5f); 
+		selected_food.setPositionGlobal(new Vector3D(app.width-app.width/1.7f, app.height-app.height/1.7f)); 
+		materialCom.addChild(selected_food); 
+		
+		
+		for(int i=0; i<6; i++) {
+			material_button[i] = new MTImageButton(app, app.loadImage("greenlight/pictures/material/"+material_id[i]+".png"));
+			material_button[i].setSizeXYGlobal(app.width/10, app.width/10);
+			material_button[i].setName("material_button"+i);
+		}
+		
+		material_button[0].setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/1.25f)); 
+		material_button[1].setPositionGlobal(new Vector3D(app.width-app.width/1.2f, app.height-app.height/1.7f)); 
+		material_button[2].setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/2.7f)); 
+		material_button[3].setPositionGlobal(new Vector3D(app.width-app.width/2.5f, app.height-app.height/2.7f)); 
+		material_button[4].setPositionGlobal(new Vector3D(app.width-app.width/2.9f, app.height-app.height/1.7f)); 
+		material_button[5].setPositionGlobal(new Vector3D(app.width-app.width/2.5f, app.height-app.height/1.25f)); 
+		for(int i=0; i<6; i++){
+			materialCom.addChild(material_button[i]);
+		}
+		
+	
+		prev_to_food = new MTImageButton(app, app.loadImage("greenlight/pictures/etc/left_btn.png"));
+		prev_to_food.setSizeXYGlobal(app.width/10, app.width/10);
+		prev_to_food.setPositionGlobal(new Vector3D(app.width-app.width/1.07f, app.height-app.height/1.13f));
+		materialCom.addChild(prev_to_food);
+		
+		
+		next_to_last = new MTImageButton(app, app.loadImage("greenlight/pictures/etc/right_btn.png"));
+		next_to_last.setSizeXYGlobal(app.width/10, app.width/10);
+		next_to_last.setPositionGlobal(new Vector3D(app.width-app.width/15f, app.height-app.height/1.13f));
+		materialCom.addChild(next_to_last);
+		
+		
+		translate = new MTImage(app, app.loadImage("greenlight/pictures/etc/translate_img.png"));
+		translate.setPickable(false);
+		translate.setSizeXYGlobal(app.width, app.height/6);
+		translate.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/10f));
+		materialCom.addChild(translate);
+		
+		
+		name = new MTTextField(50, 920, app.width/1.05f, 50, FontManager.getInstance().createFont(app, "SansSerif", 30), app); 
+		name.setFillColor(new MTColor(215,228,189,255));
+		name.setStrokeColor(new MTColor(215,228,189,255));
+		name.setPickable(false);
+		
+	
+		explain = new MTTextField(50, 980, app.width/1.05f, 50, FontManager.getInstance().createFont(app, "SansSerif", 25), app);
+		explain.setFillColor(new MTColor(215,228,189,255));
+		explain.setStrokeColor(new MTColor(215,228,189,255));
+		explain.setPickable(false);
+		
+		for(int i=0; i<6; i++) {
+			material_button[i].addGestureListener(TapProcessor.class, new materialButtonListener());
+		}
+		
+		prev_to_food.addGestureListener(TapProcessor.class, new prevToFoodListener());
+		next_to_last.addGestureListener(TapProcessor.class, new nextToLastListener());
+		
+	}
+	
+	class nextToLastListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				materialCom.destroy();
+				last();
+				mtCom.addChild(lastCom);
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	class prevToFoodListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				materialCom.destroy();
+				for(int i=0; i<6; i++) {
+					material_id[i] = change[i];
+				}
+				selected_material_id = 0;
+				selected_change_id = 0;
+				food(selected_food_id, food_explain_m[selected_food_id-1], food_name_m[selected_food_id-1]);
+				mtCom.addChild(foodCom);
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	class materialButtonListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+		
+	
+				if(selected_material_id != 0) {
+					for(int i=0; i<6; i++) {
+						change_button[i].destroy();
+					}
+				}
+				
+	
+				String material_button_name = te.getTarget().toString().split(" ")[0];
+				for(int i=0; i<6; i++) {
+					if(material_button_name.equals("\""+material_button[i].getName()+"\"")) {
+						name.setText(tr.translating(material_name[i], nation)); 
+						explain.setText(tr.translating(material_explain[i], nation)); 
+						selected_material_id = i+1;
+					
+					}
+				}
+				
+
+				for(int i=0; i<6; i++) {
+					change_button[i] = new MTImageButton(app, app.loadImage("greenlight/pictures/material/"+change[i]+".png"));
+					change_button[i].setSizeXYGlobal(app.width/11, app.width/11); 
+					change_button[i].setName("change_button"+i);
+				}
+				change_button[0].setPositionGlobal(new Vector3D(app.width-app.width/5f, app.height-app.height/1.5f)); 
+				change_button[1].setPositionGlobal(new Vector3D(app.width-app.width/9.5f, app.height-app.height/1.5f));
+				change_button[2].setPositionGlobal(new Vector3D(app.width-app.width/5f, app.height-app.height/2f)); 
+				change_button[3].setPositionGlobal(new Vector3D(app.width-app.width/9.5f, app.height-app.height/2f)); 
+				change_button[4].setPositionGlobal(new Vector3D(app.width-app.width/5f, app.height-app.height/3f)); 
+				change_button[5].setPositionGlobal(new Vector3D(app.width-app.width/9.5f, app.height-app.height/3f)); 
+				for(int i=0; i<6; i++){
+					materialCom.addChild(change_button[i]);
+				}
+				
+				for(int i=0; i<6; i++) {
+					change_button[i].addGestureListener(TapProcessor.class, new changeButtonListener());
+				}
+				
+				materialCom.addChild(name);
+				materialCom.addChild(explain);
+				
+				mtCom.addChild(materialCom);
+				
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	class changeButtonListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				
+			
+				String change_button_name = te.getTarget().toString().split(" ")[0];
+				for(int i=0; i<6; i++) {
+					if(change_button_name.equals("\""+change_button[i].getName()+"\"")) {
+						name.setText(tr.translating(change_name[i], nation)); 
+						explain.setText(tr.translating(change_explain[i], nation)); 
+						selected_change_id = i+1;
+						
+					}
+				}
+				
+				material_button[selected_material_id-1].destroy();
+				
+				for(int i=0; i<6; i++)
+					change_button[i].destroy();
+				
+				material_button[selected_material_id-1] = new MTImageButton(app, app.loadImage("greenlight/pictures/material/"+change[selected_change_id-1]+".png"));
+				material_button[selected_material_id-1].setSizeXYGlobal(app.width/10, app.width/10);
+				material_button[selected_material_id-1].setName("material_button"+(selected_material_id-1));
+				material_name[selected_material_id-1] = change_name[selected_change_id-1];
+				material_explain[selected_material_id-1] = change_explain[selected_change_id-1];
+				material_id[selected_material_id-1] = change[selected_change_id-1];
+				material_button[selected_material_id-1].addGestureListener(TapProcessor.class, new materialButtonListener());
+				
+				if(selected_material_id-1 == 0)
+					material_button[0].setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/1.25f)); 
+				if(selected_material_id-1 == 1)
+					material_button[1].setPositionGlobal(new Vector3D(app.width-app.width/1.2f, app.height-app.height/1.7f)); 
+				if(selected_material_id-1 == 2)
+					material_button[2].setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/2.7f)); 
+				if(selected_material_id-1 == 3)
+					material_button[3].setPositionGlobal(new Vector3D(app.width-app.width/2.5f, app.height-app.height/2.7f));
+				if(selected_material_id-1 == 4)
+					material_button[4].setPositionGlobal(new Vector3D(app.width-app.width/2.9f, app.height-app.height/1.7f)); 
+				if(selected_material_id-1 == 5)
+					material_button[5].setPositionGlobal(new Vector3D(app.width-app.width/2.5f, app.height-app.height/1.25f));
+				
+				materialCom.addChild(material_button[selected_material_id-1]);
+				materialCom.addChild(name);
+				materialCom.addChild(explain);
+				
+				mtCom.addChild(materialCom);
+				
+				app.invalidate();
+				app.repaint();
+	
+				break;
+				default : 
+					break;
+			}
+			
+			return true;
+		}
+	}
+	
+	public void last() {
+		lastCom = new MTComponent(app, "last", new MTCamera(app));
+		
+		last_image = new MTImage(app, app.loadImage("greenlight/pictures/etc/last.png")); 
+		last_image.setSizeXYGlobal(app.width, app.height); 
+		last_image.setPickable(false); 
+		last_image.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2)); 
+		lastCom.addChild(last_image);
+		
+		last_text = new MTTextField(290, 800, app.width/1.2f, 100, FontManager.getInstance().createFont(app, "SansSerif", 70), app); 
+		last_text.setPickable(false);
+		last_text.setText(tr2.translating("식사가 나올 때 까지 기다려주세요.", nation));
+		lastCom.addChild(last_text);
+		
+		go_to_first = new MTImageButton(app, app.loadImage("greenlight/pictures/etc/go_to_first.png"));
+		go_to_first.setSizeXYGlobal(app.width/17, app.width/17);
+		go_to_first.setPositionGlobal(new Vector3D(app.width-app.width/18f, app.height-app.height/10f));
+		lastCom.addChild(go_to_first);
+		
+		go_to_first.addGestureListener(TapProcessor.class, new goToMainListener());
+		
+		mtCom.addChild(lastCom); 
+	}
+	
+	class goToMainListener implements IGestureEventListener {
+		public boolean processGestureEvent(MTGestureEvent ge) {
+			TapEvent te = (TapEvent)ge;
+			switch(te.getTapID()) {
+			case TapEvent.TAPPED:
+				lastCom.destroy();
+				selected_food_id = 0;
+				
+				first();
+				mtCom.addChild(firstCom);
+				app.invalidate();
+				app.repaint();
+				
+				break;
+				default : 
+					break;
+			}
+			return true;
+		}
+	}
+	
+	
+	
+	
+	/******** hong min ha **********/
+	
+	private void setUpNetworking(){
+		try{
+			in = new ObjectInputStream(socket.getInputStream());
+			//ByteArrayInputStream ins = new ByteArrayInputStream(store.getBytes("UTF-8"));
+		    //ObjectInputStream in = new ObjectInputStream(ins);
+	        out = new ObjectOutputStream(socket.getOutputStream());
+		}catch (Exception e) {
+			System.out.println("E1: " + e.getMessage());
+			e.printStackTrace();
+		}finally{
+	         
+		}
+	}
+	
+	public class Reader implements Runnable{
+		public void run(){
+			try{
+				while(true){
+					Map<String, Object> map = (Map<String, Object>) in.readObject();
+					Map<String, Object> innerMap = new HashMap<String, Object>();
+					Set key = map.keySet();
+					for(Iterator iterator=key.iterator();iterator.hasNext();){
+						String keyName = (String)iterator.next();
+						if(keyName.equals("food")){
+							innerMap = (Map<String, Object>)map.get("food");
+							user = (User)innerMap.get("USER");
+							recommand_food = (ArrayList<Food>)innerMap.get("recommand_food");
+							menu_food = (ArrayList<Food>)innerMap.get("menu_food");
+							ProcessingFood(user, recommand_food, menu_food);
+						}/* else if (keyName.equals("selected_food")) {
+							innerMap = (Map<String, Object>)map.get("selected_food");
+							user = (User)innerMap.get("USER");
+							food = (Food)innerMap.get("FOOD");
+							ProcessingSelectedFood(user, food);
+						} else if (keyName.equals("prevBtn_to_main")) {
+							innerMap = (Map<String, Object>)map.get("prevBtn_to_main");
+							user = (User)innerMap.get("USER");
+							ProcessingPrevBtnToMain(user);
+						} else if (keyName.equals("menuBtn")) {
+							innerMap = (Map<String, Object>)map.get("menuBtn");
+							user = (User)innerMap.get("USER");
+							ProcessingMenuBtn();
+						} else if (keyName.equals("nextBtn_to_material")) {
+							innerMap = (Map<String, Object>)map.get("nextBtn_to_material");
+							user = (User)innerMap.get("USER");
+							food = (Food)innerMap.get("FOOD");
+							food_o = (Food)innerMap.get("FOOD_O");
+							ProcessingNextBtnToMaterial(user, food, food_o);
+							break;
+						} else if (keyName.equals("selected_material")) {
+							innerMap = (Map<String, Object>)map.get("selected_material");
+							user = (User)innerMap.get("USER");
+							position = (Integer) innerMap.get("position");
+							material = (Material)innerMap.get("MATERIAL");
+							ProcessingSelectedMaterial(user, position, material);
+							break;
+						} else if (keyName.equals("prevBtn_to_food")) {
+							innerMap = (Map<String, Object>)map.get("prevBtn_to_food");
+							user = (User)innerMap.get("USER");
+							food = (Food)innerMap.get("FOOD");
+							ProcessingPrevBtnToFood();
+							break;
+						} else if (keyName.equals("nextBtn_to_last")) {
+							innerMap = (Map<String, Object>)map.get("nextBtn_to_last");
+							user = (User)innerMap.get("USER");
+							food = (Food)innerMap.get("FOOD");
+							ProcessingNextBtnToLast();
+							break;
+						}*/
+					}
+				}
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public void ProcessingFood(User user, ArrayList<Food> recommand_food, ArrayList<Food> menu_food){
+		tableNum = user.getTableNum();
+		user_id = user.getId();
+		
+		food1 = recommand_food.get(0).getId();
+		food1_name = recommand_food.get(0).getName();
+		food1_explain = recommand_food.get(0).getExplain();
+		food1_price = recommand_food.get(0).getPrice();
+		food2 = recommand_food.get(1).getId();
+		food2_name = recommand_food.get(1).getName();
+		food2_explain = recommand_food.get(1).getExplain();
+		food2_price = recommand_food.get(1).getPrice();
+		food3 = recommand_food.get(2).getId();
+		food3_name = recommand_food.get(2).getName();
+		food3_explain = recommand_food.get(2).getExplain();
+		food3_price = recommand_food.get(2).getPrice();
+		
+		/*
+		food1 = 1;
+		food2 = 2;
+		food3 = 3;
+		food1_name = "�����";
+		food2_name = "�Ұ�ⵤ��";
+		food3_name = "��õ�߰���";
+		food1_explain = "�ҹ信 ��⺺��, ���� ���� �� ������ ����� �ø��� �����忡 �� �Դ� �����̴�. �پ��� ��ö ���� ���⸧�� ÷���ϸ� ���� ���ִ�.";
+		food2_explain = "���� ����忡 ��� �Ұ�⸦ ���� �� �� ���� ��� �Դ� �����̴�. �Ұ�⿡ ä�Ҹ� �˳��� �ְ� ������ �����ϰ� ������ ���� �� �Ա⿡ ����.";
+		food3_explain = "�߰�⸦ ������ ����忡 ����ٰ� �̰߰� �ޱ� �ҿ� �⸧�� �θ��� �����, ����, ���, ���� �Բ� ���� �Դ� ������ ��õ�� ���� �����̴�.";
+		food1_price = "6000";
+		food2_price = "7000";
+		food3_price = "9000";
+		*/
+		/*
+		int[] food_m = {0};
+		String[] food_name_m = {""};
+		String[] food_explain_m = {""};
+		String[] food_price_m = {""};
+		for(int i=0; i<menu_food.size(); i++){
+			food_m[i] = menu_food.get(i).getId();
+			food_name_m[i] = menu_food.get(i).getName();
+			food_explain_m[i] = menu_food.get(i).getExplain();
+			food_price_m[i] = menu_food.get(i).getPrice();
+		}
+		*/
+		System.out.println("---------------------------------------------------------------------------------------------------------------------");
+		System.out.println(food2_name);
+		System.out.println(food3_name);
+		
+		food(selected_food_id, explain_from_menu, name_from_menu);
+	}
+/*
+	public void ProcessingSelectedFood(User user, Food food){
+		selected_food_id = food.getId();
+	}
+	
+	public void ProcessingPrevBtnToMain(User user){
+		
+	}
+	
+	public void ProcessingMenuBtn(){
+		
+	}
+	
+	public void ProcessingNextBtnToMaterial(User user, Food food, Food food_o){
+		
+		selected_food_id = food.getId();
+		material_id[] = {0};
+		material_name[] = {""};
+		material_explain[] = {""};
+		change[] = {0};
+		change_name[] = {""};
+		change_explain[] = {""};
+		
+		for(int i=0; i<6; i++){
+			material_id[i] = food.getId();
+			material_name[i] = food.getName();
+			material_explain[i] = food.getExplain();
+			change[i] = food_o.getId();
+			change_name[i] = food_o.getName();
+			change_explain[i] = food_o.getExplain();
+		}
+	}
+	
+	public void ProcessingSelectedMaterial(User user, int position, Material material){
+		selected_position = position;
+		material_id[] = {0};
+		material_name[] = {""};
+		material_explain[] = {""};
+		
+		for(int i=0; i<6; i++){
+			material_id[i] = food.getId();
+			material_name[i] = food.getName();
+			material_explain[i] = food.getExplain();
+		}
+	}
+	
+	
+	public void ProcessingPrevBtnToFood(){
+		selected_food_id = food.getId();
+		selected_food_name = food.getName();
+		selected_food_explain = food.getExplain();
+	}
+	
+	public void ProcessingNextBtnToLast(){
+		
+	}
+	*/
+}
+
+

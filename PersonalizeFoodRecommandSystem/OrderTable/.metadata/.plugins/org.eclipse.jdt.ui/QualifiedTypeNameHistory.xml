@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.awt.Container"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseMotionListener"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
+<fullyQualifiedTypeName name="org.mt4j.components.visibleComponents.widgets.MTImage"/>
+<fullyQualifiedTypeName name="processing.core.PApplet"/>
+<fullyQualifiedTypeName name="org.mt4j.components.MTComponent"/>
+<fullyQualifiedTypeName name="org.mt4j.MTApplication"/>
+<fullyQualifiedTypeName name="processing.core.PImage"/>
+<fullyQualifiedTypeName name="java.util.regex.PatternSyntaxException"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="db.user.UserMgr"/>
+<fullyQualifiedTypeName name="member.User"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="bean.UserBean"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="bean.Food"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="Recommand.MaterialRecommand"/>
+</qualifiedTypeNameHistroy>

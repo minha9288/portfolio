@@ -1,0 +1,119 @@
+/* ------ 일반 게시판 목록 ------- */
+.bbsInform {
+	margin-bottom:10px;
+	padding-left:12px;
+	background:url(../images/board/icon_list.gif) no-repeat 0 2px;
+	color:#3c6b05;
+}
+.boardList caption {
+	position:absolute;
+	overflow:hidden;	
+	width:1px;
+	height:1px;
+	top:auto;
+	text-indent:-9999%;	
+	font-size:0;
+	line-height:0;
+}	
+.boardList td, .boardList th {
+	padding:8px 4px 6px 4px;
+	border-bottom:1px solid #e8e8e8;
+}
+.boardList th {
+	color:#ffffff;
+	text-align:center;
+	font-weight:bold;
+	background:url(../images/board/bg_board_title.gif) no-repeat top center;
+	background-color:#fb6000;
+}
+.boardList th.first {
+	background:url(../images/board/bg_board_title.gif) no-repeat top left;
+}
+.boardList th.end {
+	background:url(../images/board/bg_board_title.gif) no-repeat top right;
+}
+.boardList .num, .boardList .date, .boardList .view {
+	font-size:0.92em;
+	text-align:center;
+	color:#626262;
+}
+.boardList .num {
+	width:35px;
+}
+.boardList .bbstitle {
+}
+.boardList .date {
+	width:55px;
+}
+.boardList .view {
+	width:45px;
+}
+.boardList .replyNum {
+	margin-left:10px;
+	color:#ff5300;
+}
+.boardList .replyNum strong {
+	font-weight:bold;
+}
+
+/* ---------- 갤러리 ------------- */
+.gallery {
+	margin-left:15px;
+}
+.gallery li {
+	float:left;
+	display:inline;
+	height:167px;
+	margin:0 30px 28px 30px;
+}
+.gallery li p {
+	margin:0 2px;
+	padding-top:9px;
+}
+.gallery li p .date {
+	font-size:0.92em;
+	color:#9b9b9b;
+}
+.gallery li a img {
+	border:4px solid #e3e3e3;
+}
+.gallery li a:hover img, .gallery li a:focus img {
+	border:4px solid #8be2df;
+}
+/* ------------------------------- */
+
+/* ------ 버튼/ 페이징 영역 ------ */
+
+.paging {
+	clear:both;
+	margin-top:5px;
+	text-align:center;
+}
+
+.paging .num a, .paging .num strong {
+	padding:5px 6px 5px 9px;
+	text-decoration:none;
+	background:url(../images/board/paging_bar.gif) no-repeat 0 7px;
+	color:#707070;
+	line-height:1.2em;
+}
+.paging .num a:hover, .paging .num a:focus {
+	color: #336666;
+}
+.paging .num  strong {
+	font-weight:bold;
+	color: #336666;
+}
+.paging .num .firstItem {
+	background-image:none;
+}
+.btnArea {
+	margin-top:12px;
+	text-align:right;
+}
+.bbsSearch {
+	margin-top:17px;
+	padding:5px;
+	text-align:center;
+	background:#f6f6ee;
+}

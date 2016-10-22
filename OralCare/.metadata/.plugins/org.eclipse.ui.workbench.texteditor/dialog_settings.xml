@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="saveTo" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="saveto"/>
+			<item value="savetofile"/>
+			<item value="file"/>
+			<item value="calendarview"/>
+			<item value=" 파일을 선택하지"/>
+			<item value=" 파일을"/>
+			<item value="파일을"/>
+			<item value="show ("/>
+		</list>
+		<list key="replacehistory">
+			<item value="확인"/>
+			<item value="input_bean"/>
+			<item value="temp_bean"/>
+			<item value="tempBean_K"/>
+			<item value="임신중"/>
+			<item value="교정중"/>
+			<item value="년"/>
+			<item value="스켈링"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="289" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="366" key="DIALOG_HEIGHT"/>
+		<item value="370" key="DIALOG_Y_ORIGIN"/>
+		<item value="8" key="DIALOG_X_ORIGIN"/>
+	</section>
+</section>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SaveUserStreotype.java&apos; to &apos;G_Server/src/save&apos;&#x0D;&#x0A;- Original project: &apos;RecommendAlgorithm&apos;&#x0D;&#x0A;- Destination element: &apos;G_Server/src/save&apos;&#x0D;&#x0A;- Original element: &apos;SaveUserStreotype.java&apos;" description="Copy compilation unit" destination="=G_Server/src&lt;save" element1="/src&lt;{SaveUserStreotype.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1413710060512" units="1" version="1.0"/>
+</session>

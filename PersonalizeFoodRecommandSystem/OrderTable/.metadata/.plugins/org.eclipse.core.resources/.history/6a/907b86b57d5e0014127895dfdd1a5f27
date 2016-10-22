@@ -1,0 +1,396 @@
+
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
+import Recommand.db.FoodSearchMgr;
+import bean.Food;
+import bean.Material;
+import bean.User;
+
+
+public class SocketConn extends Thread {
+	Socket client;
+	ObjectOutputStream out;
+	ObjectInputStream in;
+	static List<ObjectOutputStream> clientList = Collections.synchronizedList(new ArrayList<ObjectOutputStream>());
+	
+	User user;
+	Food food;
+	ArrayList<Food> recommand_food;
+	ArrayList<Food> menu_food;
+	int position;
+	Material material;
+	Food food_o;
+	
+	public SocketConn(Socket socket){
+		this.client = socket;
+		try {
+			// �����°�
+			out = new ObjectOutputStream(client.getOutputStream());
+			in = new ObjectInputStream(client.getInputStream());
+			clientList.add(out);
+		} catch (Exception e) {
+			System.out.println("S: Error");
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void run() {
+		try {
+			// �޴°�
+			//in = new ObjectInputStream(client.getInputStream());
+			//recommandAlgorithm();
+			Map<String, Object> m = new HashMap<String, Object>();
+			m.put("accept", client.getInetAddress() + "Client Accept");
+			System.out.println(m.get("accept"));
+			//sendAll(m);
+
+			while(true){
+				Map<String, Object> map = (Map<String, Object>)in.readObject();
+				Map<String, Object> innerMap = new HashMap<String, Object>();		
+				Set key = map.keySet();
+				for(Iterator iterator=key.iterator(); iterator.hasNext();){
+					String keyName = (String)iterator.next();
+					System.out.println("keyname : " + keyName);
+					
+					if(keyName.equals("user")){
+						System.out.println("useruseruseruser");
+						
+
+						SendFood();
+						//user = (User)map.get("user");
+						//ProcessingUser(user);
+						//System.out.println(user.getId() + " / " + user.getNation());
+						//sendAll(map); //�̺κ� <"food">�� ���ļ� ���� ��������
+					}
+						
+					if(keyName.equals("selected_food")){
+						System.out.println("selected_food-selected_food");
+						innerMap = (Map<String, Object>)map.get("selected_food");
+						user = (User)innerMap.get("USER");
+						food = (Food)innerMap.get("FOOD");
+						SendSelectedFood(user, food);
+					}
+					
+					if(keyName.equals("prevBtn_to_main")){
+						user = (User)map.get("user");
+						SendPrevBtnToMain(user);
+					}
+					if(keyName.equals("menuBtn")){
+						innerMap = (Map<String, Object>)map.get("menuBtn");
+						user = (User)innerMap.get("USER");
+						SendMenuBtn(user);
+					}
+						
+					if(keyName.equals("nextBtn_to_material")){
+						innerMap = (Map<String, Object>)map.get("selected_food");
+						user = (User)innerMap.get("USER");
+						food = (Food)innerMap.get("FOOD");
+						food_o = (Food)innerMap.get("FOOD_O");
+						SendNextBtnToMaterial(user, food, food_o);
+					}
+						
+					if(keyName.equals("selected_material")){
+						innerMap = (Map<String, Object>)map.get("selected_food");
+						user = (User)innerMap.get("USER");
+						position = (int)innerMap.get("position");
+						material = (Material)innerMap.get("MATERIAL");
+						SendSelecteMaterial(user, position, material);
+					}
+						
+					if(keyName.equals("prevBtn_to_food")){
+						innerMap = (Map<String, Object>)map.get("prevBtn_to_food");
+						user = (User)innerMap.get("USER");
+						food = (Food)innerMap.get("FOOD");
+						SendPrevBtnToFood(user, food);
+					}
+						
+					if(keyName.equals("nextBtn_to_last")){
+						innerMap = (Map<String, Object>)map.get("nextBtn_to_last");
+						user = (User)innerMap.get("USER");
+						food = (Food)innerMap.get("FOOD");
+						SendNextBtnToLast(user, food);
+						//�ֹ��Ϸ� �� ����κ� �ڵ� ����
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("S: Error");
+			e.printStackTrace();
+		}
+		finally{
+			clientList.remove(out);
+			try{
+				client.close();
+			}catch(Exception ignored){
+			}
+		}
+	}
+
+	private void sendAll(Object obj){	
+		System.out.println("sendAll");
+		
+		for(ObjectOutputStream out : clientList){
+			try{
+				out.writeObject(obj);
+				out.flush();
+			} catch (Exception e) {
+				System.out.println("S: Error");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * write�κ�
+	 * SendFood ~
+	 */
+	public void SendFood(){
+		try{
+
+			User user = new User();
+			user.setId("abc");
+			user.setTableNum("1");
+			user.setAge(4);
+			user.setSex("F");
+			user.setNation("kr");
+			
+			//추천알고리즘 실행하도록 코드 수정하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			ArrayList<Food> recommand_food_list = new ArrayList<Food>();
+			Food f1 = new Food();
+			f1.setId(1);
+			f1.setName("떠뽀끼");
+			f1.setExplain("떡볶이떠뽀끼");
+			f1.setPrice("1000");
+			recommand_food_list.add(f1);
+			Food f2 = new Food();
+			f2.setId(2);
+			f2.setName("치킨치킨");
+			f2.setExplain("치킨먹자");
+			f2.setPrice("2000");
+			recommand_food_list.add(f2);
+			Food f3 = new Food();
+			f3.setId(3);
+			f3.setName("안녕");
+			f3.setExplain("김서희안녕");
+			f3.setPrice("3000");
+			recommand_food_list.add(f3);
+			
+			System.out.println(recommand_food_list.get(1).getId() + " / " + recommand_food_list.get(1).getName());
+			
+			ArrayList<Food> menu_food_list = new ArrayList<Food>();
+//			menu_food_list.add(f1);
+//			menu_food_list.add(f2);
+//			menu_food_list.add(f3);
+			
+			
+			
+			//추천알고리즘 실행하도록 코드 수정하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//			
+//			
+//			Map<String, Object> food_list = new HashMap<String, Object>();
+//			food_list.put("USER", user);
+//			food_list.put("recommand_food", recommand_food_list); //3개
+//			////
+//			FoodSearchMgr foodsearchMgr = new FoodSearchMgr();
+//		    Vector<Food> menu_food_list = foodsearchMgr.getMenuFood(user.getNation()); //메뉴판 정보를 보내는거라고
+//			////
+//			food_list.put("menu_food", menu_food_list); //10개
+//			Map<String, Object> map_food = new HashMap<String, Object>();
+//			map_food.put("food", food_list);
+//			
+//			recommand_food_list = (ArrayList<Food>)food_list.get("recommand_food");
+//			System.out.println(recommand_food_list.get(0).getName() + " dddddd");
+//			
+//			
+//			sendAll(map_food);
+		     Map<String, Object> food_list = new HashMap<String, Object>();
+	         food_list.put("USER", user);
+	         food_list.put("recommand_food", recommand_food_list); //3개
+	         //메뉴정보 가져오기 실행
+	         FoodSearchMgr foodsearchMgr=new FoodSearchMgr();
+	         menu_food_list = foodsearchMgr.getMenuFood(user.getNation());
+	         food_list.put("menu_food", menu_food_list); //10개
+	         Map<String, Object> map_food = new HashMap<String, Object>();
+	         map_food.put("food", food_list);
+	         
+	         sendAll(map_food);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		/**
+		 * ��õ�˰��� ����κ� Ŭ���� ȣ��
+		 *  - ������õ��� 3�� ���Ϲ޾Ƽ�
+		 *  - ArrayList<Food> recommand_food_list�� ����
+		 *  - ���� ������ Map���� �������
+		 *  - <"recommand_food", recommand_food_list>
+		 */
+		/**
+		 * �޴��� ���� �����ֱ�
+		 *   - �޴��� ���� 10�� �о�ͼ�
+		 *   - ArrayList<Food> menu_food_list�� ����
+		 *   - ���� ������ Map���� �������
+		 *   - <"menu_food", menu_food_list>
+		 */
+		/**
+		 * ��� �����ֱ�
+		 *   - ���� "User", "recommand_food", "menu_food"�� �ϳ��� map���� �������.
+		 *   - <"food", ArrayList<Map> food_list> 
+		 *   - sendAll(<"food", ArrayList<Map> food_list>)�� ����.
+		 */
+//		Map<String, Object> food_list = new HashMap<String, Object>();
+//		food_list.put("USER", user);
+//		food_list.put("recommand_food", recommand_food_list);
+//		food_list.put("menu_food", menu_food_list);
+//		Map<String, Object> map_food = new HashMap<String, Object>();
+//		map_food.put("food", food_list);
+//		out.writeObject(map_food);
+//		out.flush();
+	}
+	
+	public void SendSelectedFood(User user, Food food){
+		try{
+			//food.setId(food.getId());
+			Map<String, Object> selected_food_list = new HashMap<String, Object>();
+			selected_food_list.put("USER", user);
+			selected_food_list.put("FOOD", food);
+			Map<String, Object> map_selected_food = new HashMap<String, Object>();
+			map_selected_food.put("selected_food", selected_food_list);
+			
+			sendAll(map_selected_food);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void SendPrevBtnToMain(User user){
+		try{
+			Map<String, Object> prevBtn_to_main_list = new HashMap<String, Object>();
+			prevBtn_to_main_list.put("USER", user);
+			Map<String, Object> map_prevBtn_to_main = new HashMap<String, Object>();
+			map_prevBtn_to_main.put("prevBtn_to_main", prevBtn_to_main_list);
+			out.writeObject(map_prevBtn_to_main);
+			out.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void SendMenuBtn(User user){
+		try{
+			Map<String, Object> menuBtn_list = new HashMap<String, Object>();
+			menuBtn_list.put("USER", user);
+			menuBtn_list.put("menu", "menu");
+			Map<String, Object> map_menuBtn = new HashMap<String, Object>();
+			map_menuBtn.put("menuBtn", menuBtn_list);
+			out.writeObject(map_menuBtn);
+			out.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void SendNextBtnToMaterial(User user, Food food, Food food_o){
+		try{
+			//food.setId(food.getId());
+			Map<String, Object> nextBtn_to_material_list = new HashMap<String, Object>();
+			nextBtn_to_material_list.put("USER", user);
+			nextBtn_to_material_list.put("FOOD", food);
+			nextBtn_to_material_list.put("FOOD_O", food_o);
+			Map<String, Object> map_nextBtn_to_material = new HashMap<String, Object>();
+			map_nextBtn_to_material.put("nextBtn_to_material", nextBtn_to_material_list);
+			//���˰��� ����
+			out.writeObject(map_nextBtn_to_material);
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void SendSelectePosition(User user, int position){
+		try{
+			Map<String, Object> selected_position_list = new HashMap<String, Object>();
+			selected_position_list.put("USER", user);
+			selected_position_list.put("position", position);
+			Map<String, Object> map_selected_position = new HashMap<String, Object>();
+			map_selected_position.put("selected_position", selected_position_list);
+			out.writeObject(map_selected_position);
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void SendSelecteMaterial(User user, int position, Material material){
+		try{
+			Map<String, Object> selected_material_list = new HashMap<String, Object>();
+			selected_material_list.put("USER", user);
+			selected_material_list.put("position", position);
+			selected_material_list.put("MATERIAL", material);
+			Map<String, Object> map_selected_material = new HashMap<String, Object>();
+			map_selected_material.put("selected_material", selected_material_list);
+			out.writeObject(map_selected_material);
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void SendPrevBtnToFood(User user, Food food){
+		try{
+			Map<String, Object> prevBtn_to_food_list = new HashMap<String, Object>();
+			prevBtn_to_food_list.put("USER", user);
+			prevBtn_to_food_list.put("FOOD", food);
+			Map<String, Object> map_prevBtn_to_food = new HashMap<String, Object>();
+			map_prevBtn_to_food.put("prevBtn_to_food", prevBtn_to_food_list);
+			out.writeObject(map_prevBtn_to_food);
+			out.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void SendNextBtnToLast(User user, Food food){
+		try{
+			Map<String, Object> nextBtn_to_last_list = new HashMap<String, Object>();
+			nextBtn_to_last_list.put("USER", user);
+			nextBtn_to_last_list.put("FOOD", food);
+			Map<String, Object> map_nextBtn_to_last = new HashMap<String, Object>();
+			map_nextBtn_to_last.put("nextBtn_to_last", nextBtn_to_last_list);
+			out.writeObject(map_nextBtn_to_last);
+			out.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * ó���κ�
+	 * ProcessingUser ~
+	 */
+	public void ProcessingUser(User user){
+		//ȸ������ DB�˻�
+		
+		//�ű�ȸ�� - DB���� & recommand
+				
+		//����ȸ�� - ��õ�˰��� ����
+		
+		//SendFood(����1, ����2, ����3)ȣ��
+
+	}
+	
+	
+
+
+}

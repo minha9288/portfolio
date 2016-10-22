@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="recommand_food_list" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="recommand_food_list"/>
+			<item value="food_material_list.add(mm);"/>
+			<item value="sendfood"/>
+			<item value="sendall"/>
+			<item value="map_food"/>
+			<item value="selected_food"/>
+			<item value="selected"/>
+			<item value="selected&apos;"/>
+		</list>
+		<list key="replacehistory">
+			<item value="궁중떡볶이"/>
+			<item value="화양적"/>
+			<item value="신선로"/>
+			<item value="해물파전"/>
+			<item value="부대찌개"/>
+			<item value="춘천닭갈비"/>
+			<item value="불고기덮밥"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="261" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="355" key="DIALOG_HEIGHT"/>
+		<item value="89" key="DIALOG_X_ORIGIN"/>
+		<item value="279" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

@@ -1,0 +1,161 @@
+package view;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.MTComponent;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.components.visibleComponents.widgets.MTSceneMenu;
+import org.mt4j.components.visibleComponents.widgets.MTSceneWindow;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
+import org.mt4j.input.gestureAction.InertiaDragAction;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.dragProcessor.DragProcessor;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.sceneManagement.Iscene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.camera.MTCamera;
+import org.mt4j.util.math.Vector3D;
+
+import advanced.mtShell.ICreateScene;
+
+public class material extends AbstractScene{
+	private AbstractMTApplication app;
+	MTComponent mtCom;
+	MTImageButton left_button, right_button;
+	MTImageButton material_button1, material_button2, material_button3, material_button4, material_button5, material_button6;
+	MTImageButton change_button1, change_button2, change_button3, change_button4, change_button5, change_button6;
+	MTImage choose_food, translate;
+	int material1, material2, material3, material4, material5, material6;
+	int food;
+	
+	public material(AbstractMTApplication mtAppl, String name) {
+		super(mtAppl, name);
+		this.app = mtAppl;
+		mtCom = new MTComponent(app, "top layer group", new MTCamera(app));
+		this.setClearColor(new MTColor(255,255,255,255)); // 화면 배경 색(흰색)
+		food = 1;
+		material1 = 1;
+		material2 = 2;
+		material3 = 3;
+		material4 = 4;
+		material5 = 5;
+		material6 = 6;
+		
+		// 사용자가 선택한 음식
+		choose_food = new MTImage(app, app.loadImage("greenlight/pictures/음식사진/"+food+".PNG"));
+		choose_food.setPickable(false);
+		choose_food.setSizeXYGlobal(app.width/4.5f, app.width/4.5f); // 이미지 크기
+		choose_food.setPositionGlobal(new Vector3D(app.width-app.width/1.7f, app.height-app.height/1.7f)); // 화면 위치
+		mtCom.addChild(choose_food); // 화면에 이미지 넣기
+		
+		// 재료1번 버튼
+		material_button1 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material1+".png"));
+		material_button1.setSizeXYGlobal(app.width/10, app.width/10); // 이미지 크기
+		material_button1.setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/1.25f)); // 화면 위치
+		mtCom.addChild(material_button1); // 화면에 , 이미지버튼 넣기
+		
+		material_button2 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material2+".png"));
+		material_button2.setSizeXYGlobal(app.width/10, app.width/10); // 이미지 크기
+		material_button2.setPositionGlobal(new Vector3D(app.width-app.width/1.2f, app.height-app.height/1.7f)); // 화면 위치
+		mtCom.addChild(material_button2); // 화면에 , 이미지버튼 넣기
+		
+		material_button3 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material3+".png"));
+		material_button3.setSizeXYGlobal(app.width/10, app.width/10); // 이미지 크기
+		material_button3.setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/2.7f)); // 화면 위치
+		mtCom.addChild(material_button3); // 화면에 , 이미지버튼 넣기
+		
+		material_button4 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material4+".png"));
+		material_button4.setSizeXYGlobal(app.width/10, app.width/10); // 이미지 크기
+		material_button4.setPositionGlobal(new Vector3D(app.width-app.width/2.5f, app.height-app.height/1.25f)); // 화면 위치
+		mtCom.addChild(material_button4); // 화면에 , 이미지버튼 넣기
+		
+		material_button5 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material5+".png"));
+		material_button5.setSizeXYGlobal(app.width/10, app.width/10); // 이미지 크기
+		material_button5.setPositionGlobal(new Vector3D(app.width-app.width/2.9f, app.height-app.height/1.7f)); // 화면 위치
+		mtCom.addChild(material_button5); // 화면에 , 이미지버튼 넣기
+		
+		material_button6 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material6+".png"));
+		material_button6.setSizeXYGlobal(app.width/10, app.width/10); // 이미지 크기
+		material_button6.setPositionGlobal(new Vector3D(app.width-app.width/2.5f, app.height-app.height/2.7f)); // 화면 위치
+		mtCom.addChild(material_button6); // 화면에 , 이미지버튼 넣기
+		
+		// 이전버튼
+		left_button = new MTImageButton(app, app.loadImage("greenlight/pictures/기타사진/left_btn.png"));
+		left_button.setSizeXYGlobal(app.width/10, app.width/10);
+		left_button.setPositionGlobal(new Vector3D(app.width-app.width/1.07f, app.height-app.height/1.13f));
+		mtCom.addChild(left_button);
+		
+		// 다음버튼
+		right_button = new MTImageButton(app, app.loadImage("greenlight/pictures/기타사진/right_btn.png"));
+		right_button.setSizeXYGlobal(app.width/10, app.width/10);
+		right_button.setPositionGlobal(new Vector3D(app.width-app.width/15f, app.height-app.height/1.13f));
+		mtCom.addChild(right_button);
+		
+		// 번역된 설명이 나올 자리의 이미지
+		translate = new MTImage(app, app.loadImage("greenlight/pictures/기타사진/translate_img.png"));
+		translate.setPickable(false);
+		translate.setSizeXYGlobal(app.width/1.1f, app.height/6); // 이미지 크기
+		translate.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/8f)); // 화면 위치
+		mtCom.addChild(translate); // 화면에 이미지 넣기
+		
+		
+		material_button1.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+			public boolean processGestureEvent(MTGestureEvent ge) {
+				TapEvent te = (TapEvent)ge;
+				switch(te.getTapID()) {
+				case TapEvent.TAPPED:
+					change_button1 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material1+".png"));
+					change_button1.setSizeXYGlobal(app.width/11, app.width/11); // 이미지 크기
+					change_button1.setPositionGlobal(new Vector3D(app.width-app.width/5f, app.height-app.height/1.5f)); // 화면 위치
+					mtCom.addChild(change_button1); // 화면에 , 이미지버튼 넣기
+					
+					change_button2 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material2+".png"));
+					change_button2.setSizeXYGlobal(app.width/11, app.width/11); // 이미지 크기
+					change_button2.setPositionGlobal(new Vector3D(app.width-app.width/9.5f, app.height-app.height/1.5f)); // 화면 위치
+					mtCom.addChild(change_button2); // 화면에 , 이미지버튼 넣기
+					
+					change_button3 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material3+".png"));
+					change_button3.setSizeXYGlobal(app.width/11, app.width/11); // 이미지 크기
+					change_button3.setPositionGlobal(new Vector3D(app.width-app.width/5f, app.height-app.height/2f)); // 화면 위치
+					mtCom.addChild(change_button3); // 화면에 , 이미지버튼 넣기
+					
+					change_button4 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material4+".png"));
+					change_button4.setSizeXYGlobal(app.width/11, app.width/11); // 이미지 크기
+					change_button4.setPositionGlobal(new Vector3D(app.width-app.width/9.5f, app.height-app.height/2f)); // 화면 위치
+					mtCom.addChild(change_button4); // 화면에 , 이미지버튼 넣기
+					
+					change_button5 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material5+".png"));
+					change_button5.setSizeXYGlobal(app.width/11, app.width/11); // 이미지 크기
+					change_button5.setPositionGlobal(new Vector3D(app.width-app.width/5f, app.height-app.height/3f)); // 화면 위치
+					mtCom.addChild(change_button5); // 화면에 , 이미지버튼 넣기
+					
+					change_button6 = new MTImageButton(app, app.loadImage("greenlight/pictures/재료사진/"+material6+".png"));
+					change_button6.setSizeXYGlobal(app.width/11, app.width/11); // 이미지 크기
+					change_button6.setPositionGlobal(new Vector3D(app.width-app.width/9.5f, app.height-app.height/3f)); // 화면 위치
+					mtCom.addChild(change_button6); // 화면에 , 이미지버튼 넣기
+					break;
+					default : 
+						break;
+				}
+				return true;
+			}
+			
+			change_button1.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+				public boolean processGestureEvent(MTGestureEvent ge) {
+					TapEvent te = (TapEvent)ge;
+					switch(te.getTapID()) {
+					case TapEvent.TAPPED:
+						break;
+					default :
+						break;
+					}
+					return true;
+				}
+		});
+		
+		this.getCanvas().addChild(mtCom);
+	}
+}

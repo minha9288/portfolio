@@ -1,0 +1,186 @@
+package Recommand.db;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Vector;
+
+import db.DBConnectionMgr;
+import bean.*;
+
+
+public class FoodSearchMgr {
+	private DBConnectionMgr pool;
+	
+	public FoodSearchMgr() {
+		try {
+			pool = DBConnectionMgr.getInstance();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Vector<Food> getMenuFood(String c_user_nation){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<Food> menu_list = new Vector<Food>();
+		try {	
+			con=pool.getConnection();
+			sql="select food_translator.food_id, food_translator.food_name, food_translator.food_explain, food.food_price "
+					+ "from food inner join food_translator "
+					+ "on food.food_id=food_translator.food_id "
+					+ "where food_translator.nation='?'";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, c_user_nation);
+			rs = pstmt.executeQuery();	
+			while(rs.next()){
+				Food bean = new Food();
+				bean.setId(rs.getInt(1));
+				bean.setName(rs.getString(2));
+				bean.setExplain(rs.getString(3));
+				bean.setPrice(rs.getInt(4));
+				bean.setMeterialList(getMaterialList(rs.getInt(1)));
+				menu_list.add(bean);
+				System.out.println("");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return menu_list;
+	}
+	
+	public ArrayList<Material> getMaterialList(int food_id){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<Material> material_list = new ArrayList<Material>();
+		try {	
+			con=pool.getConnection();
+			sql="select * from "
+					+ "(select food_material.food_id, material_translator.material_id, material_translator.material_name, material_translator.material_explain "
+					+ "from food_material inner join material_translator "
+					+ "on food_material.material_id=material_translator.material_id) a "
+					+ "where a.food_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, food_id);
+			rs = pstmt.executeQuery();	
+			while(rs.next()){
+				Material material = new Material();
+				material.setId(rs.getInt(2));
+				material.setName(rs.getString(3));
+				material.setExplain(rs.getString(4));
+				material_list.add(material);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return material_list;
+	}
+	
+	//���� ���� �� 3���� �޴� ����
+	public ArrayList<String> getLowPrice() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> food_list = new ArrayList<String>();
+		
+		try {	
+			con=pool.getConnection();
+			sql="select food_id from food order by food_price limit 3";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();	
+			while(rs.next()){
+				food_list.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return food_list;
+	}	
+	
+	//�ǰ��޴� ����
+	public ArrayList<String> getHealthy() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> food_list = new ArrayList<String>();
+		
+		try {	
+			con=pool.getConnection();
+			sql="select food_id from food where food_healthy=true";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();	
+			while(rs.next()){
+				food_list.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return food_list;
+	}	
+	
+	//�����̸� ��������
+	public ArrayList<String> getFoodName() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> food_list = new ArrayList<String>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from food;";
+			pstmt = con.prepareStatement(sql); 
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				food_list.add(rs.getString("food_name"));
+			}
+			System.out.println(food_list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return food_list;
+	}
+	
+	//��ȣǥ�� ��������
+	public ArrayList<String> getDic_Opinion() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		ArrayList<String> opinion_list = new ArrayList<String>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from dic_opinion;";
+			pstmt = con.prepareStatement(sql); 
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				opinion_list.add(rs.getString("keyword"));
+			}
+			System.out.println(opinion_list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return opinion_list;
+	}
+
+		
+}

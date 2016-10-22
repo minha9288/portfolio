@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="package test2;&#x0D;&#x0A;&#x0D;&#x0A;import javax.swing.*;&#x0D;&#x0A;import java.awt.*;&#x0D;&#x0A;&#x0D;&#x0A;class MyPanel3_2 extends JPanel {&#x0D;&#x0A;&#x09;int nfc_x, nfc_y;&#x0D;&#x0A;&#x09;int nfc_x_s, nfc_y_s;&#x0D;&#x0A;&#x09;int nfc_x1, nfc_y1;&#x0D;&#x0A;&#x09;int nfc_x_s1, nfc_y_s1;&#x0D;&#x0A;&#x09;int nfc_x2, nfc_y2;&#x0D;&#x0A;&#x09;int nfc_x_s2, nfc_y_s2;&#x0D;&#x0A;&#x09;public MyPanel3_2(int x, int y) {&#x0D;&#x0A;&#x09;&#x09;nfc_x = x;&#x0D;&#x0A;&#x09;&#x09;nfc_y = y/2;&#x0D;&#x0A;&#x09;&#x09;nfc_x_s = 0;&#x0D;&#x0A;&#x09;&#x09;nfc_y_s = y/2;&#x0D;&#x0A;&#x09;&#x09;&#x0D;&#x0A;&#x09;&#x09;nfc_x1 = x/2;&#x0D;&#x0A;&#x09;&#x09;nfc_y1= y/2;&#x0D;&#x0A;&#x09;&#x09;nfc_x_s1 = 0;&#x0D;&#x0A;&#x09;&#x09;nfc_y_s1 = 0;&#x0D;&#x0A;&#x09;&#x09;&#x0D;&#x0A;&#x09;&#x09;nfc_x2 = x/2;&#x0D;&#x0A;&#x09;&#x09;nfc_y2 = y/2;&#x0D;&#x0A;&#x09;&#x09;nfc_x_s2 = x/2;&#x0D;&#x0A;&#x09;&#x09;nfc_y_s2 = 0;&#x0D;&#x0A;&#x09;}&#x0D;&#x0A;&#x09;public void paint(Graphics g) {&#x0D;&#x0A;&#x09;&#x09;super.paint(g);&#x0D;&#x0A;&#x09;&#x09;g.setColor(Color.black);&#x0D;&#x0A;&#x09;&#x09;g.drawRect(nfc_x_s, nfc_y_s, nfc_x, nfc_y); // 사각형을 그림&#x0D;&#x0A;&#x09;&#x09;g.drawRect(nfc_x_s1, nfc_y_s1, nfc_x1, nfc_y1);&#x0D;&#x0A;&#x09;&#x09;g.drawRect(nfc_x_s2, nfc_y_s2, nfc_x2, nfc_y2);&#x0D;&#x0A;&#x09;}&#x0D;&#x0A;}" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="Border"/>
+			<item value="1"/>
+		</list>
+		<list key="replacehistory">
+			<item value=""/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="261" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="380" key="DIALOG_HEIGHT"/>
+		<item value="622" key="DIALOG_X_ORIGIN"/>
+		<item value="273" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

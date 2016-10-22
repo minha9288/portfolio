@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="BMH" />
+<meta name="keywords" content="Web Cafe,Web Standards,Web Accessibility,웹접근성,웹표준" />
+<meta name="description" content="HTML과 CSS 예제 사이트" />
+<meta name="robots" content="all" />
+<title>WebCafe</title>
+<link rel="stylesheet" type="text/css" href="css/import.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<link rel="stylesheet" type="text/css" href="css/layout_ie6.css" />
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" href="css/ie6_filter.css">
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" href="css/ie7.css">
+<![endif]-->
+<script type="text/javascript" src="js/menuTab.js"></script>
+<script type="text/javascript"> 
+	window.onload = function(){
+		initMain();
+	}
+</script>
+</head>
+ 
+<body id="mainWrap">
+<div id="wrapper">
+<div id="headerWrap">
+  <div id="header">
+    <h1 class="logo"><a href="#"><img src="images/common/logo.gif" alt="WebCafe" /></a></h1>   
+    <ul id="infoMenu">
+      <li class="first-item"><a href="#">홈</a></li>
+      <li><a href="#">로그인</a></li>
+      <li><a href="#">회원가입</a></li>
+      <li><a href="#">사이트맵</a></li>
+      <li><a href="#">ENGLISH</a></li>
+    </ul>
+    <h2>주메뉴</h2>
+    <ul id="navigation">
+      <li class="first"><a href="#"><img src="images/common/topmenu01_ov.gif" alt="HTML에 대해" width="124" height="43" /></a>
+        <ul id="naviSub01">
+          <li><a href="#">(X)HTML 소개</a></li>
+          <li><a href="#">레퍼런스 소개</a></li>
+          <li><a href="#">활용예제</a></li>
+        </ul>
+      </li>
+      <li><a href="#"><img src="images/common/topmenu02.gif" alt="CSS에 대해" width="108" height="43" /></a>	  
+	  </li>
+      <li><a href="#"><img src="images/common/topmenu03.gif" alt="웹 표준" width="90" height="43" /></a></li>
+      <li><a href="#"><img src="images/common/topmenu04.gif" alt="웹 접근성" width="101" height="43" /></a></li>
+      <li><a href="#"><img src="images/common/topmenu05.gif" alt="묻고 답하기" width="109" height="43" /></a></li>
+      <li><a href="#"><img src="images/common/topmenu06.gif" alt="자료실" width="93" height="43" /></a></li>
+    </ul>
+  </div>
+ </div>
+  <div id="visual">
+    <p><img src="images/main/main_visual.gif" width="824" height="104" alt="Web standard &amp; accessibility" /></p>
+  </div>
+  <hr />
+  <div id="contents">
+    <div class="section">
+      <div class="login">
+        <h3><img src="images/main/h3_login.gif" alt="로그인" /></h3>
+        <form action="" method="post">
+          <fieldset>
+          <legend>로그인</legend>
+          <p class="id">
+            <label for="logid"><img src="images/main/title_id.gif" alt="아이디" /></label>
+            <input type="text" id="logid" />
+          </p>
+          <p class="pw">
+            <label for="logpw"><img src="images/main/title_pw.gif" alt="비밀번호" /></label>
+            <input type="text" id="logpw" />
+          </p>
+          <p class="btnLogin">
+            <input type="image" src="images/main/btn_login.gif" alt="로그인" />
+          </p>
+          </fieldset>
+        </form>
+        <div class="memberInfo"><a href="#" class="join">회원가입</a> <a href="#" class="find">아이디/비밀번호 찾기</a></div>
+      </div>
+      <div class="banner">
+        <h3>유효성 체크 배너</h3>
+        <ul>
+          <li><a href="http://validator.w3.org/" title="마크업 유효성 사이트로 이동"><img src="images/main/btn_html.gif" alt="W3C Markup Validation" /></a></li>
+          <li><a href="http://jigsaw.w3.org/css-validator/"><img src="images/main/btn_css.gif" alt="W3C CSS Validation Service" /></a></li>
+        </ul>
+      </div>
+      <div class="standardBox">
+        <h3><img src="images/main/h3_standards.gif" alt="웹표준이란?" /></h3>
+        <dl>
+          <dt class="subject"><a href="#">웹 표준이란?</a></dt>
+          <dd class="img"><img src="images/main/img_standards.gif" alt="W3C 로고" width="61" height="68" /></dd>
+          <dd class="brief"><a href="#">W3C 단체에서 규정한 웹 기술 사양에 대한 규칙을 말하며 표준 규격..</a></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="sectionInfo">
+      <div class="search">
+        <h3>자료검색</h3>
+        <form action="">
+          <fieldset>
+          <legend>검색어 입력폼</legend>          
+            <label for="search"><img src="images/common/title_search.gif" alt="자료검색" /></label>
+            <input type="text" id="search" size="14" />
+            <input type="image" class="btnSearch" src="images/common/btn_search.gif" alt="검색" />          
+          </fieldset>
+        </form>
+      </div>
+      <div class="boardBox" id="boardBox">
+        <h3 class="tab01"><a href="#"><img src="images/main/tab_notice_ov.gif" alt="공지사항" /></a></h3>
+        <div id="noticeList">
+           <ul>
+            <li><a href="#">HTML 모든 것을 알려주마 샘플 활용법</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">W3C 사이트 리뉴얼 소식 및 공지사항</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">KWCAG2.0 소식</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">서버 점검으로 인한 사이트 이용안내 입니다.</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">여러분들이 생각하는 웹 접근성에 대해 이야기를 나..</a> <span class="date">2009.10.15</span></li>
+          </ul>
+          <p class="more"><a href="#"><img src="images/main/icon_more.gif" alt="더보기" /></a></p>
+        </div>        
+        <h3 class="tab02"><a href="#"><img src="images/main/tab_pds.gif" alt="자료실" /></a></h3>
+        <div id="pdsList">
+          <ul>
+            <li><a href="#">디자인 사이트 링크 모음</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">웹 접근성 관련 자료 모음</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">예제 샘플 응용해 보기</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">웹 접근성 향상을 위한 국가표준 기술 가이드 라인</a> <span class="date">2009.10.15</span></li>
+            <li><a href="#">로얄티 프리 이미지 자료</a> <span class="date">2009.10.15</span></li>        
+          </ul>
+          <p class="more"><a href="#"><img src="images/main/icon_more.gif" alt="더보기" /></a></p>
+        </div>
+      </div>
+      <div class="newsList">
+        <h3><img src="images/main/h3_news.gif" alt="새소식" /></h3>
+        <div class="newsWrap">
+          <h4><a href="#">W3C 사이트가 리뉴얼되었습니다.</a></h4>
+          <p class="date">2009.10.15</p>
+          <p class="brief"><a href="#">디자인 및 다양한 view환경을 고려하여 구성되어 있으며, 기존보다 최신 정보 및 개발자를 위한 기술 가이드도 찾기 쉽...</a></p>
+        </div>
+        <p class="imgWrap"> <span class="img"><img src="images/main/img_112_66.gif" alt="" width="112" height="66" /></span> <span class="imgTitle">W3C 리뉴얼</span> </p>
+        <p class="more"><a href="#"><img src="images/main/icon_more.gif" alt="더보기" /></a></p>
+      </div>
+    </div>
+    <div class="sectionEvent">
+      <div class="event">
+        <h3><img src="images/main/h3_event.gif" alt="신규 이벤트" /></h3>
+        <div id="eventDetail">
+          <p><a href="#" class="thumbnail"><img src="images/main/img_163_77.gif" alt="이벤트상품 안내: 월간지" width="163" height="77" /> <em class="brief">오픈기념 이벤트 준비 중!</em></a></p>
+        </div>
+        <div class="btnGo"><a href="#"><img src="images/main/btn_event_prev.gif" alt="이전" /></a> <a href="#"><img src="images/main/btn_event_next.gif" alt="다음" /></a></div>
+      </div>
+     
+      <div class="siteLink">
+        <h3><img src="images/main/h3_relation.gif" alt="관련 사이트" /></h3>
+  <form name="" action="" method="post">
+    <fieldset>
+    <legend>관련 사이트 링크</legend>
+    <select name="siteLink" title="사이트 선택">
+      <option value='http://www.jeumedia.com'>제우미디어</option>
+      <option value='http://www.w3.org'>W3C</option>
+      <option value='http://www.csszengarden.com'>CSS ZEN GARDEN</option>
+      <option value='http://www.webstandards.org'>WEB STANDARDS</option>
+      <option value='http://www.wah.or.kr'>웹 접근성 연구소</option>
+    </select>
+    <input type="image" class="goBtn" src="images/main/btn_go.gif" alt="이동" />
+    </fieldset>
+  </form>
+      </div>
+      <div class="siteFavorite">
+        <h3><img src="images/main/h3_favorite.gif" alt="인기 사이트" /></h3>
+        <ol class="ranking">
+          <li class="no1"><a href="#">W3C</a> <span class="order"><img src="images/main/icon_up.gif" alt="상승" /></span></li>
+          <li class="no2"><a href="#">CSS ZEN GARDEN</a> <span class="order"><img src="images/main/icon_down.gif" alt="하락" /></span></li>
+          <li class="no3"><a href="#">WEB STANDARDS</a> <span class="order"><img src="images/main/icon_stop.gif" alt="변동없음" /></span></li>
+          <li class="no4"><a href="#">웹 접근성 연구소</a> <span class="order"><img src="images/main/icon_up.gif" alt="상승" /></span></li>
+        </ol>
+        <p class="more"><a href="#"><img src="images/main/icon_more.gif" alt="더보기" /></a></p>
+      </div>
+    </div>
+    <hr />   
+  </div>
+  <div id="slogan">
+    <h2>슬로건</h2>
+    <p class="sloganImg"><img src="images/common/icon_coffee.png" alt="커피잔" class="png24" /></p>
+    <div class="sloganCon"> <q cite="http://www.w3.org/WAI/">The power of the Web is in its universality, Access by everyone regardless of disability is an essential aspect.</q>
+      <p class="name">Tim Berners - Lee , W3C Director and inventor of the World Wide Web</p>
+    </div>
+  </div>
+  <hr />
+  <div id="footer">
+    <div class="footerInner">
+      <p class="footerLogo"><img src="images/common/logo_copyright.gif" alt="WebCafe" /></p>
+      <h2>사이트 이용안내</h2>
+      <ul class="guideMenu">
+        <li class="first-item"><a href="#">회사소개</a></li>
+        <li><a href="#">개인정보보호정책</a></li>
+        <li><a href="#">이메일주소무단수집거부</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Site map</a></li>
+      </ul>
+      <address>
+      <span class="addr">서울시 마포구 상수동 123-12 한주빌딩 5층</span> <span class="tel">· 전화: 02-1234-1234</span> <span class="fax">· FAX: 02-1234-1234</span> <span class="email">· E-MAIL: webmaster@mail.com</span><br />
+      <span class="copyright">Copyright ⓒ Web Cafe CORPORATION ALL RIGHTS RESERVED.</span>
+      </address>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"> 
+	function setPng24(obj)
+	{
+			obj.width = obj.height = 1;
+			obj.className = obj.className.replace(/\bpng24\b/i,'');
+			obj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+ obj.src +"',sizingMethod='image');"
+			obj.src = '';
+			return '';
+	}
+</script>
+</body>
+</html>

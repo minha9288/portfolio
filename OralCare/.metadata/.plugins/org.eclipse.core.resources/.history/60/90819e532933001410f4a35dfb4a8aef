@@ -1,0 +1,834 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Enumeration;
+
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
+public class OralCare {
+
+	public static void main(String[] args) {
+		Menu tf = new Menu();
+	}
+}
+
+class Menu extends JFrame {
+	JTabbedPane jtp = new JTabbedPane(JTabbedPane.TOP,
+			JTabbedPane.SCROLL_TAB_LAYOUT);
+	GridBagLayout gbl;
+	GridBagConstraints gbc;
+	JPanel jp;
+	
+	//정보저장 클래스
+	String chart_num;
+	String patientName;
+
+	/*환자정보*/
+	JTextField CNF; // 차트번호
+	JTextField NF; // 이름
+	JTextField YF; // 년도
+	JTextField MF; // 월
+	JTextField DF; // 일
+	JTextField T1; // 전화번호 앞
+	JTextField T2; // 전화번호 중간
+	JTextField T3; // 전화번호 끝
+	JTextArea PA; // 내원 목적
+	ButtonGroup group; // 성별
+	JRadioButton rbMan;
+	JRadioButton rbWoman;
+	JPanel infoPanel;
+	JButton btnInsert; // 확인버튼
+	JButton btnSurvey; // 설문제
+	ButtonGroup group1;
+	ButtonGroup group2;
+	ButtonGroup group3;
+	ButtonGroup group4;
+	
+	/*구강사진*/
+	JButton uploadBtn;
+	JTextField pathCheck;
+	JLabel p1, p2, p3, p4, p5, p6;
+	
+	JLabel teethP1, teethP2, teethP3;
+	JLabel plaqueP1, plaqueP2, plaqueP3;
+	
+	JPanel tap1, tap2, tap3, tap4, tap5, tap6;
+	
+	int tapNum;
+	
+
+	public Menu() {
+		
+		tap1 = PatientInfo();
+		tap2 = TeethPicture();
+		tap3 = X_ray();
+		tap4 = Plaque();
+		tap5 = new JPanel();
+		tap6 = new JPanel();
+		
+		jtp.addTab("회원정보/설문", tap1);
+		jtp.addTab("구강촬영", tap2);
+		jtp.addTab("X-ray", tap3);
+		jtp.addTab("치면세균막", tap4);
+		jtp.addTab("결과", tap5);
+		jtp.addTab("관리/일정", tap6);
+		
+		jtp.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				// TODO Auto-generated method stub
+				tapNum = jtp.getSelectedIndex();
+			}
+		});
+		
+		this.add(jtp);
+
+		this.setSize(1000, 650);
+		this.setVisible(true);
+		
+		PatientInfoBean bean = new PatientInfoBean();
+		bean.setAge(5);
+		bean.setBabyTooth(10);
+		bean.setLeaving(3);
+		bean.setTreatment(5);
+		bean.setSulcus(3);
+		bean.setPlaque_score("적음");
+		bean.setSugar_frequency("2회");
+		bean.setMicroscope_amount("적음");
+		bean.setMicroscope_movement("낮음");
+		bean.setTartar("있음");
+		bean.setGingivitis("1부위");
+		bean.setMalocclusion("정상교합");
+		bean.setOdontoclasis("없음");
+		bean.setInfection("미약");
+		bean.setBad_breath("구취");
+		bean.setDisease("심각");
+		bean.setBrush("3회");
+		bean.setChew_food("사과,김치");
+		bean.setVisit("2회이상");
+		Calculation cal = new Calculation(bean);
+	}
+
+	public JPanel PatientInfo() {
+		jp = new JPanel();
+		infoPanel = new JPanel();
+		JPanel surveyPanel = new JPanel();
+		
+		TitledBorder TB = new TitledBorder("회원정보");
+		TB.setTitleJustification(TitledBorder.CENTER);
+		TitledBorder TB2 = new TitledBorder("설문");
+		TB2.setTitleJustification(TitledBorder.CENTER);
+		infoPanel.setBorder(TB);
+		surveyPanel.setBorder(TB2);
+
+		JLabel CN = new JLabel("차트번호   ");
+		CNF = new JTextField(5);
+
+		JLabel Name = new JLabel("이름   ");
+		NF = new JTextField(10);
+
+		JLabel Birth = new JLabel("생년월일  ");
+		YF = new JTextField(6);
+		MF = new JTextField(6);
+		DF = new JTextField(6);
+		JPanel pBirth = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pBirth.add(YF);
+		pBirth.add(new JLabel("/"));
+		pBirth.add(MF);
+		pBirth.add(new JLabel("/"));
+		pBirth.add(DF);
+
+		JLabel tel = new JLabel("전화   ");
+		JPanel pTel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		T1 = new JTextField(6);
+		T2 = new JTextField(6);
+		T3 = new JTextField(6);
+		pTel.add(T1);
+		pTel.add(new JLabel("-"));
+		pTel.add(T2);
+		pTel.add(new JLabel("-"));
+		pTel.add(T3);
+
+		JLabel Gender = new JLabel("성별   ");
+		JPanel pGender = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		rbMan = new JRadioButton("남", true);
+		rbWoman = new JRadioButton("여", true);
+		group = new ButtonGroup();
+		group.add(rbMan);
+		group.add(rbWoman);
+		pGender.add(rbMan);
+		pGender.add(rbWoman);
+
+		JLabel Pur = new JLabel("내원목적   ");
+		PA = new JTextArea(8, 25);
+
+		JPanel pC = new JPanel();
+		JLabel CL = new JLabel("확인을 누르시면 설문이 시작됩니다.");
+		btnInsert = new JButton("확인");
+		pC.add(CL);
+		pC.add(btnInsert);
+
+		// 위치 지정!
+		infoPanel.setLayout(new GridBagLayout());
+		// 차트번호호
+		infoPanel.add(CN, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(CNF, new GridBagConstraints(1, 0, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		// 이름
+		infoPanel.add(Name, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(NF, new GridBagConstraints(1, 1, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 생년월일
+		infoPanel.add(Birth, new GridBagConstraints(0, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(pBirth, new GridBagConstraints(1, 2, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 전화
+		infoPanel.add(tel, new GridBagConstraints(0, 3, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(pTel, new GridBagConstraints(1, 3, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 성별
+		infoPanel.add(Gender, new GridBagConstraints(0, 4, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(pGender, new GridBagConstraints(1, 4, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 내원목적
+		infoPanel.add(Pur, new GridBagConstraints(0, 5, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(PA, new GridBagConstraints(1, 5, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 확인
+		infoPanel.add(pC, new GridBagConstraints(1, 6, 4, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		
+		btnInsert.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				chart_num = CNF.getText();
+				patientName = NF.getText();
+				System.out.println("patientName1 = " + patientName);
+				//환자정보 읽어오기
+				PatientBean bean = new PatientBean();
+				bean.setChartNum(CNF.getText());
+				bean.setPatientName(NF.getText());
+				bean.setPatientBirth(YF.getText()+MF.getText()+DF.getText());
+				bean.setPatientAge("20");
+				bean.setPatientTel(T1.getText()+T2.getText()+T3.getText());
+				if(rbMan.isSelected())
+					bean.setPatientSex("M");
+				else if(rbWoman.isSelected())
+					bean.setPatientSex("F");				
+				bean.setPatientPurpose(PA.getText());
+				
+				
+				//환자정보 DB에 저장
+				//PatientSaveMgr save = new PatientSaveMgr();
+				//save.insertPatient(bean);
+				
+				//연령군 별 설문조사
+				String Age = YF.getText(); 
+				goSurvey(Age);
+				infoPanel.getRootPane().validate();
+			}
+		});
+		
+		jp.add(infoPanel);
+
+		return jp;
+	}
+	
+	public int AgeCount(String age1) {
+		int age = Integer.parseInt(age1);
+		Calendar date = Calendar.getInstance();
+		int Age = (date.get(Calendar.YEAR) - age) + 1;
+		System.out.println("확인 : " + Age);
+		return Age;
+	}
+	
+	public JPanel goSurvey(String age1) {
+		JPanel pS = new JPanel();
+		int Age = AgeCount(age1);
+		// 영유아
+		System.out.println(Age);
+		if (0 <= Age && Age < 6) {
+			TitledBorder TB = new TitledBorder("설문");
+			TB.setTitleJustification(TitledBorder.CENTER);
+
+			JLabel j1 = new JLabel("1. 어제 하루중 당 섭취 횟수는 ?");
+			JPanel pN1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r1_1 = new JRadioButton("없었음", false);
+			JRadioButton r1_2 = new JRadioButton("1회", false);
+			JRadioButton r1_3 = new JRadioButton("2회", false);
+			JRadioButton r1_4 = new JRadioButton("3회", false);
+			JRadioButton r1_5 = new JRadioButton("4회", false);
+			group1 = new ButtonGroup();
+			group1.add(r1_1);
+			group1.add(r1_2);
+			group1.add(r1_3);
+			group1.add(r1_4);
+			group1.add(r1_5);
+			//pN1.add(j1);
+			pN1.add(r1_1);
+			pN1.add(r1_2);
+			pN1.add(r1_3);
+			pN1.add(r1_4);
+			pN1.add(r1_5);
+
+			JLabel j2 = new JLabel("2. 어제 하루 이를 닦은 횟수는 ?");
+			JPanel pN2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r2_1 = new JRadioButton("3회", false);
+			JRadioButton r2_2 = new JRadioButton("2회", false);
+			JRadioButton r2_3 = new JRadioButton("1회", false);
+			JRadioButton r2_4 = new JRadioButton("안닦았음", false);
+			group2 = new ButtonGroup();
+			group2.add(r2_1);
+			group2.add(r2_2);
+			group2.add(r2_3);
+			group2.add(r2_4);
+			//pN2.add(j2);
+			pN2.add(r2_1);
+			pN2.add(r2_2);
+			pN2.add(r2_3);
+			pN2.add(r2_4);
+
+			JLabel j3 = new JLabel("3. 다음중 어느 음식까지 잘 씹을 수 있는가 ?");
+			JPanel pN3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r3_1 = new JRadioButton("요거트/두부", false);
+			JRadioButton r3_2 = new JRadioButton("밥", false);
+			JRadioButton r3_3 = new JRadioButton("사과/김치", false);
+			JRadioButton r3_4 = new JRadioButton("고기(육류)", false);
+			JRadioButton r3_5 = new JRadioButton("마른오징어/사탕", false);
+			group3 = new ButtonGroup();
+			group3.add(r3_1);
+			group3.add(r3_2);
+			group3.add(r3_3);
+			group3.add(r3_4);
+			group3.add(r3_5);
+			
+			pN3.add(r3_1);
+			pN3.add(r3_2);
+			pN3.add(r3_3);
+			pN3.add(r3_4);
+			pN3.add(r3_5);
+			
+			JLabel j4 = new JLabel("4. 지난 일년간 치과 방문 한 적이 있는가 ?");
+			JPanel pN4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r4_1 = new JRadioButton("2회 이상", false);
+			JRadioButton r4_2 = new JRadioButton("1회", false);
+			JRadioButton r4_3 = new JRadioButton("간 적 없다", false);
+			
+			group4 = new ButtonGroup();
+			group4.add(r4_1);
+			group4.add(r4_2);
+			group4.add(r4_3);
+			
+			pN4.add(r4_1);
+			pN4.add(r4_2);
+			pN4.add(r4_3);
+			
+			JPanel pSb = new JPanel();
+			btnSurvey = new JButton("제출");
+			pSb.add(btnSurvey);
+			
+			btnSurvey.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					SurveyBean bean = new SurveyBean();
+					bean.setChartNum(CNF.getText());
+					bean.setSugar_frequency(getSelectedButtonText(group1));
+					bean.setBrush(getSelectedButtonText(group2));
+					bean.setChew_food(getSelectedButtonText(group3));
+					bean.setVisit_experience(getSelectedButtonText(group4));
+					
+					System.out.println("oral 차트넘버" + bean.getChartNum());
+					
+					PatientSaveMgr save = new PatientSaveMgr();
+					save.insertSurvey(bean);
+				}
+			});
+		
+			pS.setBorder(TB);
+
+			pS.setLayout(new GridBagLayout());
+			pS.add(j1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN1, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(j2, new GridBagConstraints(0, 2, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN2, new GridBagConstraints(0, 3, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(j3, new GridBagConstraints(0, 4, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN3, new GridBagConstraints(0, 5, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(j4, new GridBagConstraints(0, 6, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN4, new GridBagConstraints(0, 7, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pSb, new GridBagConstraints(0, 8, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			jp.add(pS);
+			
+		}
+		// 아동
+		else if (6 <= Age && Age < 12) {
+		}
+		// 청소년
+		else if (12 <= Age && Age < 20) {
+		}
+		// 청년
+		else if (20 <= Age && Age < 40) {
+		}
+		// 장년
+		else if (40 <= Age && Age < 65) {
+		}
+		// 노년
+		else if (Age > 64) {
+		}
+
+		return pS;
+	}
+	
+	public JPanel TeethPicture() {
+		
+		JPanel theethPanel = new JPanel();
+		JPanel theethPicturePanel = new JPanel();
+		TitledBorder TB = new TitledBorder("구강사진");
+		TB.setTitleJustification(TitledBorder.CENTER);
+		theethPicturePanel.setBorder(TB);
+		
+		
+		JButton uploadBtn1 = new JButton("upload1");
+		uploadBtn1.addActionListener(new OpenActionListener());
+		JButton uploadBtn2 = new JButton("upload2");
+		uploadBtn2.addActionListener(new OpenActionListener());
+		JButton uploadBtn3 = new JButton("upload3");
+		uploadBtn3.addActionListener(new OpenActionListener());
+		
+		//이미지 띄울 칸
+		teethP1 = new JLabel("p1");
+		teethP2 = new JLabel("p2");
+		teethP3 = new JLabel("p3");
+		Border border = LineBorder.createGrayLineBorder () ; 
+		teethP1.setBorder(border);
+		teethP2.setBorder(border);
+		teethP3.setBorder(border);
+		teethP1.setPreferredSize(new Dimension(250, 200));
+		teethP2.setPreferredSize(new Dimension(250, 200));
+		teethP3.setPreferredSize(new Dimension(250, 200));
+		
+		// 위치 지정!
+		theethPicturePanel.setLayout(new GridBagLayout());
+		theethPicturePanel.add(uploadBtn1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(uploadBtn2, new GridBagConstraints(2, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(uploadBtn3, new GridBagConstraints(4, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(teethP1, new GridBagConstraints(0, 1, 2, 2, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(teethP2, new GridBagConstraints(2, 1, 2, 2, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(teethP3, new GridBagConstraints(4, 1, 2, 2, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		
+		
+		JPanel teethInfoPanel = new JPanel();
+		TitledBorder TB2 = new TitledBorder("구강정보");
+		TB2.setTitleJustification(TitledBorder.CENTER);
+		teethInfoPanel.setBorder(TB2);
+		
+		JLabel info1 = new JLabel("유치 갯수");
+		JTextField info_babyTooth = new JTextField(5);
+		JLabel info2 = new JLabel("영구치 갯수");
+		JTextField info_permanentTooth = new JTextField(5);
+		JLabel info3 = new JLabel("우식방치 치아 갯수");
+		JTextField info_leaving = new JTextField(5);
+		JLabel info4 = new JLabel("우식방치 치아 갯수");
+		JTextField info_treatment = new JTextField(5);
+		JLabel info5 = new JLabel("우식방치 치아 갯수");
+		JTextField info_sulcus = new JTextField(5);
+		
+		// 위치 지정!
+		teethInfoPanel.setLayout(new GridBagLayout());
+		teethInfoPanel.add(info1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		teethInfoPanel.add(info_babyTooth, new GridBagConstraints(1, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		teethInfoPanel.add(info2, new GridBagConstraints(2, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		teethInfoPanel.add(info_permanentTooth, new GridBagConstraints(3, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 20), 0, 0));
+		teethInfoPanel.add(info3, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		teethInfoPanel.add(info_leaving, new GridBagConstraints(1, 1, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 20), 0, 0));
+		teethInfoPanel.add(info4, new GridBagConstraints(2, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		teethInfoPanel.add(info_treatment, new GridBagConstraints(3, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		teethInfoPanel.add(info5, new GridBagConstraints(4, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		teethInfoPanel.add(info_sulcus, new GridBagConstraints(5, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		
+		theethPanel.setLayout(new GridBagLayout());
+		theethPanel.add(theethPicturePanel, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPanel.add(teethInfoPanel, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		
+		return theethPanel;
+		
+		
+	}
+	
+	public JPanel X_ray() {
+		JPanel xrayPanel = new JPanel();
+		JPanel xrayPicturePanel = new JPanel();
+		TitledBorder TB = new TitledBorder("구강사진");
+		TB.setTitleJustification(TitledBorder.CENTER);
+		xrayPicturePanel.setBorder(TB);
+		
+		JButton uploadBtn = new JButton("upload");
+		
+		uploadBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser= new JFileChooser();
+				
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                        "Image Files", // 파일 이름에 창에 출력될 문자열
+                        "jpg", "gif", "PNG"); // 파일 필터로 사용되는 확장자. *.jpg. *.gif만 나열됨
+				chooser.setFileFilter(filter); // 파일 다이얼로그에 파일 필터 설정
+            
+				// 파일 다이얼로그 출력
+				int ret = chooser.showOpenDialog(null);
+				if(ret != JFileChooser.APPROVE_OPTION) { // 사용자가  창을 강제로 닫았거나 취소 버튼을 누른 경우
+					JOptionPane.showMessageDialog(null,"파일을 선택하지 않았습니다", "경고", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				// 사용자가 파일을 선택하고 "열기" 버튼을 누른 경우
+				String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
+				System.out.println(filePath);
+				
+				p1.setIcon(new ImageIcon(((new ImageIcon(filePath)).getImage()).getScaledInstance(300, 250, java.awt.Image.SCALE_SMOOTH))); // 파일을 로딩하여 이미지 레이블에 출력한다.
+			}
+			
+		});
+		
+		JTextField pathCheck = new JTextField(25);
+		
+		//이미지 띄울 칸
+		p1 = new JLabel();
+		Border border = LineBorder.createGrayLineBorder () ; 
+		p1.setBorder(border);
+		p1.setPreferredSize(new Dimension(300, 250));
+		
+		// 위치 지정!
+		xrayPicturePanel.setLayout(new GridBagLayout());
+		xrayPicturePanel.add(uploadBtn, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		xrayPicturePanel.add(pathCheck, new GridBagConstraints(1, 0, 2, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		xrayPicturePanel.add(p1, new GridBagConstraints(0, 1, 3, 3, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		
+		
+
+		JPanel addInfoPanel = new JPanel();
+		TitledBorder TB2 = new TitledBorder("추가 검사");
+		TB2.setTitleJustification(TitledBorder.CENTER);
+		addInfoPanel.setBorder(TB2);
+		
+		JLabel info1 = new JLabel("현미경 검사 양");
+		JComboBox info_microAmount = new JComboBox(new String[] {"", "많음", "적음"});
+		JLabel info2 = new JLabel("현미경 검사 활동성");
+		JComboBox info_microMovement = new JComboBox(new String[] {"", "높음", "낮음"});
+		JLabel info3 = new JLabel("부정교합");
+		JComboBox info_malocclusion = new JComboBox(new String[] {"", "정상교합", "약간부정", "부정교합"});
+		JLabel info4 = new JLabel("치아파절");
+		JComboBox info_odontoclasis = new JComboBox(new String[] {"", "없음", "약간", "있음"});
+		JLabel info5 = new JLabel("구강감염");
+		JComboBox info_infection = new JComboBox(new String[] {"", "없음", "미약", "감염"});
+		JLabel info6 = new JLabel("구취");
+		JComboBox info_badBreath = new JComboBox(new String[] {"","없음","미약", "심각"});
+		JLabel info7 = new JLabel("전신질환");
+		JComboBox info_disease = new JComboBox(new String[] {"", "없음", "미약", "심각"});
+		JLabel info8 = new JLabel("치석");
+		JComboBox info_tartar = new JComboBox(new String[] {"", "없음", "약간", "있음", "많음"});
+		JLabel info9 = new JLabel("치은염");
+		JComboBox info_gingivitis = new JComboBox(new String[] {"", "없음", "1부위", "2부위", "3부위"});
+		JLabel info10 = new JLabel("스나이더");
+		JComboBox info_snyder = new JComboBox(new String[] {"", "양성", "음,양성", "음성"});
+		
+		// 위치 지정!
+		addInfoPanel.setLayout(new GridBagLayout());
+		addInfoPanel.add(info1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_microAmount, new GridBagConstraints(1, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info2, new GridBagConstraints(2, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_microMovement, new GridBagConstraints(3, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info10, new GridBagConstraints(4, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_snyder, new GridBagConstraints(5, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info3, new GridBagConstraints(6, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+			addInfoPanel.add(info_malocclusion, new GridBagConstraints(7, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info4, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_odontoclasis, new GridBagConstraints(1, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info5, new GridBagConstraints(2, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_infection, new GridBagConstraints(3, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info6, new GridBagConstraints(4, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_badBreath, new GridBagConstraints(5, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info7, new GridBagConstraints(0, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_disease, new GridBagConstraints(1, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info8, new GridBagConstraints(2, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_tartar, new GridBagConstraints(3, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		addInfoPanel.add(info9, new GridBagConstraints(4, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		addInfoPanel.add(info_gingivitis, new GridBagConstraints(5, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 20), 0, 0));
+		
+		xrayPanel.setLayout(new GridBagLayout());
+		xrayPanel.add(xrayPicturePanel, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		xrayPanel.add(addInfoPanel, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		
+		return xrayPanel;
+	}
+	
+	
+	
+	public JPanel Plaque() {
+		JPanel plaquePanel = new JPanel();
+		
+		JPanel plaquePicturePanel = new JPanel();
+		TitledBorder TB = new TitledBorder("구강사진");
+		TB.setTitleJustification(TitledBorder.CENTER);
+		plaquePicturePanel.setBorder(TB);
+		
+		JButton uploadBtn1 = new JButton("upload1");
+		uploadBtn1.addActionListener(new OpenActionListener());
+		JButton uploadBtn2 = new JButton("upload2");
+		uploadBtn2.addActionListener(new OpenActionListener());
+		JButton uploadBtn3 = new JButton("upload3");
+		uploadBtn3.addActionListener(new OpenActionListener());
+		
+		//이미지 띄울 칸
+		plaqueP1 = new JLabel("p1");
+		plaqueP2 = new JLabel("p2");
+		plaqueP3 = new JLabel("p3");
+		Border border = LineBorder.createGrayLineBorder () ; 
+		plaqueP1.setBorder(border);
+		plaqueP2.setBorder(border);
+		plaqueP3.setBorder(border);
+		plaqueP1.setPreferredSize(new Dimension(250, 200));
+		plaqueP2.setPreferredSize(new Dimension(250, 200));
+		plaqueP3.setPreferredSize(new Dimension(250, 200));
+		
+		// 위치 지정!
+		plaquePicturePanel.setLayout(new GridBagLayout());
+		plaquePicturePanel.add(uploadBtn1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		plaquePicturePanel.add(uploadBtn2, new GridBagConstraints(2, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		plaquePicturePanel.add(uploadBtn3, new GridBagConstraints(4, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+				2, 2, 2, 2), 0, 0));
+		plaquePicturePanel.add(plaqueP1, new GridBagConstraints(0, 1, 2, 2, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		plaquePicturePanel.add(plaqueP2, new GridBagConstraints(2, 1, 2, 2, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		plaquePicturePanel.add(plaqueP3, new GridBagConstraints(4, 1, 2, 2, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		
+		plaquePanel.add(plaquePicturePanel);
+		
+		return plaquePanel;
+	}
+	
+	
+	
+	class OpenActionListener implements ActionListener{
+		JFileChooser chooser;
+		String actionName;
+        
+        OpenActionListener() {
+            chooser= new JFileChooser(); // 파일 다이얼로그 생성
+        }
+        public void actionPerformed(ActionEvent e) {
+        	
+        	actionName = e.getActionCommand();
+			
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Image Files", // 파일 이름에 창에 출력될 문자열
+                    "jpg", "gif", "PNG"); // 파일 필터로 사용되는 확장자. *.jpg. *.gif만 나열됨
+			chooser.setFileFilter(filter); // 파일 다이얼로그에 파일 필터 설정
+        
+			// 파일 다이얼로그 출력
+			int ret = chooser.showOpenDialog(null);
+			if(ret != JFileChooser.APPROVE_OPTION) { // 사용자가  창을 강제로 닫았거나 취소 버튼을 누른 경우
+				JOptionPane.showMessageDialog(null,"파일을 선택하지 않았습니다", "경고", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			// 사용자가 파일을 선택하고 "열기" 버튼을 누른 경우
+			String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
+			System.out.println(filePath);
+			
+			switch(actionName){
+			case "upload1":
+				if(tapNum==1)
+					teethP1.setIcon(new ImageIcon(((new ImageIcon(filePath)).getImage()).getScaledInstance(300, 250, java.awt.Image.SCALE_SMOOTH))); // 파일을 로딩하여 이미지 레이블에 출력한다.
+				else if(tapNum==3)
+					plaqueP1.setIcon(new ImageIcon(((new ImageIcon(filePath)).getImage()).getScaledInstance(300, 250, java.awt.Image.SCALE_SMOOTH))); // 파일을 로딩하여 이미지 레이블에 출력한다.
+				break;
+			case "upload2":
+				plaqueP2.setIcon(new ImageIcon(((new ImageIcon(filePath)).getImage()).getScaledInstance(300, 250, java.awt.Image.SCALE_SMOOTH))); // 파일을 로딩하여 이미지 레이블에 출력한다.
+				break;
+			case "upload3":
+				plaqueP3.setIcon(new ImageIcon(((new ImageIcon(filePath)).getImage()).getScaledInstance(300, 250, java.awt.Image.SCALE_SMOOTH))); // 파일을 로딩하여 이미지 레이블에 출력한다.
+				break;
+			}
+        }
+	}
+	
+	public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
+    }  
+	
+
+	
+
+}

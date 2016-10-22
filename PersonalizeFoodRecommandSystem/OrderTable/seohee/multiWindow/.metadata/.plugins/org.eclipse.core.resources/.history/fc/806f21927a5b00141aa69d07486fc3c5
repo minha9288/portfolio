@@ -1,0 +1,101 @@
+package view;
+
+import javax.swing.JDesktopPane;
+
+import java.awt.*;
+import java.beans.PropertyVetoException;
+import java.util.Random;
+
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
+public class view extends JDesktopPane implements AppSetup {
+	public view() {
+		setDragMode(JDesktopPane.LIVE_DRAG_MODE);
+	}
+	
+	public void apply(final JFrame frame) {
+		final JDesktopPane desktop = this;
+		
+		JInternalFrame frame1 = new InternalFrame1();
+		JInternalFrame frame2 = new InternalFrame2();
+		JInternalFrame frame3 = new InternalFrame3();
+		JInternalFrame frame4 = new InternalFrame4();
+		
+		((BasicInternalFrameUI)frame1.getUI()).setNorthPane(null);
+		((BasicInternalFrameUI)frame2.getUI()).setNorthPane(null);
+		((BasicInternalFrameUI)frame3.getUI()).setNorthPane(null);
+		((BasicInternalFrameUI)frame4.getUI()).setNorthPane(null);
+		
+		java.awt.geom.AffineTransform rotate;
+		double theta = (1.0) * Math.PI;
+		rotate = java.awt.geom.AffineTransform.getRotateInstance(theta);
+		
+		frame1.setVisible(true);
+		frame2.setVisible(true);
+		frame3.setVisible(true);
+		frame4.setVisible(true);
+		
+		desktop.add(frame1);
+		desktop.add(frame2);
+		desktop.add(frame3);
+		desktop.add(frame4);
+		
+		try {
+			frame1.setSelected(true);
+			frame2.setSelected(true);
+			frame3.setSelected(true);
+			frame4.setSelected(true);
+		} catch (PropertyVetoException p) {
+			
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		final JDesktopPane c = new view();
+		c.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		SimpleAppLauncher.launch("title", c);
+	}
+	
+	class InternalFrame1 extends JInternalFrame {
+		public InternalFrame1() {
+			super("table4", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(0,0);
+			
+			
+			
+		}
+	}
+
+	class InternalFrame2 extends JInternalFrame {
+		public InternalFrame2() {
+			super("table2", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2,0);
+		}
+	}
+
+	class InternalFrame3 extends JInternalFrame {
+		public InternalFrame3() {
+			super("table3", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(0,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		}
+	}
+
+	class InternalFrame4 extends JInternalFrame {
+		public InternalFrame4() {
+			super("table4", false, false, false, false);
+			setLayout(new BorderLayout());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2,Toolkit.getDefaultToolkit().getScreenSize().height/2);
+		}
+	}
+}
+
+

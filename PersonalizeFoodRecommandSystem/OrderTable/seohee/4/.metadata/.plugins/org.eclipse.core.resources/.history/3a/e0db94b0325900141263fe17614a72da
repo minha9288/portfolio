@@ -1,0 +1,240 @@
+package view;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.MTComponent;
+import org.mt4j.components.TransformSpace;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.components.visibleComponents.widgets.MTSceneMenu;
+import org.mt4j.components.visibleComponents.widgets.MTSceneWindow;
+import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.components.visibleComponents.widgets.MTTextField;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
+import org.mt4j.input.gestureAction.InertiaDragAction;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.dragProcessor.DragProcessor;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickProcessor;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
+import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.sceneManagement.Iscene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
+import org.mt4j.sceneManagement.transition.FadeTransition;
+import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.camera.MTCamera;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.math.Vector3D;
+import org.mt4j.util.opengl.GLFBO;
+
+import advanced.mtShell.ICreateScene;
+import basic.scenes.Scene2;
+import processing.core.PImage;
+import translate.translator2;
+
+public class food extends AbstractScene{
+	private AbstractMTApplication app;
+	MTComponent mtCom;
+	MTImageButton left_button, right_button, menu_button, food_button1, food_button2, food_button3;
+	MTImage choose_food, translate;
+	
+	int food1, food2, food3;
+	String nation = "jp";
+	
+	Iscene material_java;
+	
+	private boolean hasFBO;
+	private boolean switchDirectlyToScene = false;
+	
+	public food(AbstractMTApplication mtAppl, String name) {
+		super(mtAppl, name);
+		this.app = mtAppl;
+		mtCom = new MTComponent(app, "top layer group", new MTCamera(app));
+		this.setClearColor(new MTColor(255,255,255,255)); // 화면 배경 색(흰색)
+		food1 = 1;
+		food2 = 2;
+		food3 = 3;
+		
+		food_button1 = new MTImageButton(app, app.loadImage("greenlight/pictures/음식사진/"+food1+".PNG"));
+		food_button1.setPickable(true);
+		food_button1.setSizeXYGlobal(app.width/5, app.width/5); // 이미지 크기
+		food_button1.setPositionGlobal(new Vector3D(app.width-app.width/1.3f, app.height-app.height/2.35f)); // 화면 위치
+		mtCom.addChild(food_button1); // 화면에 , 이미지버튼 넣기
+		
+		// 추천된 음식 버튼 2
+		food_button2 = new MTImageButton(app, app.loadImage("greenlight/pictures/음식사진/"+food2+".PNG")); // 이미지 load
+		food_button2.setSizeXYGlobal(app.width/5, app.width/5); // 이미지 크기
+		food_button2.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2.35f)); // 화면 위치
+		mtCom.addChild(food_button2); // 화면에 이미지버튼 넣기
+		
+		// 추천된 음식 버튼 3
+		food_button3 = new MTImageButton(app, app.loadImage("greenlight/pictures/음식사진/"+food3+".PNG")); // 이미지 load
+		food_button3.setSizeXYGlobal(app.width/5, app.width/5); // 이미지 크기
+		food_button3.setPositionGlobal(new Vector3D(app.width-app.width/4.5f, app.height-app.height/2.35f)); // 화면 위치
+		mtCom.addChild(food_button3); // 화면에 이미지버튼 넣기
+		
+		// 이전버튼
+		left_button = new MTImageButton(app, app.loadImage("greenlight/pictures/기타사진/left_btn.png"));
+		left_button.setSizeXYGlobal(app.width/10, app.width/10);
+		left_button.setPositionGlobal(new Vector3D(app.width-app.width/1.07f, app.height-app.height/1.13f));
+		mtCom.addChild(left_button);
+		
+		// 다음버튼
+		right_button = new MTImageButton(app, app.loadImage("greenlight/pictures/기타사진/right_btn.png"));
+		right_button.setSizeXYGlobal(app.width/10, app.width/10);
+		right_button.setPositionGlobal(new Vector3D(app.width-app.width/15f, app.height-app.height/1.13f));
+		mtCom.addChild(right_button);
+		
+		// 메뉴버튼
+		menu_button = new MTImageButton(app, app.loadImage("greenlight/pictures/기타사진/menu_btn.png"));
+		menu_button.setSizeXYGlobal(app.width/10, app.height/15);
+		menu_button.setPositionGlobal(new Vector3D(app.width-app.width/15f, app.height-app.height/1.35f));
+		mtCom.addChild(menu_button);
+		
+		// 사용자가 선택한 음식이 들어갈 자리의 ? 이미지
+		choose_food = new MTImage(app, app.loadImage("greenlight/pictures/기타사진/food_img.png"));
+		choose_food.setPickable(false);
+		choose_food.setSizeXYGlobal(app.width/5, app.width/5); // 이미지 크기
+		choose_food.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/1.25f)); // 화면 위치
+		mtCom.addChild(choose_food); // 화면에 이미지 넣기
+		
+		// 번역된 설명이 나올 자리의 이미지
+		translate = new MTImage(app, app.loadImage("greenlight/pictures/기타사진/translate_img.png"));
+		translate.setPickable(false);
+		translate.setSizeXYGlobal(app.width, app.height/6); // 이미지 크기
+		translate.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/8f)); // 화면 위치
+		mtCom.addChild(translate); // 화면에 이미지 넣기
+		
+		final MTTextField translate_text_name = new MTTextField(50, 885, app.width/1.01f, 50, FontManager.getInstance().createFont(app, "SansSerif", 30), app); // x, y, 양옆, 위아래
+		translate_text_name.setFillColor(new MTColor(215,228,189,255));
+		translate_text_name.setStrokeColor(new MTColor(215,228,189,255));
+		translate_text_name.setPickable(false);
+		
+		final MTTextField translate_text_exp = new MTTextField(50, 935, app.width/1.01f, 50, FontManager.getInstance().createFont(app, "SansSerif", 20), app); // x, y, 양옆, 위아래
+		translate_text_exp.setFillColor(new MTColor(215,228,189,255));
+		translate_text_exp.setStrokeColor(new MTColor(215,228,189,255));
+		translate_text_exp.setPickable(false);
+		
+		
+		
+		
+		food_button1.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+			public boolean processGestureEvent(MTGestureEvent ge) {
+				TapEvent te = (TapEvent)ge;
+				switch(te.getTapID()) {
+				case TapEvent.TAPPED:
+					
+					// 설명
+					translator2 tr = new translator2();
+					translate_text_name.setText(tr.translating2(food1, nation, "name"));
+					mtCom.addChild(translate_text_name);
+					
+					translator2 tr2 = new translator2();
+					translate_text_exp.setText(tr2.translating2(food1, nation, "exp"));
+					mtCom.addChild(translate_text_exp);
+					
+					choose_food = new MTImage(app, app.loadImage("greenlight/pictures/음식사진/"+food1+".PNG"));
+					choose_food.setPickable(false);
+					choose_food.setSizeXYGlobal(app.width/5, app.width/5); // 이미지 크기
+					choose_food.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/1.25f)); // 화면 위치
+					mtCom.addChild(choose_food); // 화면에 이미지 넣기
+					
+					break;
+					default : 
+						break;
+				}
+				return true;
+			}
+		});
+		
+		food_button2.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+			public boolean processGestureEvent(MTGestureEvent ge) {
+				TapEvent te = (TapEvent)ge;
+				switch(te.getTapID()) {
+				case TapEvent.TAPPED:
+					choose_food = new MTImage(app, app.loadImage("greenlight/pictures/음식사진/"+food2+".PNG"));
+					choose_food.setPickable(false);
+					choose_food.setSizeXYGlobal(app.width/5, app.width/5); // 이미지 크기
+					choose_food.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/1.25f)); // 화면 위치
+					mtCom.addChild(choose_food); // 화면에 이미지 넣기
+					break;
+					default : 
+						break;
+				}
+				return true;
+			}
+		});
+		
+		food_button3.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+			public boolean processGestureEvent(MTGestureEvent ge) {
+				TapEvent te = (TapEvent)ge;
+				switch(te.getTapID()) {
+				case TapEvent.TAPPED:
+					choose_food = new MTImage(app, app.loadImage("greenlight/pictures/음식사진/"+food3+".PNG"));
+					choose_food.setPickable(false);
+					choose_food.setSizeXYGlobal(app.width/5, app.width/5); // 이미지 크기
+					choose_food.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/1.25f)); // 화면 위치
+					mtCom.addChild(choose_food); // 화면에 이미지 넣기
+					break;
+					default : 
+						break;
+				}
+				return true;
+			}
+		}); 
+		
+		right_button.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+			public boolean processGestureEvent(MTGestureEvent ge) {
+				this.person();
+				return false;
+			}
+
+			private void person() {
+				this.processGestureEvent_3(new ICreateScene() {
+					public Iscene getNewScene() {
+						return new material(app, "pl");
+					}
+					public String getTitle() {
+						return "화면";
+					}
+				});
+			}
+
+			private boolean processGestureEvent_3(final ICreateScene createScene) {
+				final Iscene scene = createScene.getNewScene();
+				
+				if (!switchDirectlyToScene){//We have FBO support -> show scene in a window first
+								
+					if (hasFBO && scene instanceof AbstractScene){
+						((AbstractScene) scene).setTransition(new BlendTransition(app, 300));	
+					}
+						
+					final MTSceneWindow sceneWindow = new MTSceneWindow(app, scene, 1, 1); // applet, scene, 테두리 가로두께, 테두리 세로두께
+					// 테두리 두께가 1이거나 50 이러면 x표시랑 최대화 표시가 있는데 5면 없다.(이상함...)
+					sceneWindow.setFillColor(new MTColor(50,50,50,200)); // 테두리 색
+					sceneWindow.scaleGlobal(1, 1, 1, sceneWindow.getCenterPointGlobal()); // 화면의 크기(1이면 전체화면) 가로폭, 세로폭, ?, ?	
+					sceneWindow.addGestureListener(DragProcessor.class, new InertiaDragAction());
+					sceneWindow.setPickable(false); // 화면 이동 안되게 고정
+					getCanvas().addChild(sceneWindow);
+				}else{
+					//No FBO available -> change to the new scene fullscreen directly			
+					float menuWidth = 64;
+					float menuHeight = 64;
+					MTSceneMenu sceneMenu = 
+					new MTSceneMenu(app, scene, app.width-menuWidth, app.height-menuHeight, menuWidth, menuHeight);
+					sceneMenu.addToScene();
+								
+					app.addScene(scene);
+					app.pushScene();
+					app.changeScene(scene);
+				}
+				return false;
+			}
+		});
+		
+		this.getCanvas().addChild(mtCom);
+	}
+	
+}

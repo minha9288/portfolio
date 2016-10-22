@@ -1,0 +1,39 @@
+
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.regex.PatternSyntaxException;
+
+public class Analysis
+{
+	static ArrayList<String> readKeyword;
+	
+	public static void main(String[] args)
+	{
+		
+		/*
+		//타임라인 글 받아서 String 하나로 합치기
+		String[] readData= {"불고기는 맛있다", "사과 좋아", "갈비탕 굳굳", "떡볶이 짱이야", "떡볶이 탕탕"};
+		String readSumData = "";
+		for(int i=0; i<readData.length; i++){
+			readSumData = readSumData + " / " + readData[i];
+		}
+		System.out.println(readSumData);
+		*/
+		
+		//GetFoodName test = new GetFoodName("떡볶이 좋아, 불고기 별로야 냉면은 맛있어, 떡볶이도 맛있어");
+		GetFoodName test = new GetFoodName("불고기덮밥 좋아요~♥");
+		System.out.println("읽은 데이터 : 불고기덮밥 좋아요~♥");
+		//GetFoodName test = new GetFoodName("비빔밥도 맛있어");
+		
+		readKeyword = new ArrayList<String>();
+		test.printHashMap();
+	}
+			
+}

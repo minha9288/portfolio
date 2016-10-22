@@ -1,0 +1,46 @@
+package view;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.MTComponent;
+import org.mt4j.components.visibleComponents.shapes.MTRectangle;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
+import org.mt4j.input.gestureAction.InertiaDragAction;
+import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.dragProcessor.DragProcessor;
+import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldProcessor;
+import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.math.ToolsMath;
+import org.mt4j.util.math.Vector3D;
+
+import processing.core.PImage; // 이미지
+
+public class first extends AbstractScene {
+	private AbstractMTApplication mtApp;
+	MTComponent topLayer;
+
+	public first(AbstractMTApplication mtApplication, String name) {
+		super(mtApplication, name);
+		this.mtApp = mtApplication;
+		this.setClearColor(new MTColor(255, 255, 255, 255)); // 화면 배경 색
+		
+		PImage keyboardImg = mtApp.loadImage("advanced" + AbstractMTApplication.separator + "flickrMT"+ AbstractMTApplication.separator + "data"+ AbstractMTApplication.separator 
+				+ "keyb128.png");
+		
+		//final MTImageButton keyboardButton = new MTImageButton(app, keyboardImg);
+		final MTImageButton keyboardButton = new MTImageButton(mtApp, mtApp.loadImage("C:\\Users\\김서희\\Pictures\\2.PNG"));
+		keyboardButton.setFillColor(new MTColor(255,255,255,200));
+		keyboardButton.setName("KeyboardButton");
+		keyboardButton.setNoStroke(true);
+		keyboardButton.translateGlobal(new Vector3D(100, 300));
+		topLayer.addChild(keyboardButton);	
+		this.getCanvas().addChild(topLayer);
+	}
+	
+
+}

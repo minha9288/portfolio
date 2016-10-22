@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <ImageButton
+        android:id="@+id/currentslide"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_width="70dp"
+        android:layout_height="65dp"
+        android:background="@drawable/show"
+        />
+
+    <ImageButton
+        android:id="@+id/slideMenu"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:src="@drawable/m1"
+        android:background="#FFFFFF"
+        />
+
+    <ImageButton
+        android:id="@+id/penMenu"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:src="@drawable/m2"
+        android:background="#ffffff" />
+
+    <ImageButton
+        android:id="@+id/laserMenu"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:src="@drawable/m3"
+        android:background="#ffffff" />
+
+    <ImageButton
+        android:id="@+id/alarmMenu"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:src="@drawable/m6"
+        android:background="#ffffff" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:padding="10dp"
+      >
+
+        <ImageButton
+        android:id="@+id/exitMenu"
+        android:layout_alignParentBottom="true"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:background="@drawable/exit"
+         />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

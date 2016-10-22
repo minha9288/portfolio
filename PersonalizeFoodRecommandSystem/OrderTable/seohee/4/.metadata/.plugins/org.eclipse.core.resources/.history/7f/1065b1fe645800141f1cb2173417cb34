@@ -1,0 +1,45 @@
+package view;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.TransformSpace;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickProcessor;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
+import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.sceneManagement.Iscene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
+import org.mt4j.sceneManagement.transition.FadeTransition;
+import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.math.Vector3D;
+import org.mt4j.util.opengl.GLFBO;
+
+import basic.scenes.Scene2;
+import processing.core.PImage;
+
+public class food extends AbstractScene{
+	private AbstractMTApplication app;
+	MTImageButton left_button, right_button, menu_button, food_button1, food_button2, food_button3;
+	
+	public food(AbstractMTApplication mtAppl, String name) {
+		super(mtAppl, name);
+		this.app = mtAppl;
+		this.setClearColor(new MTColor(255,255,255,255)); // 화면 배경 색(흰색)
+		
+		food_button1 = new MTImageButton(app, app.loadImage("C:\\SmartTable\\4\\mt4j-desktop\\greenlight\\pictures\\음식사진\\1.PNG")); // 이미지 load
+		//image.setSizeXYGlobal(app.width, app.height); // 이미지 크기
+		//image.setPickable(false); // 이미지 움직임 안되게 고정
+		//image.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2)); // 화면 위치
+					
+		//this.getCanvas().addChild(food_button1); // 화면에 이미지 넣기
+	}
+	
+}

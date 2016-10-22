@@ -1,0 +1,10 @@
+#headerWrap{
+	margin:0 auto;
+	width:886px;
+	height:105px;
+	background:url(../images/common/bg_menubox.png) no-repeat 0 0;
+}
+#header {
+	position:relative;
+	background:none;
+}

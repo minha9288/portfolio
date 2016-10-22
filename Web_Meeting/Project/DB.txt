@@ -1,0 +1,89 @@
+\
+
+create database web_meeting;
+\
+create table user(user_id varchar(20) not null primary key,
+
+ user_name varchar(20) not null,
+
+ user_pw varchar(20) not null,
+
+ user_email varchar(50) not null,
+
+ user_phone varchar(20) not null);
+
+\
+insert user(user_id ,user_name ,user_pw ,user_email ,user_phone )
+values('hhhh','한유진','1111','godss3982@hanmail.net','01029301231');
+
+insert user(user_id ,user_name ,user_pw ,user_email ,user_phone )
+values('aaaa','김서희','1111','kim@hanmail.net','01012342342');
+\
+
+CREATE TABLE `bbs`(
+`user_id` varchar(20) references user(user_id),
+	`num`               int(11)              NOT NULL  auto_increment,
+	`name`              varchar(20)                    ,
+	`subject`           varchar(50)                    ,
+	`content`           text                           ,
+	`pos`                smallint(7) unsigned           ,
+	`ref`               smallint(7)                    ,
+	`depth`             smallint(7) unsigned           ,
+	`regdate`          date                           ,
+	`pass`              varchar(15)                    ,
+	`ip`                  varchar(15)                    ,
+	`count`             smallint(7) unsigned           ,
+	`filename`         varchar(30)                    ,
+	`filesize`           int(11)                        ,
+	PRIMARY KEY ( `num` )
+);
+insert bbs(name,content,subject,ref,pos,depth,regdate,pass,count,ip,filename,filesize)
+values('aaa', 'bbb', 'ccc', 0, 0, 0, now(), '1111',0, '127.0.0.1', null, 0);
+\
+create table meeting(
+      meeting_id int not null auto_increment,
+      user_id varchar(20) not null,
+      meeting_name varchar(40) not null,
+      foreign key(user_id) references user(user_id) on delete cascade,
+      primary key (meeting_id));
+\
+create table entered(
+      meeting_id int not null,
+      user_id varchar(20) not null,
+      foreign key(meeting_id) references meeting(meeting_id) on delete cascade,
+      foreign key(user_id) references user(user_id) on delete cascade);
+\
+CREATE TABLE `fboard` (
+ `num`               int(11)              NOT NULL  auto_increment  ,
+ `name`              varchar(20)                    ,
+ `subject`           varchar(50)                    ,
+ `content`           text                           ,
+ `pos`                smallint(7) unsigned           ,
+ `ref`               smallint(7)                    ,
+ `depth`             smallint(7) unsigned           ,
+ `regdate`          date                           ,
+ `pass`              varchar(15)                    ,
+ `ip`                  varchar(15)                    ,
+ `count`             smallint(7) unsigned           ,
+ `filename`         varchar(30)                    ,
+ `filesize`           int(11)                        ,
+ PRIMARY KEY ( `num` )
+);
+
+\
+CREATE TABLE `fboard2` (
+ `num`               int(11)              NOT NULL  auto_increment  ,
+ `name`              varchar(20)                    ,
+ `subject`           varchar(50)                    ,
+ `content`           text                           ,
+ `pos`                smallint(7) unsigned           ,
+ `ref`               smallint(7)                    ,
+ `depth`             smallint(7) unsigned           ,
+ `regdate`          date                           ,
+ `pass`              varchar(15)                    ,
+ `ip`                  varchar(15)                    ,
+ `count`             smallint(7) unsigned           ,
+ `filename`         varchar(30)                    ,
+ `filesize`           int(11)                        ,
+ PRIMARY KEY ( `num` )
+);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="txt_ip_address">PC에서 서버를 실행시킨 후, IP주소를 입력하세요 :) </string>
+    <string name="txt_ip_error">Server not found</string>
+    <string name="txt_connect">연결</string>
+    <string name="app_name">MMouse</string>
+    <string name="txt_close">Close</string>
+    <string name="txt_server_url">http://www.remotedroid.net/</string>
+    <string name="txt_preferences">Preferences</string>
+    <string name="txt_keyboard">Keyboard</string>
+    <string name="txt_advanced">Controls</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_prefs_copy">마우스 설정을 바꾸시려면 메뉴버튼을 누르세요.</string>
+    <string name="txt_recentlyUsedHosts">최근 접속 IP:</string>
+    <string name="toast_invalidIP">정확한 IP주소를 입력하세요!</string>
+    <string name="title_activity_page">PageActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_control_page">ControlPage</string>
+    <string name="title_activity_control_pen">ControlPen</string>
+    <string name="title_activity_test">test</string>
+    <string name="title_activity_con">Con</string>
+    <string name="title_activity_control_laser">ControlLaser</string>
+    <string name="title_activity_control_voice">ControlVoice</string>
+    <string name="title_activity_control_play">ControlPlay</string>
+    <string name="title_activity_control_alarm">ControlAlarm</string>
+    <string name="title_activity_main">MainActivity</string>
+
+</resources>

@@ -1,0 +1,120 @@
+/**@author 김서희
+ * 테이블 nfc 대기 전 화면
+ */
+
+package view;
+
+import java.net.Socket;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.MTComponent;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.components.visibleComponents.widgets.MTSceneMenu;
+import org.mt4j.components.visibleComponents.widgets.MTSceneWindow;
+import org.mt4j.input.gestureAction.InertiaDragAction;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.dragProcessor.DragProcessor;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.sceneManagement.Iscene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.math.Vector3D;
+
+import advanced.mtShell.ICreateScene;
+import thread_test.ReadThread;
+import thread_test.WriteThread;
+
+public class first{
+	
+	private AbstractMTApplication app;
+	
+	private boolean hasFBO;
+	private boolean switchDirectlyToScene = false;
+	
+	private static final String serverIP = "172.25.235.152"; // 내 ip 입력하기
+	private static final int serverPort = 9286;
+	private static String msg;
+	
+	String a;
+	/*
+	public first(AbstractMTApplication mtAppl, String name) {
+		super(mtAppl, name);
+		this.app = mtAppl;
+		this.setClearColor(new MTColor(255,255,255,255)); // 화면 배경 색(흰색)
+		
+		final MTImage image = new MTImage(app, app.loadImage("greenlight/pictures/기타사진/main.png")); // 이미지 load
+		image.setSizeXYGlobal(app.width, app.height); // 이미지 크기
+		image.setPickable(false); // 이미지 움직임 안되게 고정
+		image.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2)); // 화면 위치
+						
+		this.getCanvas().addChild(image); // 화면에 이미지 넣기
+		
+		/*
+		msg = "Client";
+		try {
+	        Socket socket = new Socket(serverIP, serverPort);
+	        
+	        Thread readThread = new ReadThread(socket);
+	        Thread writeThread = new WriteThread(socket, msg);
+	        readThread.start();
+	        writeThread.start();
+	        if(name.equals("table1"))
+	        	person();
+		} catch(Exception e) {
+			System.out.println("E: " + e.getMessage());
+		}
+		
+	}*/
+	
+	public void first_view(MTComponent mtCom, AbstractMTApplication app) {
+		final MTImage image = new MTImage(app, app.loadImage("greenlight/pictures/기타사진/main.png")); // 이미지 load
+		image.setSizeXYGlobal(app.width, app.height); // 이미지 크기
+		image.setPickable(false); // 이미지 움직임 안되게 고정
+		image.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2)); // 화면 위치
+						
+		mtCom.addChild(image); // 화면에 이미지 넣기
+	}
+	
+	/*
+	private void person() {
+		this.processGestureEvent(new ICreateScene() {
+			public Iscene getNewScene() {
+				return new food(app, "pl");
+			}
+			public String getTitle() {
+				return "화면";
+			}
+		});
+	}
+
+	private boolean processGestureEvent(final ICreateScene createScene) {
+		final Iscene scene = createScene.getNewScene();
+		
+		if (!switchDirectlyToScene){//We have FBO support -> show scene in a window first
+						
+			if (hasFBO && scene instanceof AbstractScene){
+				((AbstractScene) scene).setTransition(new BlendTransition(app, 300));	
+			}
+				
+			final MTSceneWindow sceneWindow = new MTSceneWindow(app, scene, 1, 1); // applet, scene, 테두리 가로두께, 테두리 세로두께
+			// 테두리 두께가 1이거나 50 이러면 x표시랑 최대화 표시가 있는데 5면 없다.(이상함...)
+			sceneWindow.setFillColor(new MTColor(50,50,50,200)); // 테두리 색
+			sceneWindow.scaleGlobal(1, 1, 1, sceneWindow.getCenterPointGlobal()); // 화면의 크기(1이면 전체화면) 가로폭, 세로폭, ?, ?	
+			sceneWindow.addGestureListener(DragProcessor.class, new InertiaDragAction());
+			sceneWindow.setPickable(false); // 화면 이동 안되게 고정
+			getCanvas().addChild(sceneWindow);
+		}else{
+			//No FBO available -> change to the new scene fullscreen directly			
+			float menuWidth = 64;
+			float menuHeight = 64;
+			MTSceneMenu sceneMenu = 
+			new MTSceneMenu(app, scene, app.width-menuWidth, app.height-menuHeight, menuWidth, menuHeight);
+			sceneMenu.addToScene();
+						
+			app.addScene(scene);
+			app.pushScene();
+			app.changeScene(scene);
+		}
+		return false;
+	}*/
+}

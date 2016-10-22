@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;p&apos; in &apos;Menu.TeethPicture()&apos; to &apos;mouthPanel&apos;&#x0D;&#x0A;- Original project: &apos;OralCare&apos;&#x0D;&#x0A;- Original element: &apos;Menu.TeethPicture().p&apos;&#x0D;&#x0A;- Renamed element: &apos;p&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;p&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{OralCare.java[Menu~TeethPicture@p!12428!12451!12435!12435!QJPanel;!0!false" name="mouthPanel" references="true" stamp="1409479983534" version="1.0"/>
+</session>

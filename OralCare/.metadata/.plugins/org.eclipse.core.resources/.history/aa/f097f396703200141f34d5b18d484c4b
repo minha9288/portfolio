@@ -1,0 +1,523 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Enumeration;
+
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
+public class OralCare {
+
+	public static void main(String[] args) {
+		Menu tf = new Menu();
+	}
+}
+
+class Menu extends JFrame {
+	JTabbedPane jtp = new JTabbedPane(JTabbedPane.TOP,
+			JTabbedPane.SCROLL_TAB_LAYOUT);
+	GridBagLayout gbl;
+	GridBagConstraints gbc;
+	JPanel jp;
+	
+	//정보저장 클래스
+	String chart_num;
+	String patientName;
+
+	/*환자정보*/
+	JTextField CNF; // 차트번호
+	JTextField NF; // 이름
+	JTextField YF; // 년도
+	JTextField MF; // 월
+	JTextField DF; // 일
+	JTextField T1; // 전화번호 앞
+	JTextField T2; // 전화번호 중간
+	JTextField T3; // 전화번호 끝
+	JTextArea PA; // 내원 목적
+	ButtonGroup group; // 성별
+	JRadioButton rbMan;
+	JRadioButton rbWoman;
+	JPanel infoPanel;
+	JButton btnInsert; // 확인버튼
+	JButton btnSurvey; // 설문제
+	ButtonGroup group1;
+	ButtonGroup group2;
+	ButtonGroup group3;
+	ButtonGroup group4;
+	
+	/*구강사진*/
+	JButton uploadBtn;
+	JTextField pathCheck;
+	JLabel p1, p2, p3, p4, p5, p6;
+	
+	JPanel tap1, tap2, tap3, tap4, tap5, tap6;
+	
+
+	public Menu() {
+		
+		tap1 = PatientInfo();
+		tap2 = TeethPicture();
+		tap3 = X_ray();
+		tap4 = Plaque();
+		tap5 = new JPanel();
+		tap6 = new JPanel();
+		
+		jtp.addTab("회원정보/설문", tap1);
+		jtp.addTab("구강촬영", tap2);
+		jtp.addTab("X-ray", tap3);
+		jtp.addTab("치면세균막", tap4);
+		jtp.addTab("결과", tap5);
+		jtp.addTab("관리/일정", tap6);
+		
+		jtp.addChangeListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("탭선택 : " + jtp.getSelectedIndex());
+				if(jtp.getSelectedIndex()==3){
+					tap4 = Plaque();
+				}
+			}
+		});
+		
+		this.add(jtp);
+
+		this.setSize(1000, 650);
+		this.setVisible(true);
+	}
+
+	public JPanel PatientInfo() {
+		jp = new JPanel();
+		infoPanel = new JPanel();
+		JPanel surveyPanel = new JPanel();
+		
+		TitledBorder TB = new TitledBorder("회원정보");
+		TB.setTitleJustification(TitledBorder.CENTER);
+		TitledBorder TB2 = new TitledBorder("설문");
+		TB2.setTitleJustification(TitledBorder.CENTER);
+		infoPanel.setBorder(TB);
+		surveyPanel.setBorder(TB2);
+
+		JLabel CN = new JLabel("차트번호   ");
+		CNF = new JTextField(5);
+
+		JLabel Name = new JLabel("이름   ");
+		NF = new JTextField(10);
+
+		JLabel Birth = new JLabel("생년월일  ");
+		YF = new JTextField(6);
+		MF = new JTextField(6);
+		DF = new JTextField(6);
+		JPanel pBirth = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pBirth.add(YF);
+		pBirth.add(new JLabel("/"));
+		pBirth.add(MF);
+		pBirth.add(new JLabel("/"));
+		pBirth.add(DF);
+
+		JLabel tel = new JLabel("전화   ");
+		JPanel pTel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		T1 = new JTextField(6);
+		T2 = new JTextField(6);
+		T3 = new JTextField(6);
+		pTel.add(T1);
+		pTel.add(new JLabel("-"));
+		pTel.add(T2);
+		pTel.add(new JLabel("-"));
+		pTel.add(T3);
+
+		JLabel Gender = new JLabel("성별   ");
+		JPanel pGender = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		rbMan = new JRadioButton("남", true);
+		rbWoman = new JRadioButton("여", true);
+		group = new ButtonGroup();
+		group.add(rbMan);
+		group.add(rbWoman);
+		pGender.add(rbMan);
+		pGender.add(rbWoman);
+
+		JLabel Pur = new JLabel("내원목적   ");
+		PA = new JTextArea(8, 25);
+
+		JPanel pC = new JPanel();
+		JLabel CL = new JLabel("확인을 누르시면 설문이 시작됩니다.");
+		btnInsert = new JButton("확인");
+		pC.add(CL);
+		pC.add(btnInsert);
+
+		// 위치 지정!
+		infoPanel.setLayout(new GridBagLayout());
+		// 차트번호호
+		infoPanel.add(CN, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(CNF, new GridBagConstraints(1, 0, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		// 이름
+		infoPanel.add(Name, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(NF, new GridBagConstraints(1, 1, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 생년월일
+		infoPanel.add(Birth, new GridBagConstraints(0, 2, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(pBirth, new GridBagConstraints(1, 2, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 전화
+		infoPanel.add(tel, new GridBagConstraints(0, 3, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(pTel, new GridBagConstraints(1, 3, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 성별
+		infoPanel.add(Gender, new GridBagConstraints(0, 4, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(pGender, new GridBagConstraints(1, 4, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 내원목적
+		infoPanel.add(Pur, new GridBagConstraints(0, 5, 1, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		infoPanel.add(PA, new GridBagConstraints(1, 5, 3, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+
+		// 확인
+		infoPanel.add(pC, new GridBagConstraints(1, 6, 4, 1, 0, 0,
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						2, 2, 2, 2), 0, 0));
+		
+		btnInsert.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				chart_num = CNF.getText();
+				patientName = NF.getText();
+				System.out.println("patientName1 = " + patientName);
+				//환자정보 읽어오기
+				PatientBean bean = new PatientBean();
+				bean.setChartNum(CNF.getText());
+				bean.setPatientName(NF.getText());
+				bean.setPatientBirth(YF.getText()+MF.getText()+DF.getText());
+				bean.setPatientAge("20");
+				bean.setPatientTel(T1.getText()+T2.getText()+T3.getText());
+				if(rbMan.isSelected())
+					bean.setPatientSex("M");
+				else if(rbWoman.isSelected())
+					bean.setPatientSex("F");				
+				bean.setPatientPurpose(PA.getText());
+				
+				
+				//환자정보 DB에 저장
+				//PatientSaveMgr save = new PatientSaveMgr();
+				//save.insertPatient(bean);
+				
+				//연령군 별 설문조사
+				String Age = YF.getText(); 
+				goSurvey(Age);
+				infoPanel.getRootPane().validate();
+			}
+		});
+		
+		jp.add(infoPanel);
+
+		return jp;
+	}
+	
+	public int AgeCount(String age1) {
+		int age = Integer.parseInt(age1);
+		Calendar date = Calendar.getInstance();
+		int Age = (date.get(Calendar.YEAR) - age) + 1;
+		System.out.println("확인 : " + Age);
+		return Age;
+	}
+	
+	public JPanel goSurvey(String age1) {
+		JPanel pS = new JPanel();
+		int Age = AgeCount(age1);
+		// 영유아
+		System.out.println(Age);
+		if (0 <= Age && Age < 6) {
+			TitledBorder TB = new TitledBorder("설문");
+			TB.setTitleJustification(TitledBorder.CENTER);
+
+			JLabel j1 = new JLabel("1. 어제 하루중 당 섭취 횟수는 ?");
+			JPanel pN1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r1_1 = new JRadioButton("없었음", false);
+			JRadioButton r1_2 = new JRadioButton("1회", false);
+			JRadioButton r1_3 = new JRadioButton("2회", false);
+			JRadioButton r1_4 = new JRadioButton("3회", false);
+			JRadioButton r1_5 = new JRadioButton("4회", false);
+			group1 = new ButtonGroup();
+			group1.add(r1_1);
+			group1.add(r1_2);
+			group1.add(r1_3);
+			group1.add(r1_4);
+			group1.add(r1_5);
+			//pN1.add(j1);
+			pN1.add(r1_1);
+			pN1.add(r1_2);
+			pN1.add(r1_3);
+			pN1.add(r1_4);
+			pN1.add(r1_5);
+
+			JLabel j2 = new JLabel("2. 어제 하루 이를 닦은 횟수는 ?");
+			JPanel pN2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r2_1 = new JRadioButton("3회", false);
+			JRadioButton r2_2 = new JRadioButton("2회", false);
+			JRadioButton r2_3 = new JRadioButton("1회", false);
+			JRadioButton r2_4 = new JRadioButton("안닦았음", false);
+			group2 = new ButtonGroup();
+			group2.add(r2_1);
+			group2.add(r2_2);
+			group2.add(r2_3);
+			group2.add(r2_4);
+			//pN2.add(j2);
+			pN2.add(r2_1);
+			pN2.add(r2_2);
+			pN2.add(r2_3);
+			pN2.add(r2_4);
+
+			JLabel j3 = new JLabel("3. 다음중 어느 음식까지 잘 씹을 수 있는가 ?");
+			JPanel pN3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r3_1 = new JRadioButton("요거트/두부", false);
+			JRadioButton r3_2 = new JRadioButton("밥", false);
+			JRadioButton r3_3 = new JRadioButton("사과/김치", false);
+			JRadioButton r3_4 = new JRadioButton("고기(육류)", false);
+			JRadioButton r3_5 = new JRadioButton("마른오징어/사탕", false);
+			group3 = new ButtonGroup();
+			group3.add(r3_1);
+			group3.add(r3_2);
+			group3.add(r3_3);
+			group3.add(r3_4);
+			group3.add(r3_5);
+			
+			pN3.add(r3_1);
+			pN3.add(r3_2);
+			pN3.add(r3_3);
+			pN3.add(r3_4);
+			pN3.add(r3_5);
+			
+			JLabel j4 = new JLabel("4. 지난 일년간 치과 방문 한 적이 있는가 ?");
+			JPanel pN4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JRadioButton r4_1 = new JRadioButton("2회 이상", false);
+			JRadioButton r4_2 = new JRadioButton("1회", false);
+			JRadioButton r4_3 = new JRadioButton("간 적 없다", false);
+			
+			group4 = new ButtonGroup();
+			group4.add(r4_1);
+			group4.add(r4_2);
+			group4.add(r4_3);
+			
+			pN4.add(r4_1);
+			pN4.add(r4_2);
+			pN4.add(r4_3);
+			
+			JPanel pSb = new JPanel();
+			btnSurvey = new JButton("제출");
+			pSb.add(btnSurvey);
+			
+			btnSurvey.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					SurveyBean bean = new SurveyBean();
+					bean.setChartNum(CNF.getText());
+					bean.setSugar_frequency(getSelectedButtonText(group1));
+					bean.setBrush(getSelectedButtonText(group2));
+					bean.setChew_food(getSelectedButtonText(group3));
+					bean.setVisit_experience(getSelectedButtonText(group4));
+					
+					System.out.println("oral 차트넘버" + bean.getChartNum());
+					
+					PatientSaveMgr save = new PatientSaveMgr();
+					save.insertSurvey(bean);
+				}
+			});
+		
+			pS.setBorder(TB);
+
+			pS.setLayout(new GridBagLayout());
+			pS.add(j1, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN1, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(j2, new GridBagConstraints(0, 2, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN2, new GridBagConstraints(0, 3, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(j3, new GridBagConstraints(0, 4, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN3, new GridBagConstraints(0, 5, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(j4, new GridBagConstraints(0, 6, 1, 1, 0, 0,
+					GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pN4, new GridBagConstraints(0, 7, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			pS.add(pSb, new GridBagConstraints(0, 8, 1, 1, 0, 0,
+					GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+					new Insets(6,6,0,0), 0, 0));
+			jp.add(pS);
+			
+		}
+		// 아동
+		else if (6 <= Age && Age < 12) {
+		}
+		// 청소년
+		else if (12 <= Age && Age < 20) {
+		}
+		// 청년
+		else if (20 <= Age && Age < 40) {
+		}
+		// 장년
+		else if (40 <= Age && Age < 65) {
+		}
+		// 노년
+		else if (Age > 64) {
+		}
+
+		return pS;
+	}
+	
+	public JPanel TeethPicture() {
+		JPanel theethPanel = new JPanel();
+		JPanel theethPicturePanel = new JPanel();
+		TitledBorder TB = new TitledBorder("구강사진");
+		TB.setTitleJustification(TitledBorder.CENTER);
+		theethPicturePanel.setBorder(TB);
+		
+		JButton uploadBtn = new JButton("upload");
+		uploadBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser= new JFileChooser();
+				
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                        "Image Files", // 파일 이름에 창에 출력될 문자열
+                        "jpg", "gif", "PNG"); // 파일 필터로 사용되는 확장자. *.jpg. *.gif만 나열됨
+				chooser.setFileFilter(filter); // 파일 다이얼로그에 파일 필터 설정
+            
+				// 파일 다이얼로그 출력
+				int ret = chooser.showOpenDialog(null);
+				if(ret != JFileChooser.APPROVE_OPTION) { // 사용자가  창을 강제로 닫았거나 취소 버튼을 누른 경우
+					JOptionPane.showMessageDialog(null,"파일을 선택하지 않았습니다", "경고", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				// 사용자가 파일을 선택하고 "열기" 버튼을 누른 경우
+				String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
+				System.out.println(filePath);
+            
+            
+				p1.setIcon(new ImageIcon(((new ImageIcon(filePath)).getImage()).getScaledInstance(150, 100, java.awt.Image.SCALE_SMOOTH))); // 파일을 로딩하여 이미지 레이블에 출력한다.
+				add(p1);
+				setVisible(true);
+			}
+			
+		});
+		JTextField pathCheck = new JTextField(25);
+		
+		//이미지 띄울 칸
+		p1 = new JLabel("p1");
+		p2 = new JLabel("p2");
+		p3 = new JLabel("p3");
+		Border border = LineBorder.createGrayLineBorder () ; 
+		p1.setBorder(border);
+		p2.setBorder(border);
+		p3.setBorder(border);
+		p1.setPreferredSize(new Dimension(150, 100));
+		p2.setPreferredSize(new Dimension(150, 100));
+		p3.setPreferredSize(new Dimension(150, 100));
+		
+		// 위치 지정!
+		theethPicturePanel.setLayout(new GridBagLayout());
+		theethPicturePanel.add(uploadBtn, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(pathCheck, new GridBagConstraints(1, 0, 2, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(p1, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(p2, new GridBagConstraints(1, 1, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		theethPicturePanel.add(p3, new GridBagConstraints(2, 1, 1, 1, 0, 0,
+			GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+			2, 2, 2, 2), 0, 0));
+		
+		theethPanel.add(theethPicturePanel);
+		
+		return theethPanel;
+	}
+	
+	public JPanel X_ray() {
+		JPanel xrayPanel = new JPanel();
+		return xrayPanel;
+	}
+	
+	
+	
+	public JPanel Plaque() {
+		JPanel plaquePanel = new JPanel();
+		return plaquePanel;
+	}
+	
+	public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }  
+
+}

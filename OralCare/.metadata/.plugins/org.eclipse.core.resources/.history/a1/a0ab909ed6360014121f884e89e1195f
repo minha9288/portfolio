@@ -1,0 +1,71 @@
+
+import java.awt.Dimension;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
+import org.jfree.chart.plot.SpiderWebPlot;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.*;
+ 
+public class SpiderChart_E extends JPanel {
+	
+        public SpiderChart_E() {
+                JPanel jpanel = createDemoPanel();
+                jpanel.setPreferredSize(new Dimension(500, 270));
+                this.add(jpanel);
+        }
+ 
+        private static CategoryDataset createDataset() {
+                String graph = "획득점수";
+                String element_TheethNum = "치아수";
+                String element_DentalCaries = "치아우식";
+                String element_PeriodontalStatus = "치주상태";
+                String element_OtherMouthStatus = "기타구강상태";
+                String element_MouthHabit = "구강관리습관";
+ 
+                DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+                defaultcategorydataset.addValue(10, graph, element_TheethNum);
+                defaultcategorydataset.addValue(28.5, graph, element_DentalCaries);
+                defaultcategorydataset.addValue(6, graph, element_PeriodontalStatus);
+                defaultcategorydataset.addValue(7, graph, element_OtherMouthStatus);
+                defaultcategorydataset.addValue(12, graph, element_MouthHabit);
+                return defaultcategorydataset;
+        }
+ 
+
+ 
+        private static JFreeChart createChart(CategoryDataset categorydataset) {
+ 
+                SpiderWebPlot spiderwebplot = new SpiderWebPlot(categorydataset);
+                spiderwebplot.setStartAngle(54D);
+                spiderwebplot.setInteriorGap(0.40000000000000002D);
+                spiderwebplot.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+                JFreeChart jfreechart = new JFreeChart("환자 구강상태 결과", TextTitle.DEFAULT_FONT, spiderwebplot, false);
+                LegendTitle legendtitle = new LegendTitle(spiderwebplot);
+                legendtitle.setPosition(RectangleEdge.BOTTOM);
+                jfreechart.addSubtitle(legendtitle);
+                return jfreechart;
+        }
+
+ 
+        public static JPanel createDemoPanel() {
+                JFreeChart jfreechart = createChart(createDataset());
+                return new ChartPanel(jfreechart);
+        }
+        
+        /*
+ 
+        public static void main(String args[]) {
+                SpiderChart spiderwebchartdemo1 = new SpiderChart("SpiderWebChartDemo1");
+                //spiderwebchartdemo1.pack();
+                //RefineryUtilities.centerFrameOnScreen(spiderwebchartdemo1);
+                spiderwebchartdemo1.setVisible(true);
+        }
+        */
+}
+ 
+

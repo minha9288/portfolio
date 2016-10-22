@@ -1,0 +1,50 @@
+/**@author 김서희
+ * 테이블 nfc 대기 전 화면
+ */
+
+package view;
+
+import java.net.Socket;
+
+import org.mt4j.AbstractMTApplication;
+import org.mt4j.components.visibleComponents.widgets.MTImage;
+import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.util.MTColor;
+import org.mt4j.util.math.Vector3D;
+
+import thread_test.ReadThread;
+import thread_test.WriteThread;
+
+public class first extends AbstractScene {
+	
+	private AbstractMTApplication app;
+
+	private static final String serverIP = "172.25.235.152"; // 내 ip 입력하기
+	private static final int serverPort = 9286;
+	private static String msg;
+	
+	public first(AbstractMTApplication mtAppl, String name) {
+		super(mtAppl, name);
+		this.app = mtAppl;
+		this.setClearColor(new MTColor(255,255,255,255)); // 화면 배경 색(흰색)
+		
+		final MTImage image = new MTImage(app, app.loadImage("greenlight/pictures/기타사진/main.png")); // 이미지 load
+		image.setSizeXYGlobal(app.width, app.height); // 이미지 크기
+		image.setPickable(false); // 이미지 움직임 안되게 고정
+		image.setPositionGlobal(new Vector3D(app.width-app.width/2, app.height-app.height/2)); // 화면 위치
+						
+		this.getCanvas().addChild(image); // 화면에 이미지 넣기
+		
+		msg = "aaaa from Client";
+		try {
+	        Socket socket = new Socket(serverIP, serverPort);
+	        
+	        Thread readThread = new ReadThread(socket);
+	        Thread writeThread = new WriteThread(socket, msg);
+	        readThread.start();
+	        writeThread.start();
+		} catch(Exception e) {
+			System.out.println("E: " + e.getMessage());
+		}
+	}
+}
